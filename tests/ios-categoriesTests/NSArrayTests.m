@@ -13,11 +13,21 @@
 
 - (void) testArray
 {
-	NSArray * array = nil;
-	if ( ![NSArray isEmpty:array] )
+	if ( ![NSArray isEmpty:nil] )
 	{
 		STFail(@"NSArrayTests: 'isEmpty' ");
 	}
+	
+	if ( ![NSArray isEmpty:[NSArray array]] )
+	{
+		STFail(@"NSArrayTests: 'isEmpty' ");
+	}
+	
+	if ( ![NSArray isNotEmpty:[NSArray arrayWithObject:@" "]] )
+	{
+		STFail(@"NSArrayTests: 'isNotEmpty' ");
+	}
+
 	
 	
 }
