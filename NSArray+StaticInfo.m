@@ -14,7 +14,7 @@
 	return ([array count] > 0);
 }
 
-+ (NSUInteger) array:(NSArray *)array previvousIndexFrom:(NSUInteger)index
++ (NSUInteger) array:(NSArray *)array previousIndexFrom:(NSUInteger)index
 {
 	if (index > 0 && index < NSNotFound)
 	{
