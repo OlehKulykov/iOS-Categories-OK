@@ -14,6 +14,9 @@
 		3D00B2F81684BCAC0004D48D /* UIView+BackgroundImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D00B2F31684BCAC0004D48D /* UIView+BackgroundImage.m */; };
 		3D00B2F91684BCAC0004D48D /* UIView+BackgroundImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D00B2F31684BCAC0004D48D /* UIView+BackgroundImage.m */; };
 		3D00B2FC1684BCC90004D48D /* NSArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D00B2FB1684BCC90004D48D /* NSArrayTests.m */; };
+		3D55F38E1688643000B30D8D /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D55F38D1688643000B30D8D /* MachTime.m */; };
+		3D55F38F1688643000B30D8D /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D55F38D1688643000B30D8D /* MachTime.m */; };
+		3D55F3921688662300B30D8D /* MachTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D55F3911688662300B30D8D /* MachTimeTests.m */; };
 		3D7E56811684BB8800E3604A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D7E56801684BB8800E3604A /* UIKit.framework */; };
 		3D7E56831684BB8800E3604A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D7E56821684BB8800E3604A /* Foundation.framework */; };
 		3D7E56851684BB8800E3604A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D7E56841684BB8800E3604A /* CoreGraphics.framework */; };
@@ -48,6 +51,10 @@
 		3D00B2F31684BCAC0004D48D /* UIView+BackgroundImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+BackgroundImage.m"; path = "../../UIView+BackgroundImage.m"; sourceTree = "<group>"; };
 		3D00B2FA1684BCC90004D48D /* NSArrayTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayTests.h; sourceTree = "<group>"; };
 		3D00B2FB1684BCC90004D48D /* NSArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayTests.m; sourceTree = "<group>"; };
+		3D55F38C1688643000B30D8D /* MachTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachTime.h; path = ../../MachTime.h; sourceTree = "<group>"; };
+		3D55F38D1688643000B30D8D /* MachTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachTime.m; path = ../../MachTime.m; sourceTree = "<group>"; };
+		3D55F3901688662300B30D8D /* MachTimeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MachTimeTests.h; sourceTree = "<group>"; };
+		3D55F3911688662300B30D8D /* MachTimeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MachTimeTests.m; sourceTree = "<group>"; };
 		3D7E567C1684BB8800E3604A /* ios-categories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-categories.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D7E56801684BB8800E3604A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3D7E56821684BB8800E3604A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -104,6 +111,15 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		3D55F38A1688642500B30D8D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3D55F38C1688643000B30D8D /* MachTime.h */,
+				3D55F38D1688643000B30D8D /* MachTime.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		3D7E56711684BB8800E3604A = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +153,7 @@
 		3D7E56861684BB8800E3604A /* ios-categories */ = {
 			isa = PBXGroup;
 			children = (
+				3D55F38A1688642500B30D8D /* Helpers */,
 				3D00B2EC1684BC9D0004D48D /* Categories */,
 				3D7E568F1684BB8800E3604A /* AppDelegate.h */,
 				3D7E56901684BB8800E3604A /* AppDelegate.m */,
@@ -164,6 +181,8 @@
 			children = (
 				3D00B2FA1684BCC90004D48D /* NSArrayTests.h */,
 				3D00B2FB1684BCC90004D48D /* NSArrayTests.m */,
+				3D55F3901688662300B30D8D /* MachTimeTests.h */,
+				3D55F3911688662300B30D8D /* MachTimeTests.m */,
 				3D7E56A51684BB8800E3604A /* Supporting Files */,
 			);
 			path = "ios-categoriesTests";
@@ -292,6 +311,7 @@
 				3D00B2F41684BCAC0004D48D /* NSArray+StaticInfo.m in Sources */,
 				3D00B2F61684BCAC0004D48D /* UITableView+FullContentHeight.m in Sources */,
 				3D00B2F81684BCAC0004D48D /* UIView+BackgroundImage.m in Sources */,
+				3D55F38E1688643000B30D8D /* MachTime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +323,8 @@
 				3D00B2F71684BCAC0004D48D /* UITableView+FullContentHeight.m in Sources */,
 				3D00B2F91684BCAC0004D48D /* UIView+BackgroundImage.m in Sources */,
 				3D00B2FC1684BCC90004D48D /* NSArrayTests.m in Sources */,
+				3D55F38F1688643000B30D8D /* MachTime.m in Sources */,
+				3D55F3921688662300B30D8D /* MachTimeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
