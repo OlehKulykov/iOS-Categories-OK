@@ -17,6 +17,7 @@
 		3D55F38E1688643000B30D8D /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D55F38D1688643000B30D8D /* MachTime.m */; };
 		3D55F38F1688643000B30D8D /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D55F38D1688643000B30D8D /* MachTime.m */; };
 		3D55F3921688662300B30D8D /* MachTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D55F3911688662300B30D8D /* MachTimeTests.m */; };
+		3D55F39C16886C3F00B30D8D /* CGRectAdditionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D55F39B16886C3F00B30D8D /* CGRectAdditionsTests.m */; };
 		3D7E56811684BB8800E3604A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D7E56801684BB8800E3604A /* UIKit.framework */; };
 		3D7E56831684BB8800E3604A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D7E56821684BB8800E3604A /* Foundation.framework */; };
 		3D7E56851684BB8800E3604A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D7E56841684BB8800E3604A /* CoreGraphics.framework */; };
@@ -55,6 +56,10 @@
 		3D55F38D1688643000B30D8D /* MachTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachTime.m; path = ../../MachTime.m; sourceTree = "<group>"; };
 		3D55F3901688662300B30D8D /* MachTimeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MachTimeTests.h; sourceTree = "<group>"; };
 		3D55F3911688662300B30D8D /* MachTimeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MachTimeTests.m; sourceTree = "<group>"; };
+		3D55F397168868B300B30D8D /* CustomMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomMath.h; path = ../../CustomMath.h; sourceTree = "<group>"; };
+		3D55F399168869B200B30D8D /* CGRect+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CGRect+Additions.h"; path = "../../CGRect+Additions.h"; sourceTree = "<group>"; };
+		3D55F39A16886C3F00B30D8D /* CGRectAdditionsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGRectAdditionsTests.h; sourceTree = "<group>"; };
+		3D55F39B16886C3F00B30D8D /* CGRectAdditionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGRectAdditionsTests.m; sourceTree = "<group>"; };
 		3D7E567C1684BB8800E3604A /* ios-categories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-categories.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D7E56801684BB8800E3604A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3D7E56821684BB8800E3604A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -114,6 +119,8 @@
 		3D55F38A1688642500B30D8D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				3D55F397168868B300B30D8D /* CustomMath.h */,
+				3D55F399168869B200B30D8D /* CGRect+Additions.h */,
 				3D55F38C1688643000B30D8D /* MachTime.h */,
 				3D55F38D1688643000B30D8D /* MachTime.m */,
 			);
@@ -183,6 +190,8 @@
 				3D00B2FB1684BCC90004D48D /* NSArrayTests.m */,
 				3D55F3901688662300B30D8D /* MachTimeTests.h */,
 				3D55F3911688662300B30D8D /* MachTimeTests.m */,
+				3D55F39A16886C3F00B30D8D /* CGRectAdditionsTests.h */,
+				3D55F39B16886C3F00B30D8D /* CGRectAdditionsTests.m */,
 				3D7E56A51684BB8800E3604A /* Supporting Files */,
 			);
 			path = "ios-categoriesTests";
@@ -325,6 +334,7 @@
 				3D00B2FC1684BCC90004D48D /* NSArrayTests.m in Sources */,
 				3D55F38F1688643000B30D8D /* MachTime.m in Sources */,
 				3D55F3921688662300B30D8D /* MachTimeTests.m in Sources */,
+				3D55F39C16886C3F00B30D8D /* CGRectAdditionsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
