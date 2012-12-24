@@ -1,10 +1,9 @@
 
 
-#import <Foundation/Foundation.h>
-
 #ifndef __CUSTOMMATH_H__
 #define __CUSTOMMATH_H__
 
+#import <Foundation/Foundation.h>
 
 /// 180/pi
 #ifndef MATH_RADIAN
