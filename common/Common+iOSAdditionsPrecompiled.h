@@ -26,14 +26,21 @@
 #if __has_feature(objc_arc)
 
 #define SAFE_RELEASE(o) o=nil;
+
 #define SAFE_RETAIN(to,from) to=from;
-#define SAFE_AUTORELEASE(o) 
+
+#define SAFE_AUTORELEASE(o) o;
+
 
 #else
 
-#define SAFE_RELEASE(o) if(o){[o release];o=nil;}
-#define SAFE_RETAIN(to,from) if(to){[to release];to=nil;}if(from){to=[from retain];}
+
+#define SAFE_RELEASE(o) [o release];o=nil;
+
+#define SAFE_RETAIN(to,from) [to release];to=[from retain];
+
 #define SAFE_AUTORELEASE(o) [o autorelease];
+
 
 #endif
 

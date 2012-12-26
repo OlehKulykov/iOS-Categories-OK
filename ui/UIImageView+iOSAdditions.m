@@ -155,10 +155,9 @@ CG_INLINE NSInvocation * __UIImageViewLoadFromURLInvocation(UIImageView * imageV
 		}
 	}
 	
-	NSThread * thread = [[NSThread alloc] initWithTarget:self 
-												selector:@selector(__UIImageViewLoadFromURLThreadMethod:)
-												  object:params];
-	SAFE_AUTORELEASE(thread);
+	NSThread * thread = SAFE_AUTORELEASE([[NSThread alloc] initWithTarget:self 
+																 selector:@selector(__UIImageViewLoadFromURLThreadMethod:)
+																   object:params]);
 	[thread setThreadPriority:([[NSThread mainThread] threadPriority] / 2.0)];
 	[thread start];
 	return thread;
