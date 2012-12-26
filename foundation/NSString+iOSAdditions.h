@@ -16,15 +16,29 @@
 
 
 #import <Foundation/Foundation.h>
+#import "Foundation+iOSAdditionsConfig.h"
 
-#ifndef __MACHTIME_H__
-#define __MACHTIME_H__
+#ifndef NO_NSStringContaines__IOSADDITIONS__
 
-#ifndef NO_MACHTIME__IOSADDITIONS__
+@interface NSString (Containes)
 
-/// Return current mach time in seconds.
-NSTimeInterval GetMachTime();
+- (BOOL) isContainesSubstring:(NSString *)subString;
+
+@end
 
 #endif
+
+
+#ifndef NO_NSStringSpecialHTMLCharacters__IOSADDITIONS__
+
+@interface NSString (SpecialHTMLCharacters)
+
+
+- (NSString *) stringByDecodeSpecialHTMLCharacters;
+
+- (NSString *) stringByEncodeSpecialHTMLCharacters;
+
+
+@end
 
 #endif

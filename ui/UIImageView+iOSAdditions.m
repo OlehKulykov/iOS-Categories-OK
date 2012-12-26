@@ -1,7 +1,25 @@
+/*
+ *   Copyright 2012 Kulykov Oleh
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
 
 
-#import "UIImageView+LoadFromURL.h"
+#import "UIImageView+iOSAdditions.h"
 #import <CoreFoundation/CoreFoundation.h>
+
+
+#ifndef NO_UIImageViewLoadFromURL__IOSADDITIONS__
 
 #define URL_KEY @"1"
 #define IS_USE_INDICATOR_KEY @"2"
@@ -22,7 +40,7 @@ CG_INLINE NSInvocation * __UIImageViewLoadFromURLInvocation(UIImageView * imageV
 	return invocation;
 }
 
-@implementation UIImageView(LoadFromURL1)
+@implementation UIImageView (LoadFromURL)
 
 - (void) __UIImageViewLoadFromURLThreadStartMethod:(NSMutableDictionary *)params
 {
@@ -145,3 +163,5 @@ CG_INLINE NSInvocation * __UIImageViewLoadFromURLInvocation(UIImageView * imageV
 }
 
 @end
+
+#endif

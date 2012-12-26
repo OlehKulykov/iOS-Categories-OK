@@ -15,16 +15,17 @@
  */
 
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "UI+iOSAdditionsConfig.h"
 
-#ifndef __MACHTIME_H__
-#define __MACHTIME_H__
+#ifndef NO_UITableViewFullContentHeight__IOSADDITIONS__
 
-#ifndef NO_MACHTIME__IOSADDITIONS__
+@interface UITableView (FullContentHeight)
 
-/// Return current mach time in seconds.
-NSTimeInterval GetMachTime();
+/// Return full table view content height by
+/// calculating height of each cell
+- (CGFloat) fullContentHeight;
 
-#endif
+@end
 
 #endif

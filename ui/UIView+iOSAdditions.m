@@ -15,16 +15,19 @@
  */
 
 
-#import <Foundation/Foundation.h>
+#import "UIView+iOSAdditions.h"
+#import <QuartzCore/QuartzCore.h>
 
-#ifndef __MACHTIME_H__
-#define __MACHTIME_H__
+#ifndef NO_UIViewBackgroundImage__IOSADDITIONS__
 
-#ifndef NO_MACHTIME__IOSADDITIONS__
+@implementation UIView (BackgroundImage)
 
-/// Return current mach time in seconds.
-NSTimeInterval GetMachTime();
+- (void) setBackgroundImage:(UIImage *)backgroundImage
+{
+	CALayer * layer = [self layer];
+	[layer setContents:(id)[backgroundImage CGImage]];
+}
 
-#endif
+@end
 
 #endif

@@ -16,15 +16,24 @@
 
 
 #import <Foundation/Foundation.h>
+#import "Foundation+iOSAdditionsConfig.h"
 
-#ifndef __MACHTIME_H__
-#define __MACHTIME_H__
+#ifndef NO_NSArrayStaticInfo__IOSADDITIONS__
 
-#ifndef NO_MACHTIME__IOSADDITIONS__
+@interface NSArray (StaticInfo)
 
-/// Return current mach time in seconds.
-NSTimeInterval GetMachTime();
+/// Check is array has none objects
++ (BOOL) isEmpty:(NSArray *)array;
 
-#endif
+/// Check is array has objects
++ (BOOL) isNotEmpty:(NSArray *)array;
+
+/// Return previous array index from incoming or NSNotFound if index can't be found
++ (NSUInteger) array:(NSArray *)array previousIndexFrom:(NSUInteger)index;
+
+/// Retun next array index from incoming or NSNotFound if index can't be found
++ (NSUInteger) array:(NSArray *)array nextIndexFrom:(NSUInteger)index;
+
+@end
 
 #endif

@@ -16,15 +16,18 @@
 
 
 #import <Foundation/Foundation.h>
+#import "UI+iOSAdditionsConfig.h"
 
-#ifndef __MACHTIME_H__
-#define __MACHTIME_H__
+#ifndef NO_UIImageViewLoadFromURL__IOSADDITIONS__
 
-#ifndef NO_MACHTIME__IOSADDITIONS__
+@interface UIImageView (LoadFromURL)
 
-/// Return current mach time in seconds.
-NSTimeInterval GetMachTime();
+- (NSThread *) loadFromURL:(NSURL *)url
+	  useActivityIndicator:(BOOL)isUseActivityIndicator
+				withTarget:(id)target
+		   onStartSelector:(SEL)onStartSelector
+			onDoneSelector:(SEL)onDoneSelector;
 
-#endif
+@end
 
 #endif

@@ -15,16 +15,16 @@
  */
 
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "UI+iOSAdditionsConfig.h"
 
-#ifndef __MACHTIME_H__
-#define __MACHTIME_H__
+#ifndef NO_UIViewBackgroundImage__IOSADDITIONS__
 
-#ifndef NO_MACHTIME__IOSADDITIONS__
+@interface UIView (BackgroundImage)
 
-/// Return current mach time in seconds.
-NSTimeInterval GetMachTime();
+/// Sets background view color as image. Image scales to content.
+- (void) setBackgroundImage:(UIImage *)backgroundImage;
 
-#endif
+@end
 
 #endif

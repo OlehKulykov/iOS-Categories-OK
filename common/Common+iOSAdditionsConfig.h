@@ -1,0 +1,10 @@
+
+
+#ifndef __COMMON_IOSADDITIONSCONFIG_H__
+#define __COMMON_IOSADDITIONSCONFIG_H__
+
+
+//#define NO_MACHTIME__IOSADDITIONS__
+
+
+#endif
