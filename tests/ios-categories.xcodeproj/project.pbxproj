@@ -29,6 +29,8 @@
 		3D7E56A01684BB8800E3604A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D7E56801684BB8800E3604A /* UIKit.framework */; };
 		3D7E56A11684BB8800E3604A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D7E56821684BB8800E3604A /* Foundation.framework */; };
 		3D7E56A91684BB8800E3604A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D7E56A71684BB8800E3604A /* InfoPlist.strings */; };
+		3DBEE241168B550A003FEF2C /* UIImageView+LoadFromURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBEE240168B550A003FEF2C /* UIImageView+LoadFromURL.m */; };
+		3DBEE242168B550A003FEF2C /* UIImageView+LoadFromURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBEE240168B550A003FEF2C /* UIImageView+LoadFromURL.m */; };
 		3DF034FC168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */; };
 		3DF034FD168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */; };
 		3DF034FE168ADBAB0056FEDB /* RequestGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034FB168ADBAB0056FEDB /* RequestGenerator.m */; };
@@ -42,10 +44,10 @@
 		3DF03522168AEE410056FEDB /* NSString+Containes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0351E168AEE410056FEDB /* NSString+Containes.m */; };
 		3DF03523168AEE410056FEDB /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03520168AEE410056FEDB /* UIColor+Additions.m */; };
 		3DF03524168AEE410056FEDB /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03520168AEE410056FEDB /* UIColor+Additions.m */; };
-		3DF03527168AEFAB0056FEDB /* CLLocation+Distance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03526168AEFAB0056FEDB /* CLLocation+Distance.m */; };
-		3DF03528168AEFAB0056FEDB /* CLLocation+Distance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03526168AEFAB0056FEDB /* CLLocation+Distance.m */; };
 		3DF0352A168AF0FE0056FEDB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF03529168AF0FE0056FEDB /* CoreLocation.framework */; };
 		3DF0352B168AF35A0056FEDB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF03529168AF0FE0056FEDB /* CoreLocation.framework */; };
+		3DF0352C168AF4430056FEDB /* CLLocation+Distance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03526168AEFAB0056FEDB /* CLLocation+Distance.m */; };
+		3DF0352D168AF4440056FEDB /* CLLocation+Distance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03526168AEFAB0056FEDB /* CLLocation+Distance.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +90,8 @@
 		3D7E569E1684BB8800E3604A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		3D7E56A61684BB8800E3604A /* ios-categoriesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ios-categoriesTests-Info.plist"; sourceTree = "<group>"; };
 		3D7E56A81684BB8800E3604A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3DBEE23F168B550A003FEF2C /* UIImageView+LoadFromURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+LoadFromURL.h"; path = "../../UIImageView+LoadFromURL.h"; sourceTree = "<group>"; };
+		3DBEE240168B550A003FEF2C /* UIImageView+LoadFromURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+LoadFromURL.m"; path = "../../UIImageView+LoadFromURL.m"; sourceTree = "<group>"; };
 		3DF034F8168ADBAB0056FEDB /* RequestFieldsContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestFieldsContainer.h; path = ../../net/RequestFieldsContainer.h; sourceTree = "<group>"; };
 		3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequestFieldsContainer.m; path = ../../net/RequestFieldsContainer.m; sourceTree = "<group>"; };
 		3DF034FA168ADBAB0056FEDB /* RequestGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestGenerator.h; path = ../../net/RequestGenerator.h; sourceTree = "<group>"; };
@@ -138,6 +142,8 @@
 		3D00B2EC1684BC9D0004D48D /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				3DBEE23F168B550A003FEF2C /* UIImageView+LoadFromURL.h */,
+				3DBEE240168B550A003FEF2C /* UIImageView+LoadFromURL.m */,
 				3DF03506168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.h */,
 				3DF03507168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m */,
 				3D00B2EE1684BCAC0004D48D /* NSArray+StaticInfo.h */,
@@ -381,7 +387,8 @@
 				3DF03508168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m in Sources */,
 				3DF03521168AEE410056FEDB /* NSString+Containes.m in Sources */,
 				3DF03523168AEE410056FEDB /* UIColor+Additions.m in Sources */,
-				3DF03527168AEFAB0056FEDB /* CLLocation+Distance.m in Sources */,
+				3DF0352C168AF4430056FEDB /* CLLocation+Distance.m in Sources */,
+				3DBEE241168B550A003FEF2C /* UIImageView+LoadFromURL.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,7 +409,8 @@
 				3DF03510168AE4520056FEDB /* UIColorTests.m in Sources */,
 				3DF03522168AEE410056FEDB /* NSString+Containes.m in Sources */,
 				3DF03524168AEE410056FEDB /* UIColor+Additions.m in Sources */,
-				3DF03528168AEFAB0056FEDB /* CLLocation+Distance.m in Sources */,
+				3DF0352D168AF4440056FEDB /* CLLocation+Distance.m in Sources */,
+				3DBEE242168B550A003FEF2C /* UIImageView+LoadFromURL.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
