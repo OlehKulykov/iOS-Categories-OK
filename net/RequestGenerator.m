@@ -52,16 +52,16 @@
 
 - (NSMutableURLRequest *) getURLEncodedPOSTRequestForURLString:(NSString*)requestURLString
 {
-	if (requestURLString == nil) { return nil; }
+	if ( !requestURLString ) return nil;
 	
 	NSData * postData = [self getURLEncodedHTTPBodyData];
-	if (postData == nil) { return nil; }
+	if ( !postData ) return nil;
 	
 	NSURL * requestURL = [NSURL URLWithString:requestURLString];
-	if (requestURL == nil) { return nil; }
+	if ( !requestURL ) return nil;
 	
 	NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:requestURL];
-	if (request == nil) { return nil; }
+	if ( !request ) return nil;
 	
 	[request setTimeoutInterval:(NSTimeInterval)30];
 	
@@ -78,16 +78,16 @@
 
 - (NSMutableURLRequest *) getMultipartPOSTRequestForURLString:(NSString*)requestURLString
 {
-	if (requestURLString == nil) { return nil; }
+	if ( !requestURLString ) return nil;
 	
 	NSData * postData = [self getMultipartHTTPBodyData];
-	if (postData == nil) { return nil; }
+	if ( !postData ) return nil;
 	
 	NSURL * requestURL = [NSURL URLWithString:requestURLString];
-	if (requestURL == nil) { return nil; }
+	if ( !requestURL ) return nil;
 	
 	NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:requestURL];
-	if (request == nil) { return nil; }
+	if ( !request ) return nil;
 	
 	[request setTimeoutInterval:(NSTimeInterval)30];
 	NSString * contentType = [NSString stringWithFormat:@"multipart/form-data, boundary=%@", [RequestGenerator serverRequestBaseStringBoundary]];
@@ -96,7 +96,7 @@
 	[request addValue:contentType forHTTPHeaderField: @"Content-Type"];
 	[request setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
 	
-	[request setValue:[NSString stringWithFormat:@"%d", (NSUInteger)[postData length]] forHTTPHeaderField:@"Content-Length"];
+	[request setValue:[NSString stringWithFormat:@"%u", [postData length]] forHTTPHeaderField:@"Content-Length"];
 	
 	[request setHTTPBody:postData];
 	

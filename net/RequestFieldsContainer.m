@@ -7,24 +7,24 @@
 
 - (BOOL) addFieldWithName:(NSString *)fieldName data:(NSData *)data andFileName:(NSString *)fileName
 {
-	if (data == nil)
+	if ( !data )
 	{
 		return NO;
 	}
 	
-	if (_dataFields == nil)
+	if ( !_dataFields )
 	{
 		_dataFields = [[NSMutableDictionary alloc] init];
 	}
 	
-	if (fieldName == nil)
+	if ( !fieldName )
 	{
-		fieldName = [NSString stringWithFormat:@"emptyfieldname%d", (NSUInteger)[_dataFields count]];
+		fieldName = [NSString stringWithFormat:@"emptyfieldname%u", [_dataFields count]];
 	}
 	
-	if (fileName == nil)
+	if ( !fileName )
 	{
-		fileName = [NSString stringWithFormat:@"emptyfilename%d", (NSUInteger)[_dataFields count]];
+		fileName = [NSString stringWithFormat:@"emptyfilename%u", [_dataFields count]];
 	}
 	
 	NSArray * arr = [NSArray arrayWithObjects:fieldName, fileName, nil];
@@ -47,19 +47,19 @@
 
 - (BOOL) addFieldWithName:(NSString *)fieldName andStringValue:(NSString *)fieldValue
 {
-	if (fieldValue == nil)
+	if ( !fieldValue )
 	{
 		return NO;
 	}
 	
-	if (_textFields == nil)
+	if ( !_textFields )
 	{
 		_textFields = [[NSMutableDictionary alloc] init];
 	}
 	
-	if (fieldName == nil)
+	if ( !fieldName )
 	{
-		fieldName = [NSString stringWithFormat:@"emptyfieldname%d", (NSUInteger)[_textFields count]];
+		fieldName = [NSString stringWithFormat:@"emptyfieldname%u", [_textFields count]];
 	}
 	
 	[_textFields setObject:fieldValue forKey:fieldName];
