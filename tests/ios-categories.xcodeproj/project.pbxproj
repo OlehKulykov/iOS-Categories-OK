@@ -37,9 +37,15 @@
 		3DF03505168ADBDD0056FEDB /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03503168ADBDD0056FEDB /* MachTime.m */; };
 		3DF03508168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03507168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m */; };
 		3DF03509168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03507168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m */; };
-		3DF0350C168AE0810056FEDB /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0350B168AE0810056FEDB /* UIColor+Additions.m */; };
-		3DF0350D168AE0810056FEDB /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0350B168AE0810056FEDB /* UIColor+Additions.m */; };
 		3DF03510168AE4520056FEDB /* UIColorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0350F168AE4520056FEDB /* UIColorTests.m */; };
+		3DF03521168AEE410056FEDB /* NSString+Containes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0351E168AEE410056FEDB /* NSString+Containes.m */; };
+		3DF03522168AEE410056FEDB /* NSString+Containes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0351E168AEE410056FEDB /* NSString+Containes.m */; };
+		3DF03523168AEE410056FEDB /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03520168AEE410056FEDB /* UIColor+Additions.m */; };
+		3DF03524168AEE410056FEDB /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03520168AEE410056FEDB /* UIColor+Additions.m */; };
+		3DF03527168AEFAB0056FEDB /* CLLocation+Distance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03526168AEFAB0056FEDB /* CLLocation+Distance.m */; };
+		3DF03528168AEFAB0056FEDB /* CLLocation+Distance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03526168AEFAB0056FEDB /* CLLocation+Distance.m */; };
+		3DF0352A168AF0FE0056FEDB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF03529168AF0FE0056FEDB /* CoreLocation.framework */; };
+		3DF0352B168AF35A0056FEDB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF03529168AF0FE0056FEDB /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,10 +98,15 @@
 		3DF03503168ADBDD0056FEDB /* MachTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachTime.m; path = ../../common/MachTime.m; sourceTree = "<group>"; };
 		3DF03506168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+SpecialHTMLCharacters.h"; path = "../../NSString+SpecialHTMLCharacters.h"; sourceTree = "<group>"; };
 		3DF03507168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+SpecialHTMLCharacters.m"; path = "../../NSString+SpecialHTMLCharacters.m"; sourceTree = "<group>"; };
-		3DF0350A168AE0810056FEDB /* UIColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additions.h"; sourceTree = "<group>"; };
-		3DF0350B168AE0810056FEDB /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additions.m"; sourceTree = "<group>"; };
 		3DF0350E168AE4520056FEDB /* UIColorTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIColorTests.h; sourceTree = "<group>"; };
 		3DF0350F168AE4520056FEDB /* UIColorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColorTests.m; sourceTree = "<group>"; };
+		3DF0351D168AEE410056FEDB /* NSString+Containes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Containes.h"; path = "../../NSString+Containes.h"; sourceTree = "<group>"; };
+		3DF0351E168AEE410056FEDB /* NSString+Containes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Containes.m"; path = "../../NSString+Containes.m"; sourceTree = "<group>"; };
+		3DF0351F168AEE410056FEDB /* UIColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Additions.h"; path = "../../UIColor+Additions.h"; sourceTree = "<group>"; };
+		3DF03520168AEE410056FEDB /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Additions.m"; path = "../../UIColor+Additions.m"; sourceTree = "<group>"; };
+		3DF03525168AEFAB0056FEDB /* CLLocation+Distance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLLocation+Distance.h"; path = "../../CLLocation+Distance.h"; sourceTree = "<group>"; };
+		3DF03526168AEFAB0056FEDB /* CLLocation+Distance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLLocation+Distance.m"; path = "../../CLLocation+Distance.m"; sourceTree = "<group>"; };
+		3DF03529168AF0FE0056FEDB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DF0352A168AF0FE0056FEDB /* CoreLocation.framework in Frameworks */,
 				3D7E56811684BB8800E3604A /* UIKit.framework in Frameworks */,
 				3D7E56831684BB8800E3604A /* Foundation.framework in Frameworks */,
 				3D7E56851684BB8800E3604A /* CoreGraphics.framework in Frameworks */,
@@ -113,6 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DF0352B168AF35A0056FEDB /* CoreLocation.framework in Frameworks */,
 				3D7E569F1684BB8800E3604A /* SenTestingKit.framework in Frameworks */,
 				3D7E56A01684BB8800E3604A /* UIKit.framework in Frameworks */,
 				3D7E56A11684BB8800E3604A /* Foundation.framework in Frameworks */,
@@ -133,8 +146,12 @@
 				3D00B2F11684BCAC0004D48D /* UITableView+FullContentHeight.m */,
 				3D00B2F21684BCAC0004D48D /* UIView+BackgroundImage.h */,
 				3D00B2F31684BCAC0004D48D /* UIView+BackgroundImage.m */,
-				3DF0350A168AE0810056FEDB /* UIColor+Additions.h */,
-				3DF0350B168AE0810056FEDB /* UIColor+Additions.m */,
+				3DF0351D168AEE410056FEDB /* NSString+Containes.h */,
+				3DF0351E168AEE410056FEDB /* NSString+Containes.m */,
+				3DF0351F168AEE410056FEDB /* UIColor+Additions.h */,
+				3DF03520168AEE410056FEDB /* UIColor+Additions.m */,
+				3DF03525168AEFAB0056FEDB /* CLLocation+Distance.h */,
+				3DF03526168AEFAB0056FEDB /* CLLocation+Distance.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -172,6 +189,7 @@
 		3D7E567F1684BB8800E3604A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3DF03529168AF0FE0056FEDB /* CoreLocation.framework */,
 				3D7E56801684BB8800E3604A /* UIKit.framework */,
 				3D7E56821684BB8800E3604A /* Foundation.framework */,
 				3D7E56841684BB8800E3604A /* CoreGraphics.framework */,
@@ -361,7 +379,9 @@
 				3DF034FE168ADBAB0056FEDB /* RequestGenerator.m in Sources */,
 				3DF03504168ADBDD0056FEDB /* MachTime.m in Sources */,
 				3DF03508168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m in Sources */,
-				3DF0350C168AE0810056FEDB /* UIColor+Additions.m in Sources */,
+				3DF03521168AEE410056FEDB /* NSString+Containes.m in Sources */,
+				3DF03523168AEE410056FEDB /* UIColor+Additions.m in Sources */,
+				3DF03527168AEFAB0056FEDB /* CLLocation+Distance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,8 +399,10 @@
 				3DF034FF168ADBAB0056FEDB /* RequestGenerator.m in Sources */,
 				3DF03505168ADBDD0056FEDB /* MachTime.m in Sources */,
 				3DF03509168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m in Sources */,
-				3DF0350D168AE0810056FEDB /* UIColor+Additions.m in Sources */,
 				3DF03510168AE4520056FEDB /* UIColorTests.m in Sources */,
+				3DF03522168AEE410056FEDB /* NSString+Containes.m in Sources */,
+				3DF03524168AEE410056FEDB /* UIColor+Additions.m in Sources */,
+				3DF03528168AEFAB0056FEDB /* CLLocation+Distance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

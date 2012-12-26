@@ -57,3 +57,32 @@ UIColor * UIColorMakeWithHEX(NSString * hexString)
 	return nil;
 }
 
+
+@implementation UIColor(RGBA)
+
++ (UIColor *) colorWithRedByte:(unsigned char)red 
+					 greenByte:(unsigned char)green 
+					  blueByte:(unsigned char)blue 
+					 alphaByte:(unsigned char)alpha
+{
+	return UIColorMakeWithRGBA(red, green, blue, alpha);
+}
+
++ (UIColor *) colorWithRedByte:(unsigned char)red 
+					 greenByte:(unsigned char)green 
+					  blueByte:(unsigned char)blue
+{
+	return UIColorMakeWithRGB(red, green, blue);
+}
+
++ (UIColor *) colorWithHEXString:(NSString *)hexString
+{
+	return UIColorMakeWithHEX(hexString);
+}
+
+@end
+
+
+
+
+
