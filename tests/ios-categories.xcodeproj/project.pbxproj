@@ -62,6 +62,7 @@
 		3D00B2FA1684BCC90004D48D /* NSArrayTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayTests.h; sourceTree = "<group>"; };
 		3D00B2FB1684BCC90004D48D /* NSArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayTests.m; sourceTree = "<group>"; };
 		3D1C207F168BAFA5008FF58D /* Common+iOSAdditionsConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Common+iOSAdditionsConfig.h"; path = "../../common/Common+iOSAdditionsConfig.h"; sourceTree = "<group>"; };
+		3D1C2081168BBA38008FF58D /* Common+iOSAdditionsPrecompiled.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Common+iOSAdditionsPrecompiled.h"; path = "../../common/Common+iOSAdditionsPrecompiled.h"; sourceTree = "<group>"; };
 		3D55F3901688662300B30D8D /* MachTimeTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MachTimeTests.h; sourceTree = "<group>"; };
 		3D55F3911688662300B30D8D /* MachTimeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MachTimeTests.m; sourceTree = "<group>"; };
 		3D55F39A16886C3F00B30D8D /* CGRectAdditionsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGRectAdditionsTests.h; sourceTree = "<group>"; };
@@ -146,6 +147,7 @@
 				3DF03501168ADBDD0056FEDB /* CustomMath.h */,
 				3DF03502168ADBDD0056FEDB /* MachTime.h */,
 				3DF03503168ADBDD0056FEDB /* MachTime.m */,
+				3D1C2081168BBA38008FF58D /* Common+iOSAdditionsPrecompiled.h */,
 			);
 			name = Common;
 			sourceTree = "<group>";

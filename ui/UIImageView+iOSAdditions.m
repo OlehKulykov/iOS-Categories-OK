@@ -17,7 +17,7 @@
 
 #import "UIImageView+iOSAdditions.h"
 #import <CoreFoundation/CoreFoundation.h>
-
+#import "Common+iOSAdditionsPrecompiled.h"
 
 #ifndef NO_UIImageViewLoadFromURL__IOSADDITIONS__
 
@@ -65,6 +65,7 @@ CG_INLINE NSInvocation * __UIImageViewLoadFromURLInvocation(UIImageView * imageV
 			[indicator startAnimating];
 			
 			[params setObject:indicator forKey:INDICATOR_VIEW_KEY];
+			SAFE_RELEASE(indicator);
 		}
 	}
 	
@@ -156,7 +157,8 @@ CG_INLINE NSInvocation * __UIImageViewLoadFromURLInvocation(UIImageView * imageV
 	
 	NSThread * thread = [[NSThread alloc] initWithTarget:self 
 												selector:@selector(__UIImageViewLoadFromURLThreadMethod:)
-												  object:params];	
+												  object:params];
+	SAFE_AUTORELEASE(thread);
 	[thread setThreadPriority:([[NSThread mainThread] threadPriority] / 2.0)];
 	[thread start];
 	return thread;

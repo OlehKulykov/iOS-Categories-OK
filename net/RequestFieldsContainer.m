@@ -16,7 +16,7 @@
 
 
 #import "RequestFieldsContainer.h"
-
+#import "Common+iOSAdditionsPrecompiled.h"
 
 @implementation RequestFieldsContainer
 
@@ -84,8 +84,8 @@
 
 - (void) clearAllFields
 {
-	_textFields = nil;
-	_dataFields = nil;
+	SAFE_RELEASE(_textFields);
+	SAFE_RELEASE(_dataFields);
 }
 
 - (void)dealloc

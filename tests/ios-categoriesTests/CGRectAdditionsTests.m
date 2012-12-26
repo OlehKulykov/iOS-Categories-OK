@@ -1,7 +1,7 @@
 
 
 #import "CGRectAdditionsTests.h"
-#import "CGRect+Additions.h"
+#import "CGRect+iOSAdditions.h"
 
 
 @implementation CGRectAdditionsTests

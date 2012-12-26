@@ -1,10 +1,10 @@
 
 
 #import "NSArrayTests.h"
-#import "NSArray+StaticInfo.h"
+#import "NSArray+iOSAdditions.h"
 
 @implementation NSArrayTests
-
+ 
 - (void) testArray
 {
 	if ( ![NSArray isEmpty:nil] )
