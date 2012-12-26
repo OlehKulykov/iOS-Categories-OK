@@ -35,6 +35,11 @@
 		3DF034FF168ADBAB0056FEDB /* RequestGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034FB168ADBAB0056FEDB /* RequestGenerator.m */; };
 		3DF03504168ADBDD0056FEDB /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03503168ADBDD0056FEDB /* MachTime.m */; };
 		3DF03505168ADBDD0056FEDB /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03503168ADBDD0056FEDB /* MachTime.m */; };
+		3DF03508168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03507168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m */; };
+		3DF03509168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03507168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m */; };
+		3DF0350C168AE0810056FEDB /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0350B168AE0810056FEDB /* UIColor+Additions.m */; };
+		3DF0350D168AE0810056FEDB /* UIColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0350B168AE0810056FEDB /* UIColor+Additions.m */; };
+		3DF03510168AE4520056FEDB /* UIColorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0350F168AE4520056FEDB /* UIColorTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +90,12 @@
 		3DF03501168ADBDD0056FEDB /* CustomMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomMath.h; path = ../../common/CustomMath.h; sourceTree = "<group>"; };
 		3DF03502168ADBDD0056FEDB /* MachTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachTime.h; path = ../../common/MachTime.h; sourceTree = "<group>"; };
 		3DF03503168ADBDD0056FEDB /* MachTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachTime.m; path = ../../common/MachTime.m; sourceTree = "<group>"; };
+		3DF03506168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+SpecialHTMLCharacters.h"; path = "../../NSString+SpecialHTMLCharacters.h"; sourceTree = "<group>"; };
+		3DF03507168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+SpecialHTMLCharacters.m"; path = "../../NSString+SpecialHTMLCharacters.m"; sourceTree = "<group>"; };
+		3DF0350A168AE0810056FEDB /* UIColor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additions.h"; sourceTree = "<group>"; };
+		3DF0350B168AE0810056FEDB /* UIColor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additions.m"; sourceTree = "<group>"; };
+		3DF0350E168AE4520056FEDB /* UIColorTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIColorTests.h; sourceTree = "<group>"; };
+		3DF0350F168AE4520056FEDB /* UIColorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColorTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,12 +125,16 @@
 		3D00B2EC1684BC9D0004D48D /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				3DF03506168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.h */,
+				3DF03507168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m */,
 				3D00B2EE1684BCAC0004D48D /* NSArray+StaticInfo.h */,
 				3D00B2EF1684BCAC0004D48D /* NSArray+StaticInfo.m */,
 				3D00B2F01684BCAC0004D48D /* UITableView+FullContentHeight.h */,
 				3D00B2F11684BCAC0004D48D /* UITableView+FullContentHeight.m */,
 				3D00B2F21684BCAC0004D48D /* UIView+BackgroundImage.h */,
 				3D00B2F31684BCAC0004D48D /* UIView+BackgroundImage.m */,
+				3DF0350A168AE0810056FEDB /* UIColor+Additions.h */,
+				3DF0350B168AE0810056FEDB /* UIColor+Additions.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -201,6 +216,8 @@
 				3D55F3911688662300B30D8D /* MachTimeTests.m */,
 				3D55F39A16886C3F00B30D8D /* CGRectAdditionsTests.h */,
 				3D55F39B16886C3F00B30D8D /* CGRectAdditionsTests.m */,
+				3DF0350E168AE4520056FEDB /* UIColorTests.h */,
+				3DF0350F168AE4520056FEDB /* UIColorTests.m */,
 				3D7E56A51684BB8800E3604A /* Supporting Files */,
 			);
 			path = "ios-categoriesTests";
@@ -343,6 +360,8 @@
 				3DF034FC168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */,
 				3DF034FE168ADBAB0056FEDB /* RequestGenerator.m in Sources */,
 				3DF03504168ADBDD0056FEDB /* MachTime.m in Sources */,
+				3DF03508168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m in Sources */,
+				3DF0350C168AE0810056FEDB /* UIColor+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +378,9 @@
 				3DF034FD168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */,
 				3DF034FF168ADBAB0056FEDB /* RequestGenerator.m in Sources */,
 				3DF03505168ADBDD0056FEDB /* MachTime.m in Sources */,
+				3DF03509168ADE4F0056FEDB /* NSString+SpecialHTMLCharacters.m in Sources */,
+				3DF0350D168AE0810056FEDB /* UIColor+Additions.m in Sources */,
+				3DF03510168AE4520056FEDB /* UIColorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

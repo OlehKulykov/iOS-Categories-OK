@@ -8,9 +8,23 @@
 
 - (void) testTime
 {
-	NSTimeInterval currentTime = GetMachTime();
-	
-	currentTime = GetMachTime();
+	@try 
+	{
+		NSTimeInterval currentTime = GetMachTime();
+		[NSThread sleepForTimeInterval:1.0 / 1000.0];
+		if ( currentTime >= GetMachTime() ) 
+		{
+			STFail(@"MachTimeTests: current time calculation not correct.");
+		}
+	}
+	@catch (NSException *exception) 
+	{
+		STFail(@"MachTimeTests: exception on mach time.");
+	}
+	@finally 
+	{
+		
+	}
 }
 
 @end

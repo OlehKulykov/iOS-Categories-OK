@@ -4,7 +4,7 @@
 
 @implementation UITableView(FullContentHeight)
 
-static CGFloat tableViewContentHeight(UITableView * tableView)
+static CGFloat __GetFullContentHeightOfUITableView(UITableView * tableView)
 {
 	if ([tableView dataSource] == nil) return 0.0f;
 	
@@ -27,7 +27,7 @@ static CGFloat tableViewContentHeight(UITableView * tableView)
 
 - (CGFloat) fullContentHeight
 {
-	return tableViewContentHeight(self);
+	return __GetFullContentHeightOfUITableView(self);
 }
 
 
