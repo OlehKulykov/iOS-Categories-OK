@@ -15,9 +15,9 @@
  */
 
 
-#import "UITableView+iOSAdditions.h"
+#import "UITableView+okCategory.h"
 
-#ifndef NO_UITableViewFullContentHeight__IOSADDITIONS__
+#ifndef NO_UITableViewFullContentHeight_OK_CATEGORY
 
 @implementation UITableView(FullContentHeight)
 

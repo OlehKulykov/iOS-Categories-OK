@@ -15,19 +15,44 @@
  */
 
 
-#import "UIView+iOSAdditions.h"
-#import <QuartzCore/QuartzCore.h>
+#import "Foundation+okCategoryConfig.h"
+#import <Foundation/Foundation.h>
 
-#ifndef NO_UIViewBackgroundImage__IOSADDITIONS__
+#ifndef NO_NSStringContaines_OK_CATEGORY
 
-@implementation UIView (BackgroundImage)
+@interface NSString (Containes)
 
-- (void) setBackgroundImage:(UIImage *)backgroundImage
-{
-	CALayer * layer = [self layer];
-	[layer setContents:(id)[backgroundImage CGImage]];
-}
+- (BOOL) isContainesSubstring:(NSString *)subString;
 
 @end
 
 #endif
+
+
+#ifndef NO_NSStringSpecialHTMLCharacters_OK_CATEGORY
+
+@interface NSString (SpecialHTMLCharacters)
+
+
+- (NSString *) stringByDecodeSpecialHTMLCharacters;
+
+- (NSString *) stringByEncodeSpecialHTMLCharacters;
+
+
+@end
+
+#endif
+
+
+#ifndef NO_NSStringSystemPaths_OK_CATEGORY
+
+@interface NSString (SystemPaths)
+
++ (NSString *) userDocumentPath;
+
++ (NSString *) userCachePath;
+
+@end
+
+#endif
+

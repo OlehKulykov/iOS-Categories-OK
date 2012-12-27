@@ -15,11 +15,12 @@
  */
 
 
+#import "UI+okCategoryConfig.h"
+
+#ifndef NO_UIColorRGBA_OK_CATEGORY
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "UI+iOSAdditionsConfig.h"
-
-#ifndef NO_UIColorRGBA__IOSADDITIONS__
 
 UIColor * UIColorMakeWithRGB(unsigned char red,
 							 unsigned char green,

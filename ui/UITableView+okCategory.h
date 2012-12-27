@@ -15,15 +15,17 @@
  */
 
 
+#import "UI+okCategoryConfig.h"
+
+#ifndef NO_UITableViewFullContentHeight_OK_CATEGORY
+
 #import <UIKit/UIKit.h>
-#import "UI+iOSAdditionsConfig.h"
 
-#ifndef NO_UIViewBackgroundImage__IOSADDITIONS__
+@interface UITableView (FullContentHeight)
 
-@interface UIView (BackgroundImage)
-
-/// Sets background view color as image. Image scales to content.
-- (void) setBackgroundImage:(UIImage *)backgroundImage;
+/// Return full table view content height by
+/// calculating height of each cell
+- (CGFloat) fullContentHeight;
 
 @end
 

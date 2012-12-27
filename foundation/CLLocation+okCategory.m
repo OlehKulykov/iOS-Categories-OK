@@ -15,11 +15,12 @@
  */
 
 
-#import "CLLocation+iOSAdditions.h"
+#import "CLLocation+okCategory.h"
+
+#ifndef NO_CLLocationDistancePrevTo_iOS_3_2_OK_CATEGORY
+
 #import "CustomMath.h"
 #include <math.h>
-
-#ifndef NO_CLLocationDistancePrevTo_iOS_3_2__IOSADDITIONS__
 
 CLLocationDistance GetDistanceBetweenCoordinates(const CLLocationCoordinate2D firstCoord, 
 												 const CLLocationCoordinate2D secondCoord)

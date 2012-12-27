@@ -15,10 +15,11 @@
  */
 
 
-#import <Foundation/Foundation.h>
-#import "Foundation+iOSAdditionsConfig.h"
+#import "Foundation+okCategoryConfig.h"
 
-#ifndef NO_NSArrayStaticInfo__IOSADDITIONS__
+#ifndef NO_NSArrayStaticInfo_OK_CATEGORY
+
+#import <Foundation/Foundation.h>
 
 @interface NSArray (StaticInfo)
 

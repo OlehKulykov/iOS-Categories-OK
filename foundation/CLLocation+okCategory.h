@@ -15,11 +15,12 @@
  */
 
 
+#import "Foundation+okCategoryConfig.h"
+
+#ifndef NO_CLLocationDistancePrevTo_iOS_3_2_OK_CATEGORY
+
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "Foundation+iOSAdditionsConfig.h"
-
-#ifndef NO_CLLocationDistancePrevTo_iOS_3_2__IOSADDITIONS__
 
 CLLocationDistance GetDistanceBetweenCoordinates(const CLLocationCoordinate2D firstCoord, 
 												 const CLLocationCoordinate2D secondCoord);

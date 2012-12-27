@@ -15,10 +15,11 @@
  */
 
 
-#import <Foundation/Foundation.h>
-#import "UI+iOSAdditionsConfig.h"
+#import "UI+okCategoryConfig.h"
 
-#ifndef NO_UIImageViewLoadFromURL__IOSADDITIONS__
+#ifndef NO_UIImageViewLoadFromURL_OK_CATEGORY
+
+#import <Foundation/Foundation.h>
 
 @interface UIImageView (LoadFromURL)
 

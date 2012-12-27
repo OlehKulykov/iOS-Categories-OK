@@ -1,0 +1,10 @@
+
+
+#ifndef __COMMON_OK_CATEGORYCONFIG_H__
+#define __COMMON_OK_CATEGORYCONFIG_H__
+
+
+//#define NO_MACHTIME_OK_CATEGORY
+
+
+#endif

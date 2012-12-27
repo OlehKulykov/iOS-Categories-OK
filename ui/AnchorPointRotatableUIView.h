@@ -15,18 +15,12 @@
  */
 
 
-#import "Common+okCategoryConfig.h"
+#import <UIKit/UIKit.h>
 
-#ifndef __MACHTIME_H__
-#define __MACHTIME_H__
+@interface AnchorPointRotatableUIView : UIView
 
-#ifndef NO_MACHTIME_OK_CATEGORY
+/// Rotates view layer by angle in radians using anchor point coordinates
+/// in view coordinate system e.g. point inside view bounds
+- (void) rotateByAngle:(CGFloat)radianAngle withAnchorPoint:(CGPoint)anchorPoint;
 
-#import <Foundation/Foundation.h>
-
-/// Return current mach time in seconds.
-NSTimeInterval GetMachTime();
-
-#endif
-
-#endif
+@end

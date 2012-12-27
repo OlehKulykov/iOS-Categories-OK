@@ -15,11 +15,10 @@
  */
 
 
+#ifndef __CGRECT_OK_CATEGORY_H__
+#define __CGRECT_OK_CATEGORY_H__
+
 #import <CoreGraphics/CoreGraphics.h>
-
-#ifndef __CGRECT_IOSADDITIONS_H__
-#define __CGRECT_IOSADDITIONS_H__
-
 
 CG_INLINE CGRect CGRectSetTopRightOrigin(const CGRect rectangle,
 										 const CGFloat topRightX,

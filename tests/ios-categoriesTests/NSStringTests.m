@@ -1,7 +1,7 @@
 
 
 #import "NSStringTests.h"
-#import "NSString+iOSAdditions.h"
+#import "NSString+okCategory.h"
 
 @implementation NSStringTests
 

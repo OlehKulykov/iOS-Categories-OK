@@ -19,6 +19,7 @@
 #define __CUSTOMMATH_H__
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 /// 180/pi
 #ifndef MATH_RADIAN
@@ -54,14 +55,14 @@
 
 
 /// Returns distance between two float values.
-static inline CGFloat DistanceBetweenFloatValues(const CGFloat firstValue, const CGFloat secondValue)
+CG_INLINE CGFloat DistanceBetweenFloatValues(const CGFloat firstValue, const CGFloat secondValue)
 {
 	const CGFloat subResult = firstValue - secondValue;
 	return ABS(subResult);
 }
 
 /// Returns distance between two points.
-static inline CGFloat AngleBetweenPoints(const CGPoint first, const CGPoint second)
+CG_INLINE CGFloat AngleBetweenPoints(const CGPoint first, const CGPoint second)
 {
 	const CGFloat dx = first.x - second.x;
 	const CGFloat dy = first.y - second.y;

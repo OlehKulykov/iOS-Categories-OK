@@ -15,42 +15,15 @@
  */
 
 
-#import <Foundation/Foundation.h>
-#import "Foundation+iOSAdditionsConfig.h"
+#import "UI+okCategoryConfig.h"
+#import <UIKit/UIKit.h>
 
-#ifndef NO_NSStringContaines__IOSADDITIONS__
+#ifndef NO_UIViewBackgroundImage_OK_CATEGORY
 
-@interface NSString (Containes)
+@interface UIView (BackgroundImage)
 
-- (BOOL) isContainesSubstring:(NSString *)subString;
-
-@end
-
-#endif
-
-
-#ifndef NO_NSStringSpecialHTMLCharacters__IOSADDITIONS__
-
-@interface NSString (SpecialHTMLCharacters)
-
-
-- (NSString *) stringByDecodeSpecialHTMLCharacters;
-
-- (NSString *) stringByEncodeSpecialHTMLCharacters;
-
-
-@end
-
-#endif
-
-
-#ifndef NO_NSStringSystemPaths__IOSADDITIONS__
-
-@interface NSString (SystemPaths)
-
-+ (NSString *) userDocumentPath;
-
-+ (NSString *) userCachePath;
+/// Sets background view color as image. Image scales to content.
+- (void) setBackgroundImage:(UIImage *)backgroundImage;
 
 @end
 

@@ -1,7 +1,7 @@
 
 
 #import "CGRectAdditionsTests.h"
-#import "CGRect+iOSAdditions.h"
+#import "CGRect+okCategory.h"
 
 
 @implementation CGRectAdditionsTests
