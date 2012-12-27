@@ -36,8 +36,11 @@
 /// Add binary data field
 - (BOOL) addFieldWithName:(NSString *)fieldName data:(NSData *)data andFileName:(NSString *)fileName;
 
-/// Add text fields
+/// Add text field
 - (BOOL) addFieldWithName:(NSString *)fieldName andStringValue:(NSString *)fieldValue;
+
+/// Add field array with array of values
+- (BOOL) addArrayFieldWithName:(NSString *)fieldName andValues:(NSArray *)fieldValues;
 
 
 @end

@@ -35,6 +35,8 @@
 		3DF03510168AE4520056FEDB /* UIColorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0350F168AE4520056FEDB /* UIColorTests.m */; };
 		3DF0352A168AF0FE0056FEDB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF03529168AF0FE0056FEDB /* CoreLocation.framework */; };
 		3DF0352B168AF35A0056FEDB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF03529168AF0FE0056FEDB /* CoreLocation.framework */; };
+		3DF0CDA4168C73BC003BFD79 /* JSONObjectToNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0CDA3168C73BC003BFD79 /* JSONObjectToNative.m */; };
+		3DF0CDA5168C73BC003BFD79 /* JSONObjectToNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0CDA3168C73BC003BFD79 /* JSONObjectToNative.m */; };
 		3DFE0235168BA11600B080FE /* CLLocation+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE022E168BA11600B080FE /* CLLocation+okCategory.m */; };
 		3DFE0236168BA11600B080FE /* CLLocation+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE022E168BA11600B080FE /* CLLocation+okCategory.m */; };
 		3DFE0237168BA11600B080FE /* NSArray+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0230168BA11600B080FE /* NSArray+okCategory.m */; };
@@ -102,6 +104,8 @@
 		3DF0350E168AE4520056FEDB /* UIColorTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIColorTests.h; sourceTree = "<group>"; };
 		3DF0350F168AE4520056FEDB /* UIColorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColorTests.m; sourceTree = "<group>"; };
 		3DF03529168AF0FE0056FEDB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		3DF0CDA2168C73BC003BFD79 /* JSONObjectToNative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONObjectToNative.h; path = ../../common/JSONObjectToNative.h; sourceTree = "<group>"; };
+		3DF0CDA3168C73BC003BFD79 /* JSONObjectToNative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONObjectToNative.m; path = ../../common/JSONObjectToNative.m; sourceTree = "<group>"; };
 		3DFE022D168BA11600B080FE /* CLLocation+okCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLLocation+okCategory.h"; path = "../../foundation/CLLocation+okCategory.h"; sourceTree = "<group>"; };
 		3DFE022E168BA11600B080FE /* CLLocation+okCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLLocation+okCategory.m"; path = "../../foundation/CLLocation+okCategory.m"; sourceTree = "<group>"; };
 		3DFE022F168BA11600B080FE /* NSArray+okCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+okCategory.h"; path = "../../foundation/NSArray+okCategory.h"; sourceTree = "<group>"; };
@@ -161,6 +165,8 @@
 				3D1C207F168BAFA5008FF58D /* Common+okCategoryConfig.h */,
 				3DF03500168ADBDD0056FEDB /* CGRect+okCategory.h */,
 				3DF03501168ADBDD0056FEDB /* CustomMath.h */,
+				3DF0CDA2168C73BC003BFD79 /* JSONObjectToNative.h */,
+				3DF0CDA3168C73BC003BFD79 /* JSONObjectToNative.m */,
 				3DF03502168ADBDD0056FEDB /* MachTime.h */,
 				3DF03503168ADBDD0056FEDB /* MachTime.m */,
 				3D1C2081168BBA38008FF58D /* Common+okCategoryPrecompiled.h */,
@@ -419,6 +425,7 @@
 				3DFE024A168BA12400B080FE /* UITableView+okCategory.m in Sources */,
 				3DFE024C168BA12400B080FE /* UIView+okCategory.m in Sources */,
 				3D0A1C11168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m in Sources */,
+				3DF0CDA4168C73BC003BFD79 /* JSONObjectToNative.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +449,7 @@
 				3DFE024D168BA12400B080FE /* UIView+okCategory.m in Sources */,
 				3D354BF5168BDCAF00BB6F9B /* NSStringTests.m in Sources */,
 				3D0A1C12168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m in Sources */,
+				3DF0CDA5168C73BC003BFD79 /* JSONObjectToNative.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

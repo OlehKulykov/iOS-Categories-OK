@@ -82,6 +82,29 @@
 	return YES;
 }
 
+/// Add field array with array of values
+- (BOOL) addArrayFieldWithName:(NSString *)fieldName andValues:(NSArray *)fieldValues
+{
+	if ( !fieldValues )
+	{
+		return NO;
+	}
+	
+	if ( !fieldName )
+	{
+		fieldName = [NSString stringWithFormat:@"emptyfieldname%u", [_textFields count]];
+	}
+		
+	if ( !_textFields )
+	{
+		_textFields = [[NSMutableDictionary alloc] init];
+	}
+		
+	[_textFields setObject:fieldValues forKey:[fieldName stringByAppendingString:@"[]"]];
+	
+	return YES;
+}
+
 - (void) clearAllFields
 {
 	SAFE_RELEASE(_textFields);

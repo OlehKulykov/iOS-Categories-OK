@@ -32,23 +32,25 @@
 {
 	if (_textFields)
 	{
-		NSString * postString = @"";
+		NSMutableString * postString = [NSMutableString string];
 		BOOL isFirstParam = YES;
 		NSArray * allKeys = [_textFields allKeys];
 		for (NSString * keyString in allKeys)
 		{
-			NSString * formatString = nil;
-			if (isFirstParam)
+			id value = [_textFields objectForKey:keyString];
+			if ([value isKindOfClass:[NSString class]]) 
 			{
-				formatString = @"%@=%@";
+				[postString appendFormat:isFirstParam ? @"%@=%@" : @"&%@=%@", keyString, (NSString *)value];
 				isFirstParam = NO;
 			}
-			else
+			else if ([value isKindOfClass:[NSArray class]])
 			{
-				formatString = @"&%@=%@";
+				for (id subValue in (NSArray *)value) 
+				{
+					[postString appendFormat:isFirstParam ? @"%@=%@" : @"&%@=%@", keyString, [subValue description]];
+					isFirstParam = NO;
+				}
 			}
-			NSString * valueString = [_textFields objectForKey:keyString];
-			postString = [postString stringByAppendingFormat:formatString, keyString, valueString];
 		}
 		return postString;
 	}
@@ -84,7 +86,7 @@
 	[request addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField: @"Content-Type"];
 	[request setCachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData];
 	
-	[request setValue:[NSString stringWithFormat:@"%d", (NSUInteger)[postData length]] forHTTPHeaderField:@"Content-Length"];
+	[request setValue:[NSString stringWithFormat:@"%u", [postData length]] forHTTPHeaderField:@"Content-Length"];
 	
 	[request setHTTPBody:postData];
 	
