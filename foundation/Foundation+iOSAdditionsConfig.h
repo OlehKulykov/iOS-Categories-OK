@@ -11,4 +11,7 @@
 
 //#define NO_NSStringSpecialHTMLCharacters__IOSADDITIONS__
 
+//#define NO_NSStringSystemPaths__IOSADDITIONS__
+
+
 #endif

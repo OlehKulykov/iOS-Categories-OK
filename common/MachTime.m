@@ -29,7 +29,7 @@ typedef struct __machTimeStruct
 	long double nanoSecond;
 } __MachTimeStruct;
 
-void __InitMachTimeStruct(__MachTimeStruct * timeStruct)
+static void __InitMachTimeStruct(__MachTimeStruct * timeStruct)
 {
 	mach_timebase_info_data_t info = { 0 };
 	if (mach_timebase_info(&info) == KERN_SUCCESS && info.denom)

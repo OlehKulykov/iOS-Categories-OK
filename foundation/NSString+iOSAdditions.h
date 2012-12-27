@@ -42,3 +42,17 @@
 @end
 
 #endif
+
+
+#ifndef NO_NSStringSystemPaths__IOSADDITIONS__
+
+@interface NSString (SystemPaths)
+
++ (NSString *) userDocumentPath;
+
++ (NSString *) userCachePath;
+
+@end
+
+#endif
+

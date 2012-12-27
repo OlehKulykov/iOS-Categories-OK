@@ -8,7 +8,7 @@
 
 - (void) testOrigin
 {
-	//TODO:
+	
 }
 
 @end

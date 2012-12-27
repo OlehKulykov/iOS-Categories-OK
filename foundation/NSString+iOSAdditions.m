@@ -360,3 +360,53 @@ static __NSStringSpecialHTMLCharactersStruct * NSStringSpecialHTMLCharactersTabl
 
 #endif
 
+
+#ifndef NO_NSStringSystemPaths__IOSADDITIONS__
+
+#import <CoreFoundation/CoreFoundation.h>
+#include <unistd.h>
+#include <sys/stat.h>
+
+static NSString * __NSStringSystemPathsGetFirstPathFromArray(NSArray * pathsArray)
+{
+	if ([pathsArray count]) 
+	{
+		NSString * path = [pathsArray objectAtIndex:0];
+		const char * utf8Path = [path UTF8String];
+		if ( !utf8Path ) 
+		{
+			return nil;
+		}
+		
+		if (access(utf8Path, R_OK | W_OK | F_OK) == 0) 
+		{
+			return path;
+		}
+		else if (mkdir(utf8Path, 644) == 0)
+		{
+			return path;
+		}
+	}
+	return nil;
+}
+
+@implementation NSString (SystemPaths)
+
++ (NSString *) userDocumentPath
+{
+	NSArray * pathsArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	return __NSStringSystemPathsGetFirstPathFromArray(pathsArray);
+}
+
++ (NSString *) userCachePath
+{
+	NSArray * pathsArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+	return __NSStringSystemPathsGetFirstPathFromArray(pathsArray);
+}
+
+@end
+
+#endif
+
+
+
