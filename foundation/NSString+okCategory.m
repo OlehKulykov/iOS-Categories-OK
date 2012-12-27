@@ -373,18 +373,16 @@ static NSString * __NSStringSystemPathsGetFirstPathFromArray(NSArray * pathsArra
 	{
 		NSString * path = [pathsArray objectAtIndex:0];
 		const char * utf8Path = [path UTF8String];
-		if ( !utf8Path ) 
+		if (utf8Path) 
 		{
-			return nil;
-		}
-		
-		if (access(utf8Path, R_OK | W_OK | F_OK) == 0) 
-		{
-			return path;
-		}
-		else if (mkdir(utf8Path, 644) == 0)
-		{
-			return path;
+			if (access(utf8Path, R_OK | W_OK | F_OK) == 0) 
+			{
+				return path;
+			}
+			else if (mkdir(utf8Path, 644) == 0)
+			{
+				return path;
+			}
 		}
 	}
 	return nil;
