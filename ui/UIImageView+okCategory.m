@@ -17,7 +17,7 @@
 
 #import "UIImageView+okCategory.h"
 #import <CoreFoundation/CoreFoundation.h>
-#import "Common+okCategoryPrecompiled.h"
+#import "../common/Common+okCategoryPrecompiled.h"
 
 #ifndef NO_UIImageViewLoadFromURL_OK_CATEGORY
 

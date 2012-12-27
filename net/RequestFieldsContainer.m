@@ -16,7 +16,7 @@
 
 
 #import "RequestFieldsContainer.h"
-#import "Common+okCategoryPrecompiled.h"
+#import "../common/Common+okCategoryPrecompiled.h"
 
 @implementation RequestFieldsContainer
 

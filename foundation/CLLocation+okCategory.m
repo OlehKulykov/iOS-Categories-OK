@@ -19,7 +19,7 @@
 
 #ifndef NO_CLLocationDistancePrevTo_iOS_3_2_OK_CATEGORY
 
-#import "CustomMath.h"
+#import "../common/CustomMath.h"
 #include <math.h>
 
 CLLocationDistance GetDistanceBetweenCoordinates(const CLLocationCoordinate2D firstCoord, 
