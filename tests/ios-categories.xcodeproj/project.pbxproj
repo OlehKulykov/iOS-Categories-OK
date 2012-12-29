@@ -11,8 +11,8 @@
 		3D0A1C11168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0A1C10168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m */; };
 		3D0A1C12168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0A1C10168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m */; };
 		3D354BF5168BDCAF00BB6F9B /* NSStringTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D354BF4168BDCAF00BB6F9B /* NSStringTests.m */; };
-		3D3556FF168C952E00D4462E /* NSData+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3556FE168C952E00D4462E /* NSData+okCategory.m */; };
-		3D355700168C952E00D4462E /* NSData+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3556FE168C952E00D4462E /* NSData+okCategory.m */; };
+		3D3556FF168C952E00D4462E /* NSData+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3556FE168C952E00D4462E /* NSData+CategoryOK.m */; };
+		3D355700168C952E00D4462E /* NSData+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3556FE168C952E00D4462E /* NSData+CategoryOK.m */; };
 		3D4EE612168C9BD60067F698 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4EE611168C9BD60067F698 /* libz.dylib */; };
 		3D4EE614168C9BDC0067F698 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4EE611168C9BD60067F698 /* libz.dylib */; };
 		3D4EE615168C9D170067F698 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7E56921684BB8800E3604A /* Default.png */; };
@@ -46,20 +46,20 @@
 		3DF0352B168AF35A0056FEDB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF03529168AF0FE0056FEDB /* CoreLocation.framework */; };
 		3DF0CDA4168C73BC003BFD79 /* JSONObjectToNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0CDA3168C73BC003BFD79 /* JSONObjectToNative.m */; };
 		3DF0CDA5168C73BC003BFD79 /* JSONObjectToNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0CDA3168C73BC003BFD79 /* JSONObjectToNative.m */; };
-		3DFE0235168BA11600B080FE /* CLLocation+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE022E168BA11600B080FE /* CLLocation+okCategory.m */; };
-		3DFE0236168BA11600B080FE /* CLLocation+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE022E168BA11600B080FE /* CLLocation+okCategory.m */; };
-		3DFE0237168BA11600B080FE /* NSArray+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0230168BA11600B080FE /* NSArray+okCategory.m */; };
-		3DFE0238168BA11600B080FE /* NSArray+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0230168BA11600B080FE /* NSArray+okCategory.m */; };
-		3DFE0239168BA11600B080FE /* NSString+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0232168BA11600B080FE /* NSString+okCategory.m */; };
-		3DFE023A168BA11600B080FE /* NSString+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0232168BA11600B080FE /* NSString+okCategory.m */; };
-		3DFE0246168BA12400B080FE /* UIColor+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE023F168BA12400B080FE /* UIColor+okCategory.m */; };
-		3DFE0247168BA12400B080FE /* UIColor+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE023F168BA12400B080FE /* UIColor+okCategory.m */; };
-		3DFE0248168BA12400B080FE /* UIImageView+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0241168BA12400B080FE /* UIImageView+okCategory.m */; };
-		3DFE0249168BA12400B080FE /* UIImageView+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0241168BA12400B080FE /* UIImageView+okCategory.m */; };
-		3DFE024A168BA12400B080FE /* UITableView+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0243168BA12400B080FE /* UITableView+okCategory.m */; };
-		3DFE024B168BA12400B080FE /* UITableView+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0243168BA12400B080FE /* UITableView+okCategory.m */; };
-		3DFE024C168BA12400B080FE /* UIView+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0245168BA12400B080FE /* UIView+okCategory.m */; };
-		3DFE024D168BA12400B080FE /* UIView+okCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0245168BA12400B080FE /* UIView+okCategory.m */; };
+		3DFE0235168BA11600B080FE /* CLLocation+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE022E168BA11600B080FE /* CLLocation+CategoryOK.m */; };
+		3DFE0236168BA11600B080FE /* CLLocation+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE022E168BA11600B080FE /* CLLocation+CategoryOK.m */; };
+		3DFE0237168BA11600B080FE /* NSArray+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0230168BA11600B080FE /* NSArray+CategoryOK.m */; };
+		3DFE0238168BA11600B080FE /* NSArray+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0230168BA11600B080FE /* NSArray+CategoryOK.m */; };
+		3DFE0239168BA11600B080FE /* NSString+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0232168BA11600B080FE /* NSString+CategoryOK.m */; };
+		3DFE023A168BA11600B080FE /* NSString+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0232168BA11600B080FE /* NSString+CategoryOK.m */; };
+		3DFE0246168BA12400B080FE /* UIColor+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE023F168BA12400B080FE /* UIColor+CategoryOK.m */; };
+		3DFE0247168BA12400B080FE /* UIColor+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE023F168BA12400B080FE /* UIColor+CategoryOK.m */; };
+		3DFE0248168BA12400B080FE /* UIImageView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0241168BA12400B080FE /* UIImageView+CategoryOK.m */; };
+		3DFE0249168BA12400B080FE /* UIImageView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0241168BA12400B080FE /* UIImageView+CategoryOK.m */; };
+		3DFE024A168BA12400B080FE /* UITableView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0243168BA12400B080FE /* UITableView+CategoryOK.m */; };
+		3DFE024B168BA12400B080FE /* UITableView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0243168BA12400B080FE /* UITableView+CategoryOK.m */; };
+		3DFE024C168BA12400B080FE /* UIView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0245168BA12400B080FE /* UIView+CategoryOK.m */; };
+		3DFE024D168BA12400B080FE /* UIView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0245168BA12400B080FE /* UIView+CategoryOK.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,12 +77,12 @@
 		3D00B2FB1684BCC90004D48D /* NSArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayTests.m; sourceTree = "<group>"; };
 		3D0A1C0F168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnchorPointRotatableUIView.h; path = ../../derived/AnchorPointRotatableUIView.h; sourceTree = "<group>"; };
 		3D0A1C10168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnchorPointRotatableUIView.m; path = ../../derived/AnchorPointRotatableUIView.m; sourceTree = "<group>"; };
-		3D1C207F168BAFA5008FF58D /* Common+okCategoryConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Common+okCategoryConfig.h"; path = "../../common/Common+okCategoryConfig.h"; sourceTree = "<group>"; };
-		3D1C2081168BBA38008FF58D /* Common+okCategoryPrecompiled.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Common+okCategoryPrecompiled.h"; path = "../../common/Common+okCategoryPrecompiled.h"; sourceTree = "<group>"; };
+		3D1C207F168BAFA5008FF58D /* Common+CategoryOKConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Common+CategoryOKConfig.h"; path = "../../common/Common+CategoryOKConfig.h"; sourceTree = "<group>"; };
+		3D1C2081168BBA38008FF58D /* Common+CategoryOKPrecompiled.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Common+CategoryOKPrecompiled.h"; path = "../../common/Common+CategoryOKPrecompiled.h"; sourceTree = "<group>"; };
 		3D354BF3168BDCAF00BB6F9B /* NSStringTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringTests.h; sourceTree = "<group>"; };
 		3D354BF4168BDCAF00BB6F9B /* NSStringTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringTests.m; sourceTree = "<group>"; };
-		3D3556FD168C952E00D4462E /* NSData+okCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+okCategory.h"; path = "../../foundation/NSData+okCategory.h"; sourceTree = "<group>"; };
-		3D3556FE168C952E00D4462E /* NSData+okCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+okCategory.m"; path = "../../foundation/NSData+okCategory.m"; sourceTree = "<group>"; };
+		3D3556FD168C952E00D4462E /* NSData+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+CategoryOK.h"; path = "../../foundation/NSData+CategoryOK.h"; sourceTree = "<group>"; };
+		3D3556FE168C952E00D4462E /* NSData+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+CategoryOK.m"; path = "../../foundation/NSData+CategoryOK.m"; sourceTree = "<group>"; };
 		3D4EE611168C9BD60067F698 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3D4EE618168C9D2F0067F698 /* NSDataTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataTests.h; sourceTree = "<group>"; };
 		3D4EE619168C9D2F0067F698 /* NSDataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataTests.m; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 		3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequestFieldsContainer.m; path = ../../net/RequestFieldsContainer.m; sourceTree = "<group>"; };
 		3DF034FA168ADBAB0056FEDB /* RequestGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestGenerator.h; path = ../../net/RequestGenerator.h; sourceTree = "<group>"; };
 		3DF034FB168ADBAB0056FEDB /* RequestGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequestGenerator.m; path = ../../net/RequestGenerator.m; sourceTree = "<group>"; };
-		3DF03500168ADBDD0056FEDB /* CGRect+okCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CGRect+okCategory.h"; path = "../../common/CGRect+okCategory.h"; sourceTree = "<group>"; };
+		3DF03500168ADBDD0056FEDB /* CGRect+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CGRect+CategoryOK.h"; path = "../../common/CGRect+CategoryOK.h"; sourceTree = "<group>"; };
 		3DF03501168ADBDD0056FEDB /* CustomMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomMath.h; path = ../../common/CustomMath.h; sourceTree = "<group>"; };
 		3DF03502168ADBDD0056FEDB /* MachTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachTime.h; path = ../../common/MachTime.h; sourceTree = "<group>"; };
 		3DF03503168ADBDD0056FEDB /* MachTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachTime.m; path = ../../common/MachTime.m; sourceTree = "<group>"; };
@@ -120,22 +120,22 @@
 		3DF03529168AF0FE0056FEDB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3DF0CDA2168C73BC003BFD79 /* JSONObjectToNative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONObjectToNative.h; path = ../../common/JSONObjectToNative.h; sourceTree = "<group>"; };
 		3DF0CDA3168C73BC003BFD79 /* JSONObjectToNative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONObjectToNative.m; path = ../../common/JSONObjectToNative.m; sourceTree = "<group>"; };
-		3DFE022D168BA11600B080FE /* CLLocation+okCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLLocation+okCategory.h"; path = "../../foundation/CLLocation+okCategory.h"; sourceTree = "<group>"; };
-		3DFE022E168BA11600B080FE /* CLLocation+okCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLLocation+okCategory.m"; path = "../../foundation/CLLocation+okCategory.m"; sourceTree = "<group>"; };
-		3DFE022F168BA11600B080FE /* NSArray+okCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+okCategory.h"; path = "../../foundation/NSArray+okCategory.h"; sourceTree = "<group>"; };
-		3DFE0230168BA11600B080FE /* NSArray+okCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+okCategory.m"; path = "../../foundation/NSArray+okCategory.m"; sourceTree = "<group>"; };
-		3DFE0231168BA11600B080FE /* NSString+okCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+okCategory.h"; path = "../../foundation/NSString+okCategory.h"; sourceTree = "<group>"; };
-		3DFE0232168BA11600B080FE /* NSString+okCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+okCategory.m"; path = "../../foundation/NSString+okCategory.m"; sourceTree = "<group>"; };
-		3DFE023E168BA12400B080FE /* UIColor+okCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+okCategory.h"; path = "../../ui/UIColor+okCategory.h"; sourceTree = "<group>"; };
-		3DFE023F168BA12400B080FE /* UIColor+okCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+okCategory.m"; path = "../../ui/UIColor+okCategory.m"; sourceTree = "<group>"; };
-		3DFE0240168BA12400B080FE /* UIImageView+okCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+okCategory.h"; path = "../../ui/UIImageView+okCategory.h"; sourceTree = "<group>"; };
-		3DFE0241168BA12400B080FE /* UIImageView+okCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+okCategory.m"; path = "../../ui/UIImageView+okCategory.m"; sourceTree = "<group>"; };
-		3DFE0242168BA12400B080FE /* UITableView+okCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableView+okCategory.h"; path = "../../ui/UITableView+okCategory.h"; sourceTree = "<group>"; };
-		3DFE0243168BA12400B080FE /* UITableView+okCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableView+okCategory.m"; path = "../../ui/UITableView+okCategory.m"; sourceTree = "<group>"; };
-		3DFE0244168BA12400B080FE /* UIView+okCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+okCategory.h"; path = "../../ui/UIView+okCategory.h"; sourceTree = "<group>"; };
-		3DFE0245168BA12400B080FE /* UIView+okCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+okCategory.m"; path = "../../ui/UIView+okCategory.m"; sourceTree = "<group>"; };
-		3DFE024E168BA68200B080FE /* UI+okCategoryConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UI+okCategoryConfig.h"; path = "../../ui/UI+okCategoryConfig.h"; sourceTree = "<group>"; };
-		3DFE024F168BA97600B080FE /* Foundation+okCategoryConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Foundation+okCategoryConfig.h"; path = "../../foundation/Foundation+okCategoryConfig.h"; sourceTree = "<group>"; };
+		3DFE022D168BA11600B080FE /* CLLocation+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLLocation+CategoryOK.h"; path = "../../foundation/CLLocation+CategoryOK.h"; sourceTree = "<group>"; };
+		3DFE022E168BA11600B080FE /* CLLocation+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLLocation+CategoryOK.m"; path = "../../foundation/CLLocation+CategoryOK.m"; sourceTree = "<group>"; };
+		3DFE022F168BA11600B080FE /* NSArray+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+CategoryOK.h"; path = "../../foundation/NSArray+CategoryOK.h"; sourceTree = "<group>"; };
+		3DFE0230168BA11600B080FE /* NSArray+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+CategoryOK.m"; path = "../../foundation/NSArray+CategoryOK.m"; sourceTree = "<group>"; };
+		3DFE0231168BA11600B080FE /* NSString+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+CategoryOK.h"; path = "../../foundation/NSString+CategoryOK.h"; sourceTree = "<group>"; };
+		3DFE0232168BA11600B080FE /* NSString+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+CategoryOK.m"; path = "../../foundation/NSString+CategoryOK.m"; sourceTree = "<group>"; };
+		3DFE023E168BA12400B080FE /* UIColor+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+CategoryOK.h"; path = "../../ui/UIColor+CategoryOK.h"; sourceTree = "<group>"; };
+		3DFE023F168BA12400B080FE /* UIColor+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+CategoryOK.m"; path = "../../ui/UIColor+CategoryOK.m"; sourceTree = "<group>"; };
+		3DFE0240168BA12400B080FE /* UIImageView+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+CategoryOK.h"; path = "../../ui/UIImageView+CategoryOK.h"; sourceTree = "<group>"; };
+		3DFE0241168BA12400B080FE /* UIImageView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+CategoryOK.m"; path = "../../ui/UIImageView+CategoryOK.m"; sourceTree = "<group>"; };
+		3DFE0242168BA12400B080FE /* UITableView+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableView+CategoryOK.h"; path = "../../ui/UITableView+CategoryOK.h"; sourceTree = "<group>"; };
+		3DFE0243168BA12400B080FE /* UITableView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableView+CategoryOK.m"; path = "../../ui/UITableView+CategoryOK.m"; sourceTree = "<group>"; };
+		3DFE0244168BA12400B080FE /* UIView+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+CategoryOK.h"; path = "../../ui/UIView+CategoryOK.h"; sourceTree = "<group>"; };
+		3DFE0245168BA12400B080FE /* UIView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+CategoryOK.m"; path = "../../ui/UIView+CategoryOK.m"; sourceTree = "<group>"; };
+		3DFE024E168BA68200B080FE /* UI+CategoryOKConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UI+CategoryOKConfig.h"; path = "../../ui/UI+CategoryOKConfig.h"; sourceTree = "<group>"; };
+		3DFE024F168BA97600B080FE /* Foundation+CategoryOKConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Foundation+CategoryOKConfig.h"; path = "../../foundation/Foundation+CategoryOKConfig.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,14 +179,14 @@
 		3D55F38A1688642500B30D8D /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				3D1C207F168BAFA5008FF58D /* Common+okCategoryConfig.h */,
-				3DF03500168ADBDD0056FEDB /* CGRect+okCategory.h */,
+				3D1C207F168BAFA5008FF58D /* Common+CategoryOKConfig.h */,
+				3DF03500168ADBDD0056FEDB /* CGRect+CategoryOK.h */,
 				3DF03501168ADBDD0056FEDB /* CustomMath.h */,
 				3DF0CDA2168C73BC003BFD79 /* JSONObjectToNative.h */,
 				3DF0CDA3168C73BC003BFD79 /* JSONObjectToNative.m */,
 				3DF03502168ADBDD0056FEDB /* MachTime.h */,
 				3DF03503168ADBDD0056FEDB /* MachTime.m */,
-				3D1C2081168BBA38008FF58D /* Common+okCategoryPrecompiled.h */,
+				3D1C2081168BBA38008FF58D /* Common+CategoryOKPrecompiled.h */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -296,15 +296,15 @@
 		3DFE022C168BA10A00B080FE /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				3DFE024F168BA97600B080FE /* Foundation+okCategoryConfig.h */,
-				3DFE022D168BA11600B080FE /* CLLocation+okCategory.h */,
-				3DFE022E168BA11600B080FE /* CLLocation+okCategory.m */,
-				3DFE022F168BA11600B080FE /* NSArray+okCategory.h */,
-				3DFE0230168BA11600B080FE /* NSArray+okCategory.m */,
-				3DFE0231168BA11600B080FE /* NSString+okCategory.h */,
-				3DFE0232168BA11600B080FE /* NSString+okCategory.m */,
-				3D3556FD168C952E00D4462E /* NSData+okCategory.h */,
-				3D3556FE168C952E00D4462E /* NSData+okCategory.m */,
+				3DFE024F168BA97600B080FE /* Foundation+CategoryOKConfig.h */,
+				3DFE022D168BA11600B080FE /* CLLocation+CategoryOK.h */,
+				3DFE022E168BA11600B080FE /* CLLocation+CategoryOK.m */,
+				3DFE022F168BA11600B080FE /* NSArray+CategoryOK.h */,
+				3DFE0230168BA11600B080FE /* NSArray+CategoryOK.m */,
+				3DFE0231168BA11600B080FE /* NSString+CategoryOK.h */,
+				3DFE0232168BA11600B080FE /* NSString+CategoryOK.m */,
+				3D3556FD168C952E00D4462E /* NSData+CategoryOK.h */,
+				3D3556FE168C952E00D4462E /* NSData+CategoryOK.m */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -312,15 +312,15 @@
 		3DFE023D168BA11C00B080FE /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				3DFE024E168BA68200B080FE /* UI+okCategoryConfig.h */,
-				3DFE023E168BA12400B080FE /* UIColor+okCategory.h */,
-				3DFE023F168BA12400B080FE /* UIColor+okCategory.m */,
-				3DFE0240168BA12400B080FE /* UIImageView+okCategory.h */,
-				3DFE0241168BA12400B080FE /* UIImageView+okCategory.m */,
-				3DFE0242168BA12400B080FE /* UITableView+okCategory.h */,
-				3DFE0243168BA12400B080FE /* UITableView+okCategory.m */,
-				3DFE0244168BA12400B080FE /* UIView+okCategory.h */,
-				3DFE0245168BA12400B080FE /* UIView+okCategory.m */,
+				3DFE024E168BA68200B080FE /* UI+CategoryOKConfig.h */,
+				3DFE023E168BA12400B080FE /* UIColor+CategoryOK.h */,
+				3DFE023F168BA12400B080FE /* UIColor+CategoryOK.m */,
+				3DFE0240168BA12400B080FE /* UIImageView+CategoryOK.h */,
+				3DFE0241168BA12400B080FE /* UIImageView+CategoryOK.m */,
+				3DFE0242168BA12400B080FE /* UITableView+CategoryOK.h */,
+				3DFE0243168BA12400B080FE /* UITableView+CategoryOK.m */,
+				3DFE0244168BA12400B080FE /* UIView+CategoryOK.h */,
+				3DFE0245168BA12400B080FE /* UIView+CategoryOK.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -442,16 +442,16 @@
 				3DF034FC168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */,
 				3DF034FE168ADBAB0056FEDB /* RequestGenerator.m in Sources */,
 				3DF03504168ADBDD0056FEDB /* MachTime.m in Sources */,
-				3DFE0235168BA11600B080FE /* CLLocation+okCategory.m in Sources */,
-				3DFE0237168BA11600B080FE /* NSArray+okCategory.m in Sources */,
-				3DFE0239168BA11600B080FE /* NSString+okCategory.m in Sources */,
-				3DFE0246168BA12400B080FE /* UIColor+okCategory.m in Sources */,
-				3DFE0248168BA12400B080FE /* UIImageView+okCategory.m in Sources */,
-				3DFE024A168BA12400B080FE /* UITableView+okCategory.m in Sources */,
-				3DFE024C168BA12400B080FE /* UIView+okCategory.m in Sources */,
+				3DFE0235168BA11600B080FE /* CLLocation+CategoryOK.m in Sources */,
+				3DFE0237168BA11600B080FE /* NSArray+CategoryOK.m in Sources */,
+				3DFE0239168BA11600B080FE /* NSString+CategoryOK.m in Sources */,
+				3DFE0246168BA12400B080FE /* UIColor+CategoryOK.m in Sources */,
+				3DFE0248168BA12400B080FE /* UIImageView+CategoryOK.m in Sources */,
+				3DFE024A168BA12400B080FE /* UITableView+CategoryOK.m in Sources */,
+				3DFE024C168BA12400B080FE /* UIView+CategoryOK.m in Sources */,
 				3D0A1C11168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m in Sources */,
 				3DF0CDA4168C73BC003BFD79 /* JSONObjectToNative.m in Sources */,
-				3D3556FF168C952E00D4462E /* NSData+okCategory.m in Sources */,
+				3D3556FF168C952E00D4462E /* NSData+CategoryOK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,17 +466,17 @@
 				3DF034FF168ADBAB0056FEDB /* RequestGenerator.m in Sources */,
 				3DF03505168ADBDD0056FEDB /* MachTime.m in Sources */,
 				3DF03510168AE4520056FEDB /* UIColorTests.m in Sources */,
-				3DFE0236168BA11600B080FE /* CLLocation+okCategory.m in Sources */,
-				3DFE0238168BA11600B080FE /* NSArray+okCategory.m in Sources */,
-				3DFE023A168BA11600B080FE /* NSString+okCategory.m in Sources */,
-				3DFE0247168BA12400B080FE /* UIColor+okCategory.m in Sources */,
-				3DFE0249168BA12400B080FE /* UIImageView+okCategory.m in Sources */,
-				3DFE024B168BA12400B080FE /* UITableView+okCategory.m in Sources */,
-				3DFE024D168BA12400B080FE /* UIView+okCategory.m in Sources */,
+				3DFE0236168BA11600B080FE /* CLLocation+CategoryOK.m in Sources */,
+				3DFE0238168BA11600B080FE /* NSArray+CategoryOK.m in Sources */,
+				3DFE023A168BA11600B080FE /* NSString+CategoryOK.m in Sources */,
+				3DFE0247168BA12400B080FE /* UIColor+CategoryOK.m in Sources */,
+				3DFE0249168BA12400B080FE /* UIImageView+CategoryOK.m in Sources */,
+				3DFE024B168BA12400B080FE /* UITableView+CategoryOK.m in Sources */,
+				3DFE024D168BA12400B080FE /* UIView+CategoryOK.m in Sources */,
 				3D354BF5168BDCAF00BB6F9B /* NSStringTests.m in Sources */,
 				3D0A1C12168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m in Sources */,
 				3DF0CDA5168C73BC003BFD79 /* JSONObjectToNative.m in Sources */,
-				3D355700168C952E00D4462E /* NSData+okCategory.m in Sources */,
+				3D355700168C952E00D4462E /* NSData+CategoryOK.m in Sources */,
 				3D4EE61A168C9D2F0067F698 /* NSDataTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

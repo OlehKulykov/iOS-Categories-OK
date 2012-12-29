@@ -15,9 +15,9 @@
  */
 
 
-#import "NSData+okCategory.h"
+#import "NSData+CategoryOK.h"
 
-#ifndef NO_DataBase64_OK_CATEGORY
+#ifndef NO_DataBase64_CATEGORY_OK
 
 #include <zlib.h>
 #import <CoreFoundation/CoreFoundation.h>

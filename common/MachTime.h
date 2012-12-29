@@ -15,12 +15,12 @@
  */
 
 
-#import "Common+okCategoryConfig.h"
+#import "Common+CategoryOKConfig.h"
 
 #ifndef __MACHTIME_H__
 #define __MACHTIME_H__
 
-#ifndef NO_MACHTIME_OK_CATEGORY
+#ifndef NO_MACHTIME_CATEGORY_OK
 
 #import <Foundation/Foundation.h>
 

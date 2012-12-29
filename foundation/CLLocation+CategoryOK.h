@@ -15,9 +15,9 @@
  */
 
 
-#import "Foundation+okCategoryConfig.h"
+#import "Foundation+CategoryOKConfig.h"
 
-#ifndef NO_CLLocationDistancePrevTo_iOS_3_2_OK_CATEGORY
+#ifndef NO_CLLocationDistancePrevTo_iOS_3_2_CATEGORY_OK
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>

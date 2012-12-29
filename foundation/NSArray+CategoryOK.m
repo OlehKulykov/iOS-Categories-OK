@@ -15,9 +15,9 @@
  */
 
 
-#import "NSArray+okCategory.h"
+#import "NSArray+CategoryOK.h"
 
-#ifndef NO_NSArrayStaticInfo_OK_CATEGORY
+#ifndef NO_NSArrayStaticInfo_CATEGORY_OK
 
 @implementation NSArray (StaticInfo)
 

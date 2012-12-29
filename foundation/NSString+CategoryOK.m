@@ -15,10 +15,10 @@
  */
 
 
-#import "NSString+okCategory.h"
+#import "NSString+CategoryOK.h"
 
 
-#ifndef NO_NSStringContaines_OK_CATEGORY
+#ifndef NO_NSStringContaines_CATEGORY_OK
 
 @implementation NSString(Containes)
 
@@ -38,7 +38,7 @@
 #endif
 
 
-#ifndef NO_NSStringSpecialHTMLCharacters_OK_CATEGORY
+#ifndef NO_NSStringSpecialHTMLCharacters_CATEGORY_OK
 
 typedef struct __NSStringSpecialHTMLCharactersStruct
 {
@@ -361,7 +361,7 @@ static __NSStringSpecialHTMLCharactersStruct * NSStringSpecialHTMLCharactersTabl
 #endif
 
 
-#ifndef NO_NSStringSystemPaths_OK_CATEGORY
+#ifndef NO_NSStringSystemPaths_CATEGORY_OK
 
 #import <CoreFoundation/CoreFoundation.h>
 #include <unistd.h>

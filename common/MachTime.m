@@ -17,7 +17,7 @@
 
 #import "MachTime.h"
 
-#ifndef NO_MACHTIME_OK_CATEGORY
+#ifndef NO_MACHTIME_CATEGORY_OK
 
 #include <inttypes.h>
 #include <mach/mach_time.h>

@@ -15,20 +15,18 @@
  */
 
 
-#import "UIView+okCategory.h"
-#import <QuartzCore/QuartzCore.h>
+#import "UI+CategoryOKConfig.h"
 
-#ifndef NO_UIViewBackgroundImage_OK_CATEGORY
+#ifndef NO_UITableViewFullContentHeight_CATEGORY_OK
 
-@implementation UIView (BackgroundImage)
+#import <UIKit/UIKit.h>
 
-- (void) setBackgroundImage:(UIImage *)backgroundImage
-{
-	CALayer * layer = [self layer];
-	[layer setContents:(id)[backgroundImage CGImage]];
-}
+@interface UITableView (FullContentHeight)
+
+/// Return full table view content height by
+/// calculating height of each cell
+- (CGFloat) fullContentHeight;
 
 @end
 
 #endif
-

@@ -1,7 +1,7 @@
 
 
 #import "UIColorTests.h"
-#import "UIColor+okCategory.h"
+#import "UIColor+CategoryOK.h"
 
 @implementation UIColorTests
 

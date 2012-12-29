@@ -15,9 +15,9 @@
  */
 
 
-#import "UI+okCategoryConfig.h"
+#import "UI+CategoryOKConfig.h"
 
-#ifndef NO_UIColorRGBA_OK_CATEGORY
+#ifndef NO_UIColorRGBA_CATEGORY_OK
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>

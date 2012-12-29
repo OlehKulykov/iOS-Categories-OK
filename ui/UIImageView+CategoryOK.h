@@ -15,17 +15,20 @@
  */
 
 
-#import "UI+okCategoryConfig.h"
-#import <UIKit/UIKit.h>
+#import "UI+CategoryOKConfig.h"
 
-#ifndef NO_UIViewBackgroundImage_OK_CATEGORY
+#ifndef NO_UIImageViewLoadFromURL_CATEGORY_OK
 
-@interface UIView (BackgroundImage)
+#import <Foundation/Foundation.h>
 
-/// Sets background view color as image. Image scales to content.
-- (void) setBackgroundImage:(UIImage *)backgroundImage;
+@interface UIImageView (LoadFromURL)
+
+- (NSThread *) loadFromURL:(NSURL *)url
+	  useActivityIndicator:(BOOL)isUseActivityIndicator
+				withTarget:(id)target
+		   onStartSelector:(SEL)onStartSelector
+			onDoneSelector:(SEL)onDoneSelector;
 
 @end
 
 #endif
-

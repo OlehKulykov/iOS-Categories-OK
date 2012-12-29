@@ -15,17 +15,25 @@
  */
 
 
-#import "Foundation+okCategoryConfig.h"
+#import "Foundation+CategoryOKConfig.h"
 
-#ifndef NO_DataZIPCompression_OK_CATEGORY
+#ifndef NO_NSArrayStaticInfo_CATEGORY_OK
 
 #import <Foundation/Foundation.h>
 
-@interface NSData (DataZIPCompression)
+@interface NSArray (StaticInfo)
 
-- (NSData *) zipCompressedDataWithRatio:(CGFloat)compressionRatio;
+/// Check is array has none objects
++ (BOOL) isEmpty:(NSArray *)array;
 
-- (NSData *) zipDecompressedData;
+/// Check is array has objects
++ (BOOL) isNotEmpty:(NSArray *)array;
+
+/// Return previous array index from incoming or NSNotFound if index can't be found
++ (NSUInteger) array:(NSArray *)array previousIndexFrom:(NSUInteger)index;
+
+/// Retun next array index from incoming or NSNotFound if index can't be found
++ (NSUInteger) array:(NSArray *)array nextIndexFrom:(NSUInteger)index;
 
 @end
 

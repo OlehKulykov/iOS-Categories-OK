@@ -15,38 +15,20 @@
  */
 
 
-#ifndef __COMMON_OK_CATEGORYPRECOMPILED_H__
-#define __COMMON_OK_CATEGORYPRECOMPILED_H__o
+#import "UIView+CategoryOK.h"
+#import <QuartzCore/QuartzCore.h>
 
+#ifndef NO_UIViewBackgroundImage_CATEGORY_OK
 
-#if !defined(__has_feature)
+@implementation UIView (BackgroundImage)
 
-#define __has_feature(feature) 0
+- (void) setBackgroundImage:(UIImage *)backgroundImage
+{
+	CALayer * layer = [self layer];
+	[layer setContents:(id)[backgroundImage CGImage]];
+}
 
-#endif
-
-
-
-#if __has_feature(objc_arc)
-
-#define SAFE_RELEASE(o) o=nil;
-
-#define SAFE_RETAIN(to,from) to=from;
-
-#define SAFE_AUTORELEASE(o) o;
-
-
-#else
-
-
-#define SAFE_RELEASE(o) [o release];o=nil;
-
-#define SAFE_RETAIN(to,from) [to release];to=[from retain];
-
-#define SAFE_AUTORELEASE(o) [o autorelease];
-
+@end
 
 #endif
 
-
-#endif

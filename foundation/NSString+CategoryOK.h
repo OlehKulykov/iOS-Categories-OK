@@ -15,18 +15,44 @@
  */
 
 
-#import "UI+okCategoryConfig.h"
+#import "Foundation+CategoryOKConfig.h"
+#import <Foundation/Foundation.h>
 
-#ifndef NO_UITableViewFullContentHeight_OK_CATEGORY
+#ifndef NO_NSStringContaines_CATEGORY_OK
 
-#import <UIKit/UIKit.h>
+@interface NSString (Containes)
 
-@interface UITableView (FullContentHeight)
-
-/// Return full table view content height by
-/// calculating height of each cell
-- (CGFloat) fullContentHeight;
+- (BOOL) isContainesSubstring:(NSString *)subString;
 
 @end
 
 #endif
+
+
+#ifndef NO_NSStringSpecialHTMLCharacters_CATEGORY_OK
+
+@interface NSString (SpecialHTMLCharacters)
+
+
+- (NSString *) stringByDecodeSpecialHTMLCharacters;
+
+- (NSString *) stringByEncodeSpecialHTMLCharacters;
+
+
+@end
+
+#endif
+
+
+#ifndef NO_NSStringSystemPaths_CATEGORY_OK
+
+@interface NSString (SystemPaths)
+
++ (NSString *) userDocumentPath;
+
++ (NSString *) userCachePath;
+
+@end
+
+#endif
+

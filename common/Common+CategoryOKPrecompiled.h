@@ -15,44 +15,38 @@
  */
 
 
-#import "Foundation+okCategoryConfig.h"
-#import <Foundation/Foundation.h>
+#ifndef __COMMON_CATEGORY_OKPRECOMPILED_H__
+#define __COMMON_CATEGORY_OKPRECOMPILED_H__o
 
-#ifndef NO_NSStringContaines_OK_CATEGORY
 
-@interface NSString (Containes)
+#if !defined(__has_feature)
 
-- (BOOL) isContainesSubstring:(NSString *)subString;
-
-@end
+#define __has_feature(feature) 0
 
 #endif
 
 
-#ifndef NO_NSStringSpecialHTMLCharacters_OK_CATEGORY
 
-@interface NSString (SpecialHTMLCharacters)
+#if __has_feature(objc_arc)
 
+#define SAFE_RELEASE(o) o=nil;
 
-- (NSString *) stringByDecodeSpecialHTMLCharacters;
+#define SAFE_RETAIN(to,from) to=from;
 
-- (NSString *) stringByEncodeSpecialHTMLCharacters;
-
-
-@end
-
-#endif
+#define SAFE_AUTORELEASE(o) o;
 
 
-#ifndef NO_NSStringSystemPaths_OK_CATEGORY
+#else
 
-@interface NSString (SystemPaths)
 
-+ (NSString *) userDocumentPath;
+#define SAFE_RELEASE(o) [o release];o=nil;
 
-+ (NSString *) userCachePath;
+#define SAFE_RETAIN(to,from) [to release];to=[from retain];
 
-@end
+#define SAFE_AUTORELEASE(o) [o autorelease];
+
 
 #endif
 
+
+#endif

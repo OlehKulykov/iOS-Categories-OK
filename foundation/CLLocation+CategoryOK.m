@@ -15,9 +15,9 @@
  */
 
 
-#import "CLLocation+okCategory.h"
+#import "CLLocation+CategoryOK.h"
 
-#ifndef NO_CLLocationDistancePrevTo_iOS_3_2_OK_CATEGORY
+#ifndef NO_CLLocationDistancePrevTo_iOS_3_2_CATEGORY_OK
 
 #import "../common/CustomMath.h"
 #include <math.h>

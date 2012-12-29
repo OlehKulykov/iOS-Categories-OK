@@ -1,14 +1,14 @@
 
 
 #import "NSDataTests.h"
-#import "NSData+okCategory.h"
+#import "NSData+CategoryOK.h"
 
 @implementation NSDataTests
 
 - (void) testZip
 {
 /// Need define because zip compression requares linking with zlib library
-#ifndef NO_DataZIPCompression_OK_CATEGORY
+#ifndef NO_DataZIPCompression_CATEGORY_OK
 	NSString * pngDataPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"Default"
 																			  ofType:@"png"];
 	if ( !pngDataPath )

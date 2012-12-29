@@ -15,11 +15,11 @@
  */
 
 
-#import "UIImageView+okCategory.h"
+#import "UIImageView+CategoryOK.h"
 #import <CoreFoundation/CoreFoundation.h>
-#import "../common/Common+okCategoryPrecompiled.h"
+#import "../common/Common+CategoryOKPrecompiled.h"
 
-#ifndef NO_UIImageViewLoadFromURL_OK_CATEGORY
+#ifndef NO_UIImageViewLoadFromURL_CATEGORY_OK
 
 #define URL_KEY @"1"
 #define IS_USE_INDICATOR_KEY @"2"

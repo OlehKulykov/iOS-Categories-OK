@@ -1,7 +1,7 @@
 
 
 #import "NSArrayTests.h"
-#import "NSArray+okCategory.h"
+#import "NSArray+CategoryOK.h"
 
 @implementation NSArrayTests
  
