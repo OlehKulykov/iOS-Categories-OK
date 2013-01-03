@@ -15,29 +15,16 @@
  */
 
 
-#import "Common+CategoryOKConfig.h"
+#import "UI+CategoryOKConfig.h"
 
-#ifndef NO_JSONOBJECTTONATIVE_CATEGORY_OK
+#ifndef NO_UIWebViewContentSize_CATEGORY_OK
 
 #import <Foundation/Foundation.h>
 
-NSInteger JSONObjectToInteger(id object);
+@interface UIWebView (ContentSize)
 
-NSUInteger JSONObjectToUInteger(id object);
+- (CGSize) contentSize;
 
-CGFloat JSONObjectToFloat(id object);
-
-double JSONObjectToDouble(id object);
-
-BOOL JSONObjectToBoolean(id object);
-
-NSString * JSONObjectToString(id object);
-
-NSDictionary * JSONObjectToDictionary(id object);
-
-NSArray * JSONObjectToArray(id object);
-
-NSDate * JSONObjectToDate(id object);
+@end
 
 #endif
-

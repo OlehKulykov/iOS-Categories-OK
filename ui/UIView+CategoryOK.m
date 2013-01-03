@@ -32,3 +32,64 @@
 
 #endif
 
+
+
+#ifndef NO_UIViewSimpleFrame_CATEGORY_OK
+
+@implementation UIView (SimpleFrame)
+
+- (CGFloat) x
+{
+	return self.frame.origin.x;
+}
+
+- (void) setX:(CGFloat)newX
+{
+	CGRect selfFrame = [self frame];
+	selfFrame.origin.x = newX;
+	[self setFrame:selfFrame];
+}
+
+- (CGFloat) y
+{
+	return self.frame.origin.y;
+}
+
+- (void) setY:(CGFloat)newY
+{
+	CGRect selfFrame = [self frame];
+	selfFrame.origin.y = newY;
+	[self setFrame:selfFrame];
+}
+
+- (CGFloat) width
+{
+	return self.frame.size.width;
+}
+
+- (void) setWidth:(CGFloat)newWidth
+{
+	CGRect selfFrame = [self frame];
+	selfFrame.size.width = newWidth;
+	[self setFrame:selfFrame];
+}
+
+- (CGFloat) height
+{
+	return self.frame.size.height;
+}
+
+- (void) setHeight:(CGFloat)newHeight
+{
+	CGRect selfFrame = [self frame];
+	selfFrame.size.height = newHeight;
+	[self setFrame:selfFrame];
+}
+
+@end
+
+#endif
+
+
+
+

@@ -6,5 +6,6 @@
 
 //#define NO_MACHTIME_CATEGORY_OK
 
+//#define NO_JSONOBJECTTONATIVE_CATEGORY_OK
 
 #endif

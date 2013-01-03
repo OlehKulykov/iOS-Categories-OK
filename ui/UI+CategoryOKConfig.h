@@ -14,5 +14,9 @@
 
 //#define NO_UIViewRotateByAngleWithAnchorPoint_CATEGORY_OK
 
+//#define NO_UIViewSimpleFrame_CATEGORY_OK
+
+//#define NO_UIWebViewContentSize_CATEGORY_OK
+
 #endif 
 

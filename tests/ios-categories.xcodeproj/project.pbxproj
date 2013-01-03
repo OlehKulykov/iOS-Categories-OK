@@ -35,6 +35,7 @@
 		3D7E56A01684BB8800E3604A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D7E56801684BB8800E3604A /* UIKit.framework */; };
 		3D7E56A11684BB8800E3604A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D7E56821684BB8800E3604A /* Foundation.framework */; };
 		3D7E56A91684BB8800E3604A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D7E56A71684BB8800E3604A /* InfoPlist.strings */; };
+		3DD7CF151695B12900581FAB /* UIWebView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DD7CF141695B12900581FAB /* UIWebView+CategoryOK.m */; };
 		3DF034FC168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */; };
 		3DF034FD168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */; };
 		3DF034FE168ADBAB0056FEDB /* RequestGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034FB168ADBAB0056FEDB /* RequestGenerator.m */; };
@@ -107,6 +108,8 @@
 		3D7E569E1684BB8800E3604A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		3D7E56A61684BB8800E3604A /* ios-categoriesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ios-categoriesTests-Info.plist"; sourceTree = "<group>"; };
 		3D7E56A81684BB8800E3604A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3DD7CF131695B12900581FAB /* UIWebView+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+CategoryOK.h"; path = "../../ui/UIWebView+CategoryOK.h"; sourceTree = "<group>"; };
+		3DD7CF141695B12900581FAB /* UIWebView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+CategoryOK.m"; path = "../../ui/UIWebView+CategoryOK.m"; sourceTree = "<group>"; };
 		3DF034F8168ADBAB0056FEDB /* RequestFieldsContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestFieldsContainer.h; path = ../../net/RequestFieldsContainer.h; sourceTree = "<group>"; };
 		3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequestFieldsContainer.m; path = ../../net/RequestFieldsContainer.m; sourceTree = "<group>"; };
 		3DF034FA168ADBAB0056FEDB /* RequestGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestGenerator.h; path = ../../net/RequestGenerator.h; sourceTree = "<group>"; };
@@ -321,6 +324,8 @@
 				3DFE0243168BA12400B080FE /* UITableView+CategoryOK.m */,
 				3DFE0244168BA12400B080FE /* UIView+CategoryOK.h */,
 				3DFE0245168BA12400B080FE /* UIView+CategoryOK.m */,
+				3DD7CF131695B12900581FAB /* UIWebView+CategoryOK.h */,
+				3DD7CF141695B12900581FAB /* UIWebView+CategoryOK.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -452,6 +457,7 @@
 				3D0A1C11168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m in Sources */,
 				3DF0CDA4168C73BC003BFD79 /* JSONObjectToNative.m in Sources */,
 				3D3556FF168C952E00D4462E /* NSData+CategoryOK.m in Sources */,
+				3DD7CF151695B12900581FAB /* UIWebView+CategoryOK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

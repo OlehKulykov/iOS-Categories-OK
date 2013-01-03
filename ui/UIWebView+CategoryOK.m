@@ -15,29 +15,25 @@
  */
 
 
-#import "Common+CategoryOKConfig.h"
+#import "UIWebView+CategoryOK.h"
 
-#ifndef NO_JSONOBJECTTONATIVE_CATEGORY_OK
+#ifndef NO_UIWebViewContentSize_CATEGORY_OK
 
-#import <Foundation/Foundation.h>
+@implementation UIWebView (ContentSize)
 
-NSInteger JSONObjectToInteger(id object);
+- (CGSize) contentSize
+{
+	CGRect selfFrame = [self frame];
+    selfFrame.size.height = 1.0f;
+	[self setFrame:selfFrame];
+	
+    CGSize fittingSize = [self sizeThatFits:CGSizeZero];
+    selfFrame.size = fittingSize;
+	[self setFrame:selfFrame];
+	
+	return fittingSize;
+}
 
-NSUInteger JSONObjectToUInteger(id object);
-
-CGFloat JSONObjectToFloat(id object);
-
-double JSONObjectToDouble(id object);
-
-BOOL JSONObjectToBoolean(id object);
-
-NSString * JSONObjectToString(id object);
-
-NSDictionary * JSONObjectToDictionary(id object);
-
-NSArray * JSONObjectToArray(id object);
-
-NSDate * JSONObjectToDate(id object);
+@end
 
 #endif
-

@@ -29,3 +29,20 @@
 
 #endif
 
+
+
+#ifndef NO_UIViewSimpleFrame_CATEGORY_OK
+
+@interface UIView (SimpleFrame)
+
+@property CGFloat x;
+@property CGFloat y;
+@property CGFloat width;
+@property CGFloat height;
+
+@end
+
+#endif
+
+
+
