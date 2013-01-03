@@ -27,6 +27,7 @@
 #define IMAGE_KEY @"4"
 #define ON_START_INVOKATION_KEY @"5"
 #define ON_DONE_INVOKATION_KEY @"6"
+#define INDICATOR_COLOR_KEY @"7"
 
 CG_INLINE NSInvocation * __UIImageViewLoadFromURLInvocation(UIImageView * imageView,
 															id target,
@@ -62,6 +63,12 @@ CG_INLINE NSInvocation * __UIImageViewLoadFromURLInvocation(UIImageView * imageV
 			indicatorFrame.origin.y = (selfFrame.size.height / 2.0f) - (indicatorFrame.size.height / 2.0f);
 			[indicator setFrame:indicatorFrame];
 			[indicator setHidden:NO];
+			
+			UIColor * color = [params objectForKey:INDICATOR_COLOR_KEY];
+			if (color) 
+			{
+				[indicator setColor:color];
+			}
 			[indicator startAnimating];
 			
 			[params setObject:indicator forKey:INDICATOR_VIEW_KEY];
@@ -125,9 +132,10 @@ CG_INLINE NSInvocation * __UIImageViewLoadFromURLInvocation(UIImageView * imageV
 
 - (NSThread *) loadFromURL:(NSURL *)url
 	  useActivityIndicator:(BOOL)isUseActivityIndicator
+	activityIndicatorColor:(UIColor *)activityIndicatorColor
 				withTarget:(id)target
 		   onStartSelector:(SEL)onStartSelector
-			onDoneSelector:(SEL)onDoneSelector
+			onDoneSelector:(SEL)onDoneSelector;
 {
 	if ( !url ) return nil;
 	
@@ -139,6 +147,10 @@ CG_INLINE NSInvocation * __UIImageViewLoadFromURLInvocation(UIImageView * imageV
 	if (isUseActivityIndicator) 
 	{
 		[params setObject:[NSNumber numberWithBool:YES] forKey:IS_USE_INDICATOR_KEY];
+		if (activityIndicatorColor)
+		{
+			[params setObject:activityIndicatorColor forKey:INDICATOR_COLOR_KEY];
+		}
 	}
 	
 	if (target) 
@@ -162,6 +174,21 @@ CG_INLINE NSInvocation * __UIImageViewLoadFromURLInvocation(UIImageView * imageV
 	[thread start];
 	return thread;
 }
+
+- (NSThread *) loadFromURL:(NSURL *)url
+	  useActivityIndicator:(BOOL)isUseActivityIndicator
+				withTarget:(id)target
+		   onStartSelector:(SEL)onStartSelector
+			onDoneSelector:(SEL)onDoneSelector
+{
+	return [self loadFromURL:url 
+		useActivityIndicator:isUseActivityIndicator
+	  activityIndicatorColor:nil
+				  withTarget:target
+			 onStartSelector:onStartSelector
+			  onDoneSelector:onDoneSelector];
+}
+
 
 @end
 

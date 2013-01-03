@@ -25,6 +25,14 @@
 
 - (NSThread *) loadFromURL:(NSURL *)url
 	  useActivityIndicator:(BOOL)isUseActivityIndicator
+	activityIndicatorColor:(UIColor *)activityIndicatorColor
+				withTarget:(id)target
+		   onStartSelector:(SEL)onStartSelector
+			onDoneSelector:(SEL)onDoneSelector;
+
+
+- (NSThread *) loadFromURL:(NSURL *)url
+	  useActivityIndicator:(BOOL)isUseActivityIndicator
 				withTarget:(id)target
 		   onStartSelector:(SEL)onStartSelector
 			onDoneSelector:(SEL)onDoneSelector;

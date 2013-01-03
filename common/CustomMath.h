@@ -54,6 +54,17 @@
 #endif
 
 
+#ifndef NSUInteger64
+//typedef uint64_t NSUInteger64;
+#define NSUInteger64 uint64_t
+#endif
+
+#ifndef NSInteger64
+//typedef int64_t NSInteger64;
+#define NSInteger64 int64_t
+#endif
+
+
 /// Returns distance between two float values.
 CG_INLINE CGFloat DistanceBetweenFloatValues(const CGFloat firstValue, const CGFloat secondValue)
 {
