@@ -1,5 +1,5 @@
 /*
- *   Copyright 2012 Kulykov Oleh
+ *   Copyright 2012 - 2013 Kulykov Oleh
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 #import "NSData+CategoryOK.h"
 
-#ifndef NO_DataBase64_CATEGORY_OK
+#ifndef NO_DataZIPCompression_CATEGORY_OK
 
 #include <zlib.h>
 #import <CoreFoundation/CoreFoundation.h>

@@ -13,6 +13,6 @@
 
 //#define NO_NSStringSystemPaths_CATEGORY_OK
 
-//#define NO_DataZIPCompression_CATEGORY_OK
+#define NO_DataZIPCompression_CATEGORY_OK
 
 #endif
