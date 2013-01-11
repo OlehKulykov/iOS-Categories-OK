@@ -116,8 +116,15 @@ CG_INLINE NSInvocation * __UIImageViewLoadFromURLInvocation(UIImageView * imageV
 		NSURL * url = [params objectForKey:URL_KEY];
 		if (url) 
 		{
-			NSData * data = [NSData dataWithContentsOfURL:url];
-			if (data) 
+			NSURLRequest * request = [NSURLRequest requestWithURL:url 
+													  cachePolicy:NSURLRequestReturnCacheDataElseLoad
+												  timeoutInterval:10];
+			NSError * error = nil;
+			NSURLResponse * responce = nil;
+			NSData * data = [NSURLConnection sendSynchronousRequest:request
+												  returningResponse:&responce 
+															  error:&error];
+			if (data && responce && !error) 
 			{
 				UIImage * image = [UIImage imageWithData:data];
 				if (image) [params setObject:image forKey:IMAGE_KEY];

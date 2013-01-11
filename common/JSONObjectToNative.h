@@ -33,6 +33,8 @@ BOOL JSONObjectToBoolean(id object);
 
 NSString * JSONObjectToString(id object);
 
+NSString * JSONObjectToNonEmptyString(id object);
+
 NSDictionary * JSONObjectToDictionary(id object);
 
 NSArray * JSONObjectToArray(id object);

@@ -77,6 +77,15 @@ NSString * JSONObjectToString(id object)
 	return ([object isKindOfClass:[NSString class]]) ? (NSString *)object : nil;
 }
 
+NSString * JSONObjectToNonEmptyString(id object)
+{
+	if ([object isKindOfClass:[NSString class]])
+	{
+		return [(NSString *)object length] > 0 ? (NSString *)object : nil;
+	}
+	return nil;
+}
+
 NSDictionary * JSONObjectToDictionary(id object)
 {
 	if ([object isKindOfClass:[NSDictionary class]] || [object isKindOfClass:[NSMutableDictionary class]]) 
