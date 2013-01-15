@@ -104,26 +104,39 @@ NSArray * JSONObjectToArray(id object)
 	return nil;
 }
 
+static const char ** __commonDateFormatStrings()
+{
+	static const char * formats[] =
+	{
+		"yyyy-MM-dd'T'HH:mm:sszzzz",
+		"yyyy-MM-dd'T'HH:mm:ssZ",
+		"yyyy-MM-dd'T'HH:mm:ssTZD",
+		"yyyy-MM-dd",
+		0
+	};
+	return formats;
+}
+
 NSDate * JSONObjectToDate(id object)
 {
 	if ([object isKindOfClass:[NSString class]]) 
 	{
-		NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-		[formatter setLocale:[NSLocale currentLocale]];
 		NSString * string = (NSString *)object;
-		if ([string length] == [@"yyyy-MM-dd" length])
+		if ([string length] > 0)
 		{
-			[formatter setDateFormat:@"yyyy-MM-dd"];
+			const char ** format = __commonDateFormatStrings();
+			if (format)
+			{
+				NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+				do 
+				{
+					[formatter setDateFormat:[NSString stringWithUTF8String:*format]];
+					NSDate * date = [formatter dateFromString:string];
+					if (date) return date;
+				} while (*++format);
+			}
 		}
-		else
-		{
-			[formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:sszzzz"];
-		}
-		
-		NSDate * date = [formatter dateFromString:string];
-		return date;
 	}
-	
 	return nil;
 }
 
