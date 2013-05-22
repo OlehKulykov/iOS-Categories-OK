@@ -22,33 +22,38 @@
 #include <inttypes.h>
 #include <mach/mach_time.h>
 
-typedef struct __machTimeStruct
+typedef struct __machTimeStructPrivate
 {
 	uint64_t absoluteAppStartTime;
 	uint64_t absoluteLastCallTime;
-	long double nanoSecond;
-} __MachTimeStruct;
+	double_t nanoSecond;
+} __MachTimeStructPrivate;
 
-static void __InitMachTimeStruct(__MachTimeStruct * timeStruct)
+static void __InitMachTimeStructPrivate(__MachTimeStructPrivate * timeStruct)
 {
 	mach_timebase_info_data_t info = { 0 };
 	if (mach_timebase_info(&info) == KERN_SUCCESS && info.denom)
 	{
 		timeStruct->absoluteAppStartTime = mach_absolute_time();
 		timeStruct->absoluteLastCallTime = timeStruct->absoluteAppStartTime;
-		timeStruct->nanoSecond = 1e-9 * ((long double)info.numer) / ((long double)info.denom);
+		timeStruct->nanoSecond = 1e-9 * ((double_t)info.numer) / ((double_t)info.denom);
 	}
 }
 
-NSTimeInterval GetMachTime()
+@implementation MachTime
+
+static __MachTimeStructPrivate timeStructPrivate = { 0 };
+
++ (NSTimeInterval) currentTime
 {
-	static __MachTimeStruct timeStruct = { 0 };
-	if ( !timeStruct.absoluteAppStartTime )
+	if ( !timeStructPrivate.absoluteAppStartTime )
 	{
-		__InitMachTimeStruct(&timeStruct);
+		__InitMachTimeStructPrivate(&timeStructPrivate);
 	}
-	return ((long double)(mach_absolute_time() - timeStruct.absoluteAppStartTime) * timeStruct.nanoSecond);
+	return ((double_t)(mach_absolute_time() - timeStructPrivate.absoluteAppStartTime) * timeStructPrivate.nanoSecond);
 }
+
+@end
 
 #endif
 

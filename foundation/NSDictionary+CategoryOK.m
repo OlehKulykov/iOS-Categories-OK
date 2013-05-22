@@ -17,6 +17,8 @@
 
 #import "NSDictionary+CategoryOK.h"
 
+#ifndef NO_NSDictionary_Plist_CATEGORY_OK
+
 @implementation NSDictionary(Plists)
 
 + (NSDictionary *) dictionaryWithPropertyListData:(NSData *)plistData
@@ -82,3 +84,6 @@
 }
 
 @end
+
+#endif
+

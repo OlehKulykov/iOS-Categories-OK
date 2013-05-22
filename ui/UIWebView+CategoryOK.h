@@ -15,7 +15,7 @@
  */
 
 
-#import "UI+CategoryOKConfig.h"
+//#define NO_UIWebViewContentSize_CATEGORY_OK
 
 #ifndef NO_UIWebViewContentSize_CATEGORY_OK
 

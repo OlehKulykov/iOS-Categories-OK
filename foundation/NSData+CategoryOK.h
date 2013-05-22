@@ -15,7 +15,7 @@
  */
 
 
-#import "Foundation+CategoryOKConfig.h"
+//#define NO_DataZIPCompression_CATEGORY_OK
 
 #ifndef NO_DataZIPCompression_CATEGORY_OK
 

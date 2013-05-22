@@ -15,7 +15,10 @@
  */
 
 
-#import "Foundation+CategoryOKConfig.h"
+//#define NO_NSStringContaines_CATEGORY_OK
+//#define NO_NSStringSpecialHTMLCharacters_CATEGORY_OK
+//#define NO_NSStringSystemPaths_CATEGORY_OK
+
 #import <Foundation/Foundation.h>
 
 #ifndef NO_NSStringContaines_CATEGORY_OK

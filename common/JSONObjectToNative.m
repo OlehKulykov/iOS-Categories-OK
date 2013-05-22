@@ -47,7 +47,7 @@ CGFloat JSONObjectToFloat(id object)
 	return (CGFloat)JSONObjectToDouble(object);
 }
 
-double JSONObjectToDouble(id object)
+double_t JSONObjectToDouble(id object)
 {
 	if ([object isKindOfClass:[NSNumber class]] || [object isKindOfClass:[NSString class]])
 	{

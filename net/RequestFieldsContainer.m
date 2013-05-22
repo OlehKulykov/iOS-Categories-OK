@@ -16,7 +16,26 @@
 
 
 #import "RequestFieldsContainer.h"
-#import "../common/Common+CategoryOKPrecompiled.h"
+
+#if !defined(__has_feature)
+#define __has_feature(feature) 0
+#endif
+
+
+
+#if __has_feature(objc_arc)
+
+#define SAFE_RELEASE(o) o=nil;
+#define SAFE_RETAIN(to,from) to=from;
+#define SAFE_AUTORELEASE(o) o;
+
+#else
+
+#define SAFE_RELEASE(o) [o release];o=nil;
+#define SAFE_RETAIN(to,from) [to release];to=[from retain];
+#define SAFE_AUTORELEASE(o) [o autorelease];
+
+#endif
 
 @implementation RequestFieldsContainer
 

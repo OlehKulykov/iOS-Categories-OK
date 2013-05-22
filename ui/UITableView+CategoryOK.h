@@ -15,7 +15,7 @@
  */
 
 
-#import "UI+CategoryOKConfig.h"
+//#define NO_UITableViewFullContentHeight_CATEGORY_OK
 
 #ifndef NO_UITableViewFullContentHeight_CATEGORY_OK
 

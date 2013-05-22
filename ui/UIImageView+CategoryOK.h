@@ -15,7 +15,7 @@
  */
 
 
-#import "UI+CategoryOKConfig.h"
+//#define NO_UIImageViewLoadFromURL_CATEGORY_OK
 
 #ifndef NO_UIImageViewLoadFromURL_CATEGORY_OK
 

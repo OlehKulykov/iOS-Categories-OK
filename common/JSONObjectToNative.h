@@ -15,7 +15,8 @@
  */
 
 
-#import "Common+CategoryOKConfig.h"
+//#define NO_JSONOBJECTTONATIVE_CATEGORY_OK
+
 
 #ifndef NO_JSONOBJECTTONATIVE_CATEGORY_OK
 
@@ -27,7 +28,7 @@ NSUInteger JSONObjectToUInteger(id object);
 
 CGFloat JSONObjectToFloat(id object);
 
-double JSONObjectToDouble(id object);
+double_t JSONObjectToDouble(id object);
 
 BOOL JSONObjectToBoolean(id object);
 

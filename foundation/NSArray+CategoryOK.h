@@ -15,7 +15,7 @@
  */
 
 
-#import "Foundation+CategoryOKConfig.h"
+//#define NO_NSArrayStaticInfo_CATEGORY_OK
 
 #ifndef NO_NSArrayStaticInfo_CATEGORY_OK
 

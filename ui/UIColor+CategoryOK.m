@@ -19,9 +19,9 @@
 
 #ifndef NO_UIColorRGBA_CATEGORY_OK
 
-UIColor * UIColorMakeWithRGB(unsigned char red,
-							 unsigned char green,
-							 unsigned char blue)
+UIColor * UIColorMakeWithRGB(uint8_t red,
+							 uint8_t green,
+							 uint8_t blue)
 {
 	return [UIColor colorWithRed:((CGFloat)red / 255.0f)
 						   green:((CGFloat)green / 255.0f) 
@@ -29,10 +29,10 @@ UIColor * UIColorMakeWithRGB(unsigned char red,
 						   alpha:1.0f];
 }
 
-UIColor * UIColorMakeWithRGBA(unsigned char red,
-							  unsigned char green,
-							  unsigned char blue,
-							  unsigned char alpha)
+UIColor * UIColorMakeWithRGBA(uint8_t red,
+							  uint8_t green,
+							  uint8_t blue,
+							  uint8_t alpha)
 {
 	return [UIColor colorWithRed:((CGFloat)red / 255.0f)
 						   green:((CGFloat)green / 255.0f) 
@@ -77,17 +77,58 @@ UIColor * UIColorMakeWithHEX(NSString * hexString)
 
 @implementation UIColor (RGBA)
 
-+ (UIColor *) colorWithRedByte:(unsigned char)red 
-					 greenByte:(unsigned char)green 
-					  blueByte:(unsigned char)blue 
-					 alphaByte:(unsigned char)alpha
++ (UIColor *) colorWithRGBAByteColor:(RGBAByteColor) byteColor
+{
+	return [UIColor colorWithRed:(CGFloat)byteColor.red / 255.0f 
+						   green:(CGFloat)byteColor.green / 255.0f
+							blue:(CGFloat)byteColor.blue / 255.0f
+						   alpha:(CGFloat)byteColor.alpha / 255.0f];
+}
+
+- (RGBAByteColor) colorGetRGBAByteColor
+{
+	RGBAByteColor c;
+	c.value = 0;
+	if ([self respondsToSelector:@selector(getRed:green:blue:alpha:)])
+	{
+		float r, g, b, a;
+		if ([self getRed:&r green:&g blue:&b alpha:&a])
+		{
+			c = RGBAByteColorMakeWithRGBA(r, g, b, a);
+		}
+	}
+	else
+	{
+		const CGFloat * comps = CGColorGetComponents(self.CGColor);
+		if (comps)
+		{
+			switch (CGColorGetNumberOfComponents(self.CGColor)) 
+			{
+				case 4:
+					c = RGBAByteColorMakeWithRGBA(comps[0], comps[1], comps[2], comps[3]);
+					break;
+				case 3:
+					c = RGBAByteColorMakeWithRGB(comps[0], comps[1], comps[2]);
+					break;
+				default:
+					break;
+			}
+		}
+	}
+	return c;
+}
+
++ (UIColor *) colorWithRedByte:(uint8_t)red 
+					 greenByte:(uint8_t)green 
+					  blueByte:(uint8_t)blue 
+					 alphaByte:(uint8_t)alpha
 {
 	return UIColorMakeWithRGBA(red, green, blue, alpha);
 }
 
-+ (UIColor *) colorWithRedByte:(unsigned char)red 
-					 greenByte:(unsigned char)green 
-					  blueByte:(unsigned char)blue
++ (UIColor *) colorWithRedByte:(uint8_t)red 
+					 greenByte:(uint8_t)green 
+					  blueByte:(uint8_t)blue
 {
 	return UIColorMakeWithRGB(red, green, blue);
 }
