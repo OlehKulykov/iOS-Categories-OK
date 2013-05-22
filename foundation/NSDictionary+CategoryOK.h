@@ -15,38 +15,18 @@
  */
 
 
-#ifndef __COMMON_CATEGORY_OKPRECOMPILED_H__
-#define __COMMON_CATEGORY_OKPRECOMPILED_H__o
+#import <Foundation/Foundation.h>
 
+@interface NSDictionary(Plists)
 
-#if !defined(__has_feature)
+- (NSData *) propertyListData;
 
-#define __has_feature(feature) 0
+- (NSData *) binaryPropertyListData;
 
-#endif
++ (NSDictionary *) dictionaryWithPropertyListData:(NSData *) plistData;
 
++ (NSData *) propertyListDataWithDictionary:(NSDictionary *) dictionary;
 
++ (NSData *) binaryPropertyListDataWithDictionary:(NSDictionary *) dictionary;
 
-#if __has_feature(objc_arc)
-
-#define SAFE_RELEASE(o) o=nil;
-
-#define SAFE_RETAIN(to,from) to=from;
-
-#define SAFE_AUTORELEASE(o) o;
-
-
-#else
-
-
-#define SAFE_RELEASE(o) [o release];o=nil;
-
-#define SAFE_RETAIN(to,from) [to release];to=[from retain];
-
-#define SAFE_AUTORELEASE(o) [o autorelease];
-
-
-#endif
-
-
-#endif
+@end
