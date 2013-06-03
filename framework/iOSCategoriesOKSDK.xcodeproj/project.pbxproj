@@ -23,6 +23,10 @@
 		3DBBD28A175C83240051A020 /* UITableView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD283175C83240051A020 /* UITableView+CategoryOK.m */; };
 		3DBBD28B175C83240051A020 /* UIView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD285175C83240051A020 /* UIView+CategoryOK.m */; };
 		3DBBD28C175C83240051A020 /* UIWebView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD287175C83240051A020 /* UIWebView+CategoryOK.m */; };
+		3DBBD290175C8DF50051A020 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD28D175C8DF50051A020 /* CoreFoundation.framework */; };
+		3DBBD291175C8DF50051A020 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD28E175C8DF50051A020 /* CoreGraphics.framework */; };
+		3DBBD292175C8DF50051A020 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD28F175C8DF50051A020 /* CoreLocation.framework */; };
+		3DBBD294175C8DFF0051A020 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD293175C8DFF0051A020 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,6 +77,10 @@
 		3DBBD285175C83240051A020 /* UIView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+CategoryOK.m"; path = "../ui/UIView+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
 		3DBBD286175C83240051A020 /* UIWebView+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+CategoryOK.h"; path = "../ui/UIWebView+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
 		3DBBD287175C83240051A020 /* UIWebView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+CategoryOK.m"; path = "../ui/UIWebView+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
+		3DBBD28D175C8DF50051A020 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		3DBBD28E175C8DF50051A020 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3DBBD28F175C8DF50051A020 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		3DBBD293175C8DFF0051A020 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +88,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DBBD294175C8DFF0051A020 /* UIKit.framework in Frameworks */,
+				3DBBD290175C8DF50051A020 /* CoreFoundation.framework in Frameworks */,
+				3DBBD291175C8DF50051A020 /* CoreGraphics.framework in Frameworks */,
+				3DBBD292175C8DF50051A020 /* CoreLocation.framework in Frameworks */,
 				3DBBD20A175C7F710051A020 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,6 +119,10 @@
 		3DBBD208175C7F710051A020 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3DBBD293175C8DFF0051A020 /* UIKit.framework */,
+				3DBBD28D175C8DF50051A020 /* CoreFoundation.framework */,
+				3DBBD28E175C8DF50051A020 /* CoreGraphics.framework */,
+				3DBBD28F175C8DF50051A020 /* CoreLocation.framework */,
 				3DBBD209175C7F710051A020 /* Foundation.framework */,
 			);
 			name = Frameworks;
