@@ -17,10 +17,6 @@
 
 #import <Foundation/Foundation.h>
 
-//#define NO_NSDictionary_Plist_CATEGORY_OK
-
-#ifndef NO_NSDictionary_Plist_CATEGORY_OK
-
 @interface NSDictionary(Plists)
 
 - (NSData *) propertyListData;
@@ -34,5 +30,3 @@
 + (NSData *) binaryPropertyListDataWithDictionary:(NSDictionary *) dictionary;
 
 @end
-
-#endif

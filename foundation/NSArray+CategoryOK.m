@@ -23,12 +23,12 @@
 
 + (BOOL) isEmpty:(NSArray *)array
 {
-	return ([array count] == 0);
+	return NSArrayIsEmpty(array);
 }
 
 + (BOOL) isNotEmpty:(NSArray *)array
 {
-	return ([array count] > 0);
+	return NSArrayIsNotEmpty(array);
 }
 
 + (NSUInteger) array:(NSArray *)array previousIndexFrom:(NSUInteger)index

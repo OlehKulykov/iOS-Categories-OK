@@ -20,6 +20,17 @@
 #ifndef NO_NSArrayStaticInfo_CATEGORY_OK
 
 #import <Foundation/Foundation.h>
+#import <CoreFoundation/CoreFoundation.h>
+
+CG_INLINE BOOL NSArrayIsEmpty(NSArray * array)
+{
+	return (array) ? ([array count] == 0) : YES;
+}
+
+CG_INLINE BOOL NSArrayIsNotEmpty(NSArray * array)
+{
+	return (array) ? ([array count] > 0) : NO;
+}
 
 @interface NSArray (StaticInfo)
 
