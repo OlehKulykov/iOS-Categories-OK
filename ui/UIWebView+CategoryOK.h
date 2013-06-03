@@ -15,11 +15,9 @@
  */
 
 
-//#define NO_UIWebViewContentSize_CATEGORY_OK
-
-#ifndef NO_UIWebViewContentSize_CATEGORY_OK
-
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 @interface UIWebView (ContentSize)
 
@@ -27,4 +25,3 @@
 
 @end
 
-#endif

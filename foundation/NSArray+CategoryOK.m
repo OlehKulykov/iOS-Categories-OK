@@ -17,8 +17,6 @@
 
 #import "NSArray+CategoryOK.h"
 
-#ifndef NO_NSArrayStaticInfo_CATEGORY_OK
-
 @implementation NSArray (StaticInfo)
 
 + (BOOL) isEmpty:(NSArray *)array
@@ -56,4 +54,3 @@
 
 @end
 
-#endif

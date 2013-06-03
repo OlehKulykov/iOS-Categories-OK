@@ -19,8 +19,6 @@
 #import <CoreFoundation/CoreFoundation.h>
 
 
-#ifndef NO_UIImageViewLoadFromURL_CATEGORY_OK
-
 #define URL_KEY @"1"
 #define IS_USE_INDICATOR_KEY @"2"
 #define INDICATOR_VIEW_KEY @"3"
@@ -219,4 +217,3 @@ CG_INLINE NSInvocation * __UIImageViewLoadFromURLInvocation(UIImageView * imageV
 
 @end
 
-#endif

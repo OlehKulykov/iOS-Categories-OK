@@ -4,6 +4,8 @@
 # exclude patterns (uncomment them if you want to use them):
 # *.[oa]
 # *~
+framework/iOSCategoriesOKSDK.framework
+framework/libiOSCategoriesOKSDK.a
 .DS_Store
 *.mode1v3
 *.pbxuser

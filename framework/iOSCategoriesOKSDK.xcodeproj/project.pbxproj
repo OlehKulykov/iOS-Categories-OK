@@ -1,0 +1,375 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3DBBD20A175C7F710051A020 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD209175C7F710051A020 /* Foundation.framework */; };
+		3DBBD25E175C81420051A020 /* JSONObjectToNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD25B175C81420051A020 /* JSONObjectToNative.m */; };
+		3DBBD25F175C81420051A020 /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD25D175C81420051A020 /* MachTime.m */; };
+		3DBBD265175C82AF0051A020 /* AnchorPointRotatableUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD264175C82AF0051A020 /* AnchorPointRotatableUIView.m */; };
+		3DBBD271175C82B90051A020 /* CLLocation+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD268175C82B90051A020 /* CLLocation+CategoryOK.m */; };
+		3DBBD272175C82B90051A020 /* NSArray+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD26A175C82B90051A020 /* NSArray+CategoryOK.m */; };
+		3DBBD273175C82B90051A020 /* NSData+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD26C175C82B90051A020 /* NSData+CategoryOK.m */; };
+		3DBBD274175C82B90051A020 /* NSDictionary+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD26E175C82B90051A020 /* NSDictionary+CategoryOK.m */; };
+		3DBBD275175C82B90051A020 /* NSString+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD270175C82B90051A020 /* NSString+CategoryOK.m */; };
+		3DBBD27B175C831B0051A020 /* RequestFieldsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD278175C831B0051A020 /* RequestFieldsContainer.m */; };
+		3DBBD27C175C831B0051A020 /* RequestGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD27A175C831B0051A020 /* RequestGenerator.m */; };
+		3DBBD288175C83240051A020 /* UIColor+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD27F175C83240051A020 /* UIColor+CategoryOK.m */; };
+		3DBBD289175C83240051A020 /* UIImageView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD281175C83240051A020 /* UIImageView+CategoryOK.m */; };
+		3DBBD28A175C83240051A020 /* UITableView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD283175C83240051A020 /* UITableView+CategoryOK.m */; };
+		3DBBD28B175C83240051A020 /* UIView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD285175C83240051A020 /* UIView+CategoryOK.m */; };
+		3DBBD28C175C83240051A020 /* UIWebView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD287175C83240051A020 /* UIWebView+CategoryOK.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3DBBD204175C7F710051A020 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3DBBD206175C7F710051A020 /* libiOSCategoriesOKSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiOSCategoriesOKSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DBBD209175C7F710051A020 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3DBBD258175C81420051A020 /* CGRect+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CGRect+CategoryOK.h"; path = "../common/CGRect+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
+		3DBBD259175C81420051A020 /* CustomMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomMath.h; path = ../common/CustomMath.h; sourceTree = SOURCE_ROOT; };
+		3DBBD25A175C81420051A020 /* JSONObjectToNative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONObjectToNative.h; path = ../common/JSONObjectToNative.h; sourceTree = SOURCE_ROOT; };
+		3DBBD25B175C81420051A020 /* JSONObjectToNative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONObjectToNative.m; path = ../common/JSONObjectToNative.m; sourceTree = SOURCE_ROOT; };
+		3DBBD25C175C81420051A020 /* MachTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachTime.h; path = ../common/MachTime.h; sourceTree = SOURCE_ROOT; };
+		3DBBD25D175C81420051A020 /* MachTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachTime.m; path = ../common/MachTime.m; sourceTree = SOURCE_ROOT; };
+		3DBBD261175C81D70051A020 /* iOSCategoriesOKSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = iOSCategoriesOKSDK.h; path = ../common/iOSCategoriesOKSDK.h; sourceTree = SOURCE_ROOT; };
+		3DBBD263175C82AF0051A020 /* AnchorPointRotatableUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnchorPointRotatableUIView.h; path = ../derived/AnchorPointRotatableUIView.h; sourceTree = SOURCE_ROOT; };
+		3DBBD264175C82AF0051A020 /* AnchorPointRotatableUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnchorPointRotatableUIView.m; path = ../derived/AnchorPointRotatableUIView.m; sourceTree = SOURCE_ROOT; };
+		3DBBD267175C82B90051A020 /* CLLocation+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLLocation+CategoryOK.h"; path = "../foundation/CLLocation+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
+		3DBBD268175C82B90051A020 /* CLLocation+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLLocation+CategoryOK.m"; path = "../foundation/CLLocation+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
+		3DBBD269175C82B90051A020 /* NSArray+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+CategoryOK.h"; path = "../foundation/NSArray+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
+		3DBBD26A175C82B90051A020 /* NSArray+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+CategoryOK.m"; path = "../foundation/NSArray+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
+		3DBBD26B175C82B90051A020 /* NSData+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+CategoryOK.h"; path = "../foundation/NSData+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
+		3DBBD26C175C82B90051A020 /* NSData+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+CategoryOK.m"; path = "../foundation/NSData+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
+		3DBBD26D175C82B90051A020 /* NSDictionary+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+CategoryOK.h"; path = "../foundation/NSDictionary+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
+		3DBBD26E175C82B90051A020 /* NSDictionary+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+CategoryOK.m"; path = "../foundation/NSDictionary+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
+		3DBBD26F175C82B90051A020 /* NSString+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+CategoryOK.h"; path = "../foundation/NSString+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
+		3DBBD270175C82B90051A020 /* NSString+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+CategoryOK.m"; path = "../foundation/NSString+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
+		3DBBD277175C831B0051A020 /* RequestFieldsContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestFieldsContainer.h; path = ../net/RequestFieldsContainer.h; sourceTree = SOURCE_ROOT; };
+		3DBBD278175C831B0051A020 /* RequestFieldsContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequestFieldsContainer.m; path = ../net/RequestFieldsContainer.m; sourceTree = SOURCE_ROOT; };
+		3DBBD279175C831B0051A020 /* RequestGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestGenerator.h; path = ../net/RequestGenerator.h; sourceTree = SOURCE_ROOT; };
+		3DBBD27A175C831B0051A020 /* RequestGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequestGenerator.m; path = ../net/RequestGenerator.m; sourceTree = SOURCE_ROOT; };
+		3DBBD27E175C83240051A020 /* UIColor+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+CategoryOK.h"; path = "../ui/UIColor+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
+		3DBBD27F175C83240051A020 /* UIColor+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+CategoryOK.m"; path = "../ui/UIColor+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
+		3DBBD280175C83240051A020 /* UIImageView+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+CategoryOK.h"; path = "../ui/UIImageView+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
+		3DBBD281175C83240051A020 /* UIImageView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+CategoryOK.m"; path = "../ui/UIImageView+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
+		3DBBD282175C83240051A020 /* UITableView+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableView+CategoryOK.h"; path = "../ui/UITableView+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
+		3DBBD283175C83240051A020 /* UITableView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableView+CategoryOK.m"; path = "../ui/UITableView+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
+		3DBBD284175C83240051A020 /* UIView+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+CategoryOK.h"; path = "../ui/UIView+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
+		3DBBD285175C83240051A020 /* UIView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+CategoryOK.m"; path = "../ui/UIView+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
+		3DBBD286175C83240051A020 /* UIWebView+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+CategoryOK.h"; path = "../ui/UIWebView+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
+		3DBBD287175C83240051A020 /* UIWebView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+CategoryOK.m"; path = "../ui/UIWebView+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3DBBD203175C7F710051A020 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DBBD20A175C7F710051A020 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3DBBD1FD175C7F710051A020 = {
+			isa = PBXGroup;
+			children = (
+				3DBBD20B175C7F710051A020 /* iOSCategoriesOKSDK */,
+				3DBBD208175C7F710051A020 /* Frameworks */,
+				3DBBD207175C7F710051A020 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3DBBD207175C7F710051A020 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3DBBD206175C7F710051A020 /* libiOSCategoriesOKSDK.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3DBBD208175C7F710051A020 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3DBBD209175C7F710051A020 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3DBBD20B175C7F710051A020 /* iOSCategoriesOKSDK */ = {
+			isa = PBXGroup;
+			children = (
+				3DBBD27D175C83240051A020 /* ui */,
+				3DBBD276175C831B0051A020 /* net */,
+				3DBBD266175C82B90051A020 /* foundation */,
+				3DBBD262175C82AF0051A020 /* derived */,
+				3DBBD257175C81420051A020 /* common */,
+			);
+			path = iOSCategoriesOKSDK;
+			sourceTree = "<group>";
+		};
+		3DBBD257175C81420051A020 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				3DBBD261175C81D70051A020 /* iOSCategoriesOKSDK.h */,
+				3DBBD258175C81420051A020 /* CGRect+CategoryOK.h */,
+				3DBBD259175C81420051A020 /* CustomMath.h */,
+				3DBBD25A175C81420051A020 /* JSONObjectToNative.h */,
+				3DBBD25B175C81420051A020 /* JSONObjectToNative.m */,
+				3DBBD25C175C81420051A020 /* MachTime.h */,
+				3DBBD25D175C81420051A020 /* MachTime.m */,
+			);
+			name = common;
+			path = ../../common;
+			sourceTree = "<group>";
+		};
+		3DBBD262175C82AF0051A020 /* derived */ = {
+			isa = PBXGroup;
+			children = (
+				3DBBD263175C82AF0051A020 /* AnchorPointRotatableUIView.h */,
+				3DBBD264175C82AF0051A020 /* AnchorPointRotatableUIView.m */,
+			);
+			name = derived;
+			path = ../../derived;
+			sourceTree = "<group>";
+		};
+		3DBBD266175C82B90051A020 /* foundation */ = {
+			isa = PBXGroup;
+			children = (
+				3DBBD267175C82B90051A020 /* CLLocation+CategoryOK.h */,
+				3DBBD268175C82B90051A020 /* CLLocation+CategoryOK.m */,
+				3DBBD269175C82B90051A020 /* NSArray+CategoryOK.h */,
+				3DBBD26A175C82B90051A020 /* NSArray+CategoryOK.m */,
+				3DBBD26B175C82B90051A020 /* NSData+CategoryOK.h */,
+				3DBBD26C175C82B90051A020 /* NSData+CategoryOK.m */,
+				3DBBD26D175C82B90051A020 /* NSDictionary+CategoryOK.h */,
+				3DBBD26E175C82B90051A020 /* NSDictionary+CategoryOK.m */,
+				3DBBD26F175C82B90051A020 /* NSString+CategoryOK.h */,
+				3DBBD270175C82B90051A020 /* NSString+CategoryOK.m */,
+			);
+			name = foundation;
+			path = ../../foundation;
+			sourceTree = "<group>";
+		};
+		3DBBD276175C831B0051A020 /* net */ = {
+			isa = PBXGroup;
+			children = (
+				3DBBD277175C831B0051A020 /* RequestFieldsContainer.h */,
+				3DBBD278175C831B0051A020 /* RequestFieldsContainer.m */,
+				3DBBD279175C831B0051A020 /* RequestGenerator.h */,
+				3DBBD27A175C831B0051A020 /* RequestGenerator.m */,
+			);
+			name = net;
+			path = ../../net;
+			sourceTree = "<group>";
+		};
+		3DBBD27D175C83240051A020 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				3DBBD27E175C83240051A020 /* UIColor+CategoryOK.h */,
+				3DBBD27F175C83240051A020 /* UIColor+CategoryOK.m */,
+				3DBBD280175C83240051A020 /* UIImageView+CategoryOK.h */,
+				3DBBD281175C83240051A020 /* UIImageView+CategoryOK.m */,
+				3DBBD282175C83240051A020 /* UITableView+CategoryOK.h */,
+				3DBBD283175C83240051A020 /* UITableView+CategoryOK.m */,
+				3DBBD284175C83240051A020 /* UIView+CategoryOK.h */,
+				3DBBD285175C83240051A020 /* UIView+CategoryOK.m */,
+				3DBBD286175C83240051A020 /* UIWebView+CategoryOK.h */,
+				3DBBD287175C83240051A020 /* UIWebView+CategoryOK.m */,
+			);
+			name = ui;
+			path = ../../ui;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3DBBD205175C7F710051A020 /* iOSCategoriesOKSDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3DBBD214175C7F710051A020 /* Build configuration list for PBXNativeTarget "iOSCategoriesOKSDK" */;
+			buildPhases = (
+				3DBBD202175C7F710051A020 /* Sources */,
+				3DBBD203175C7F710051A020 /* Frameworks */,
+				3DBBD204175C7F710051A020 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iOSCategoriesOKSDK;
+			productName = iOSCategoriesOKSDK;
+			productReference = 3DBBD206175C7F710051A020 /* libiOSCategoriesOKSDK.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3DBBD1FE175C7F710051A020 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = n;
+			};
+			buildConfigurationList = 3DBBD201175C7F710051A020 /* Build configuration list for PBXProject "iOSCategoriesOKSDK" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3DBBD1FD175C7F710051A020;
+			productRefGroup = 3DBBD207175C7F710051A020 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3DBBD205175C7F710051A020 /* iOSCategoriesOKSDK */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3DBBD202175C7F710051A020 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DBBD25E175C81420051A020 /* JSONObjectToNative.m in Sources */,
+				3DBBD25F175C81420051A020 /* MachTime.m in Sources */,
+				3DBBD265175C82AF0051A020 /* AnchorPointRotatableUIView.m in Sources */,
+				3DBBD271175C82B90051A020 /* CLLocation+CategoryOK.m in Sources */,
+				3DBBD272175C82B90051A020 /* NSArray+CategoryOK.m in Sources */,
+				3DBBD273175C82B90051A020 /* NSData+CategoryOK.m in Sources */,
+				3DBBD274175C82B90051A020 /* NSDictionary+CategoryOK.m in Sources */,
+				3DBBD275175C82B90051A020 /* NSString+CategoryOK.m in Sources */,
+				3DBBD27B175C831B0051A020 /* RequestFieldsContainer.m in Sources */,
+				3DBBD27C175C831B0051A020 /* RequestGenerator.m in Sources */,
+				3DBBD288175C83240051A020 /* UIColor+CategoryOK.m in Sources */,
+				3DBBD289175C83240051A020 /* UIImageView+CategoryOK.m in Sources */,
+				3DBBD28A175C83240051A020 /* UITableView+CategoryOK.m in Sources */,
+				3DBBD28B175C83240051A020 /* UIView+CategoryOK.m in Sources */,
+				3DBBD28C175C83240051A020 /* UIWebView+CategoryOK.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3DBBD212175C7F710051A020 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3DBBD213175C7F710051A020 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3DBBD215175C7F710051A020 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/iOSCategoriesOKSDK.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		3DBBD216175C7F710051A020 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/iOSCategoriesOKSDK.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3DBBD201175C7F710051A020 /* Build configuration list for PBXProject "iOSCategoriesOKSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3DBBD212175C7F710051A020 /* Debug */,
+				3DBBD213175C7F710051A020 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3DBBD214175C7F710051A020 /* Build configuration list for PBXNativeTarget "iOSCategoriesOKSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3DBBD215175C7F710051A020 /* Debug */,
+				3DBBD216175C7F710051A020 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3DBBD1FE175C7F710051A020 /* Project object */;
+}

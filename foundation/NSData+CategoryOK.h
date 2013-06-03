@@ -15,11 +15,8 @@
  */
 
 
-//#define NO_DataZIPCompression_CATEGORY_OK
-
-#ifndef NO_DataZIPCompression_CATEGORY_OK
-
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 @interface NSData (DataZIPCompression)
 
@@ -29,4 +26,4 @@
 
 @end
 
-#endif
+

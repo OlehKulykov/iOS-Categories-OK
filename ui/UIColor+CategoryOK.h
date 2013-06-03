@@ -15,10 +15,6 @@
  */
 
 
-//#import "UI+CategoryOKConfig.h"
-
-#ifndef NO_UIColorRGBA_CATEGORY_OK
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -159,5 +155,4 @@ UIColor * UIColorMakeWithHEX(NSString * hexString);
 
 @end
 
-#endif 
 

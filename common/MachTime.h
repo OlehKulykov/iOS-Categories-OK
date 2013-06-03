@@ -15,17 +15,13 @@
  */
 
 
-//#define NO_MACHTIME_CATEGORY_OK
-
-#ifndef NO_MACHTIME_CATEGORY_OK
-
 #import <Foundation/Foundation.h>
 
 @interface MachTime : NSObject
 
 + (NSTimeInterval) currentTime;
 
-@end
++ (uint64_t) machAbsoluteTime;
 
-#endif
+@end
 

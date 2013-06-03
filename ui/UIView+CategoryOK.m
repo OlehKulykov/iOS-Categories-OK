@@ -18,8 +18,6 @@
 #import "UIView+CategoryOK.h"
 #import <QuartzCore/QuartzCore.h>
 
-#ifndef NO_UIViewBackgroundImage_CATEGORY_OK
-
 @implementation UIView (BackgroundImage)
 
 - (void) setBackgroundImage:(UIImage *)backgroundImage
@@ -30,11 +28,7 @@
 
 @end
 
-#endif
 
-
-
-#ifndef NO_UIViewSimpleFrame_CATEGORY_OK
 
 @implementation UIView (SimpleFrame)
 
@@ -87,8 +81,6 @@
 }
 
 @end
-
-#endif
 
 
 

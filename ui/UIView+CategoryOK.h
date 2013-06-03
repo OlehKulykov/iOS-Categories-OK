@@ -15,13 +15,8 @@
  */
 
 
-//#define NO_UIViewBackgroundImage_CATEGORY_OK
-//#define NO_UIViewSimpleFrame_CATEGORY_OK
-
-
 #import <UIKit/UIKit.h>
 
-#ifndef NO_UIViewBackgroundImage_CATEGORY_OK
 
 @interface UIView (BackgroundImage)
 
@@ -30,11 +25,6 @@
 
 @end
 
-#endif
-
-
-
-#ifndef NO_UIViewSimpleFrame_CATEGORY_OK
 
 @interface UIView (SimpleFrame)
 
@@ -45,7 +35,6 @@
 
 @end
 
-#endif
 
 
 

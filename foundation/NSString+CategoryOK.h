@@ -17,6 +17,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreFoundation/CoreFoundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 CG_INLINE BOOL NSStringIsEmpty(NSString * stringToTest)
 {
@@ -44,8 +45,6 @@ CG_INLINE BOOL NSStringIsNotEmpty(NSString * stringToTest)
 
 
 
-#ifndef NO_NSStringSpecialHTMLCharacters_CATEGORY_OK
-
 @interface NSString (SpecialHTMLCharacters)
 
 
@@ -55,8 +54,6 @@ CG_INLINE BOOL NSStringIsNotEmpty(NSString * stringToTest)
 
 
 @end
-
-#endif
 
 
 

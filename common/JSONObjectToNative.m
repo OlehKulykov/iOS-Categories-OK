@@ -17,8 +17,6 @@
 
 #import "JSONObjectToNative.h"
 
-#ifndef NO_JSONOBJECTTONATIVE_CATEGORY_OK
-
 NSInteger JSONObjectToInteger(id object)
 {
 	if ([object isKindOfClass:[NSNumber class]] || [object isKindOfClass:[NSString class]])
@@ -140,5 +138,4 @@ NSDate * JSONObjectToDate(id object)
 	return nil;
 }
 
-#endif
 

@@ -17,8 +17,6 @@
 
 #import "NSData+CategoryOK.h"
 
-#ifndef NO_DataZIPCompression_CATEGORY_OK
-
 #include <zlib.h>
 #import <CoreFoundation/CoreFoundation.h>
 
@@ -165,4 +163,3 @@ CG_INLINE bool __NSDataDataZIPCompressionAppend(NSMutableData * data,
 
 @end
 
-#endif

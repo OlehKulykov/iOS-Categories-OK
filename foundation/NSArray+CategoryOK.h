@@ -15,18 +15,17 @@
  */
 
 
-//#define NO_NSArrayStaticInfo_CATEGORY_OK
-
-#ifndef NO_NSArrayStaticInfo_CATEGORY_OK
-
 #import <Foundation/Foundation.h>
 #import <CoreFoundation/CoreFoundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
+/// Check is array has no objects
 CG_INLINE BOOL NSArrayIsEmpty(NSArray * array)
 {
 	return (array) ? ([array count] == 0) : YES;
 }
 
+/// Check is array has objects
 CG_INLINE BOOL NSArrayIsNotEmpty(NSArray * array)
 {
 	return (array) ? ([array count] > 0) : NO;
@@ -34,7 +33,7 @@ CG_INLINE BOOL NSArrayIsNotEmpty(NSArray * array)
 
 @interface NSArray (StaticInfo)
 
-/// Check is array has none objects
+/// Check is array has no objects
 + (BOOL) isEmpty:(NSArray *)array;
 
 /// Check is array has objects
@@ -48,4 +47,3 @@ CG_INLINE BOOL NSArrayIsNotEmpty(NSArray * array)
 
 @end
 
-#endif

@@ -17,8 +17,6 @@
 
 #import "CLLocation+CategoryOK.h"
 
-#ifndef NO_CLLocationDistancePrevTo_iOS_3_2_CATEGORY_OK
-
 #import "../common/CustomMath.h"
 #include <math.h>
 
@@ -92,4 +90,4 @@ CLLocationDistance GetDistanceBetweenLocations(CLLocation * firstLocation,
 
 @end
 
-#endif
+

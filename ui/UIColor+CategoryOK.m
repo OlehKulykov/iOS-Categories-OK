@@ -17,8 +17,6 @@
 
 #import "UIColor+CategoryOK.h"
 
-#ifndef NO_UIColorRGBA_CATEGORY_OK
-
 UIColor * UIColorMakeWithRGB(uint8_t red,
 							 uint8_t green,
 							 uint8_t blue)
@@ -139,6 +137,4 @@ UIColor * UIColorMakeWithHEX(NSString * hexString)
 }
 
 @end
-
-#endif 
 

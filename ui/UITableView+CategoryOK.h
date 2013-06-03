@@ -15,10 +15,6 @@
  */
 
 
-//#define NO_UITableViewFullContentHeight_CATEGORY_OK
-
-#ifndef NO_UITableViewFullContentHeight_CATEGORY_OK
-
 #import <UIKit/UIKit.h>
 
 @interface UITableView (FullContentHeight)
@@ -29,4 +25,4 @@
 
 @end
 
-#endif
+

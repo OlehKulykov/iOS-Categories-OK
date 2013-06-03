@@ -15,11 +15,9 @@
  */
 
 
-//#define NO_UIImageViewLoadFromURL_CATEGORY_OK
-
-#ifndef NO_UIImageViewLoadFromURL_CATEGORY_OK
-
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 @interface UIImageView (LoadFromURL)
 
@@ -39,4 +37,3 @@
 
 @end
 
-#endif

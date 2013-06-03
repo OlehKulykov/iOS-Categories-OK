@@ -16,6 +16,11 @@
 
 
 #import "NSString+CategoryOK.h"
+#import "../common/MachTime.h"
+
+#import <CoreFoundation/CoreFoundation.h>
+#include <unistd.h>
+#include <sys/stat.h>
 
 @implementation NSString(IsEmpty)
 
@@ -46,8 +51,6 @@
 
 @end
 
-
-#ifndef NO_NSStringSpecialHTMLCharacters_CATEGORY_OK
 
 typedef struct __NSStringSpecialHTMLCharactersStruct
 {
@@ -367,13 +370,6 @@ static __NSStringSpecialHTMLCharactersStruct * NSStringSpecialHTMLCharactersTabl
 
 @end
 
-#endif
-
-
-#import <CoreFoundation/CoreFoundation.h>
-#include <unistd.h>
-#include <sys/stat.h>
-
 static NSString * __NSStringSystemPathsGetFirstPathFromArray(NSArray * pathsArray)
 {
 	if ([pathsArray count]) 
@@ -462,7 +458,6 @@ BOOL __NSStringSystemPathsCreateFullPathIfNeeded(NSString * path)
 	return nil;
 }
 
-#import <mach/mach_time.h>
 + (NSString *) uniqFileFullPathInDirectory:(NSString *) directoryPath
 {
 	if (directoryPath)
@@ -476,7 +471,7 @@ BOOL __NSStringSystemPathsCreateFullPathIfNeeded(NSString * path)
 				int count = -1, max = 5;
 				while (++count < max)
 				{
-					NSString * newPath = [directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%llu.file", mach_absolute_time()]];
+					NSString * newPath = [directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%llu.file", [MachTime machAbsoluteTime]]];
 					if (newPath)
 					{
 						if (![manager fileExistsAtPath:newPath])

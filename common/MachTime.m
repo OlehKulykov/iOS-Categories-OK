@@ -17,8 +17,6 @@
 
 #import "MachTime.h"
 
-#ifndef NO_MACHTIME_CATEGORY_OK
-
 #include <inttypes.h>
 #include <mach/mach_time.h>
 
@@ -53,7 +51,10 @@ static __MachTimeStructPrivate timeStructPrivate = { 0 };
 	return ((double_t)(mach_absolute_time() - timeStructPrivate.absoluteAppStartTime) * timeStructPrivate.nanoSecond);
 }
 
-@end
++ (uint64_t) machAbsoluteTime
+{
+	return mach_absolute_time();
+}
 
-#endif
+@end
 

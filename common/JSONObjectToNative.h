@@ -15,12 +15,9 @@
  */
 
 
-//#define NO_JSONOBJECTTONATIVE_CATEGORY_OK
-
-
-#ifndef NO_JSONOBJECTTONATIVE_CATEGORY_OK
-
 #import <Foundation/Foundation.h>
+#import <CoreFoundation/CoreFoundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 NSInteger JSONObjectToInteger(id object);
 
@@ -42,5 +39,4 @@ NSArray * JSONObjectToArray(id object);
 
 NSDate * JSONObjectToDate(id object);
 
-#endif
 

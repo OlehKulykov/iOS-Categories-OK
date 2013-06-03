@@ -17,7 +17,6 @@
 
 #import "UITableView+CategoryOK.h"
 
-#ifndef NO_UITableViewFullContentHeight_CATEGORY_OK
 
 @implementation UITableView(FullContentHeight)
 
@@ -50,4 +49,3 @@ static CGFloat __UITableViewGetFullContentHeight(UITableView * tableView)
 
 @end
 
-#endif

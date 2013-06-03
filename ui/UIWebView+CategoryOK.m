@@ -17,8 +17,6 @@
 
 #import "UIWebView+CategoryOK.h"
 
-#ifndef NO_UIWebViewContentSize_CATEGORY_OK
-
 @implementation UIWebView (ContentSize)
 
 - (CGSize) contentSize
@@ -36,4 +34,3 @@
 
 @end
 
-#endif

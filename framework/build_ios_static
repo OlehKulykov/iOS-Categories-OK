@@ -1,0 +1,70 @@
+rm -rf iOSCategoriesOKSDK.framework
+rm -f *.a
+
+xcodebuild -configuration Release -project iOSCategoriesOKSDK.xcodeproj -target iOSCategoriesOKSDK -arch i386 -sdk iphonesimulator OBJROOT=obj SYMROOT=sym clean build
+mv sym/Release-iphonesimulator/libiOSCategoriesOKSDK.a libiOSCategoriesOKSDK-iphonesimulator.a
+cd obj
+find . -type f -iregex '.*\.o$' | xargs -I @ ar -q -v ../all-i386.a @
+cd ..
+rm -rf obj
+rm -rf sym
+
+xcodebuild -configuration Release -project iOSCategoriesOKSDK.xcodeproj -target iOSCategoriesOKSDK -arch armv7 -sdk iphoneos OBJROOT=obj SYMROOT=sym clean build
+mv sym/Release-iphoneos/libiOSCategoriesOKSDK.a libiOSCategoriesOKSDK-armv7.a
+cd obj
+find . -type f -iregex '.*\.o$' | xargs -I @ ar -q -v ../all-armv7.a @
+cd ..
+rm -rf obj
+rm -rf sym
+
+xcodebuild -configuration Release -project iOSCategoriesOKSDK.xcodeproj -target iOSCategoriesOKSDK -arch armv7s -sdk iphoneos OBJROOT=obj SYMROOT=sym clean build
+mv sym/Release-iphoneos/libiOSCategoriesOKSDK.a libiOSCategoriesOKSDK-armv7s.a
+cd obj
+find . -type f -iregex '.*\.o$' | xargs -I @ ar -q -v ../all-armv7s.a @
+cd ..
+rm -rf obj
+rm -rf sym
+
+
+lipo -create libiOSCategoriesOKSDK-iphonesimulator.a libiOSCategoriesOKSDK-armv7.a libiOSCategoriesOKSDK-armv7s.a -output libiOSCategoriesOKSDK.a
+rm -f libiOSCategoriesOKSDK-iphonesimulator.a
+rm -f libiOSCategoriesOKSDK-armv7.a
+rm -f libiOSCategoriesOKSDK-armv7s.a
+
+
+
+lipo -create all-i386.a all-armv7.a all-armv7s.a -output all.a
+rm -f all-i386.a
+rm -f all-armv7.a
+rm -f all-armv7s.a
+
+
+
+rm -rf iOSCategoriesOKSDK.framework
+mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Headers
+
+mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Headers/common
+mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Headers/derived
+mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Headers/foundation
+mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Headers/net
+mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Headers/ui
+
+cp ../common/*.h iOSCategoriesOKSDK.framework/Versions/A/Headers/common/
+cp ../derived/*.h iOSCategoriesOKSDK.framework/Versions/A/Headers/derived/
+cp ../foundation/*.h iOSCategoriesOKSDK.framework/Versions/A/Headers/foundation/
+cp ../net/*.h iOSCategoriesOKSDK.framework/Versions/A/Headers/net/
+cp ../ui/*.h iOSCategoriesOKSDK.framework/Versions/A/Headers/ui/
+
+mv iOSCategoriesOKSDK.framework/Versions/A/Headers/common/iOSCategoriesOKSDK.h iOSCategoriesOKSDK.framework/Versions/A/Headers/iOSCategoriesOKSDK.h
+
+mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Resources
+cp all.a iOSCategoriesOKSDK
+cp iOSCategoriesOKSDK iOSCategoriesOKSDK.framework/Versions/A
+
+ln -s A iOSCategoriesOKSDK.framework/Versions/Current
+ln -s Versions/Current/Headers iOSCategoriesOKSDK.framework/Headers
+ln -s Versions/Current/Resources iOSCategoriesOKSDK.framework/Resources
+ln -s Versions/Current/iOSCategoriesOKSDK iOSCategoriesOKSDK.framework/iOSCategoriesOKSDK
+
+rm -f iOSCategoriesOKSDK
+rm -f all.a

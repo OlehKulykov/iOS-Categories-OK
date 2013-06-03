@@ -15,10 +15,6 @@
  */
 
 
-//#define NO_CLLocationDistancePrevTo_iOS_3_2_CATEGORY_OK
-
-#ifndef NO_CLLocationDistancePrevTo_iOS_3_2_CATEGORY_OK
-
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
@@ -40,4 +36,4 @@ CLLocationDistance GetDistanceBetweenLocations(CLLocation * firstLocation,
 
 @end
 
-#endif
+
