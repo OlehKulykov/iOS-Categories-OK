@@ -17,8 +17,19 @@
 
 #import "NSString+CategoryOK.h"
 
+@implementation NSString(IsEmpty)
 
-#ifndef NO_NSStringContaines_CATEGORY_OK
++ (BOOL) isEmpty:(NSString *)stringToTest
+{
+	return NSStringIsEmpty(stringToTest);
+}
+
++ (BOOL) isNotEmpty:(NSString *)stringToTest
+{
+	return NSStringIsNotEmpty(stringToTest);
+}
+
+@end
 
 @implementation NSString(Containes)
 
@@ -34,8 +45,6 @@
 
 
 @end
-
-#endif
 
 
 #ifndef NO_NSStringSpecialHTMLCharacters_CATEGORY_OK
@@ -361,8 +370,6 @@ static __NSStringSpecialHTMLCharactersStruct * NSStringSpecialHTMLCharactersTabl
 #endif
 
 
-#ifndef NO_NSStringSystemPaths_CATEGORY_OK
-
 #import <CoreFoundation/CoreFoundation.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -402,9 +409,89 @@ static NSString * __NSStringSystemPathsGetFirstPathFromArray(NSArray * pathsArra
 	return __NSStringSystemPathsGetFirstPathFromArray(pathsArray);
 }
 
-@end
++ (NSString *) tempFileFullPath
+{
+	NSArray * pathsArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString * path = __NSStringSystemPathsGetFirstPathFromArray(pathsArray);
+	if (!path) return nil;
+	
+	NSString * fullFilePath = nil;
+	while (!fullFilePath) 
+	{
+		fullFilePath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"tmp%u", arc4random()]];
+		if (fullFilePath) 
+		{
+			if ([[NSFileManager defaultManager] fileExistsAtPath:fullFilePath])
+			{
+				fullFilePath = nil;
+			}
+		}
+	}
+	
+	return fullFilePath;
+}
 
-#endif
+BOOL __NSStringSystemPathsCreateFullPathIfNeeded(NSString * path)
+{
+	if (path) 
+	{
+		NSFileManager * manager = [NSFileManager defaultManager];
+		BOOL isDir = NO;
+		if ([manager fileExistsAtPath:path isDirectory:&isDir]) 
+		{
+			if (isDir && [manager isReadableFileAtPath:path] && [manager isWritableFileAtPath:path]) 
+			{
+				return YES;
+			}
+			[manager removeItemAtPath:path error:nil];
+		}
+		
+		return [manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+	}
+	return NO;
+}
+
++ (NSString *) storageDirFullPathForClass:(Class) targetClass
+{
+	NSString * path = [NSString userDocumentPath];
+	if (path)
+	{
+		path = [path stringByAppendingPathComponent:NSStringFromClass(targetClass)];
+		return __NSStringSystemPathsCreateFullPathIfNeeded(path) ? path : nil;
+	}
+	return nil;
+}
+
+#import <mach/mach_time.h>
++ (NSString *) uniqFileFullPathInDirectory:(NSString *) directoryPath
+{
+	if (directoryPath)
+	{
+		BOOL isDir = NO;
+		NSFileManager * manager = [NSFileManager defaultManager];
+		if ([manager fileExistsAtPath:directoryPath isDirectory:&isDir])
+		{
+			if (isDir)
+			{
+				int count = -1, max = 5;
+				while (++count < max)
+				{
+					NSString * newPath = [directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%llu.file", mach_absolute_time()]];
+					if (newPath)
+					{
+						if (![manager fileExistsAtPath:newPath])
+						{
+							return newPath;
+						}
+					}
+				}
+			}
+		}
+	}
+	return nil;
+}
+
+@end
 
 
 

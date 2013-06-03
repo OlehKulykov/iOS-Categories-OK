@@ -15,7 +15,7 @@
  */
 
 
-//#define NO_UIColorRGBA_CATEGORY_OK
+//#import "UI+CategoryOKConfig.h"
 
 #ifndef NO_UIColorRGBA_CATEGORY_OK
 

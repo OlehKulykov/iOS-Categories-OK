@@ -15,13 +15,26 @@
  */
 
 
-//#define NO_NSStringContaines_CATEGORY_OK
-//#define NO_NSStringSpecialHTMLCharacters_CATEGORY_OK
-//#define NO_NSStringSystemPaths_CATEGORY_OK
-
 #import <Foundation/Foundation.h>
+#import <CoreFoundation/CoreFoundation.h>
 
-#ifndef NO_NSStringContaines_CATEGORY_OK
+CG_INLINE BOOL NSStringIsEmpty(NSString * stringToTest)
+{
+	return (stringToTest) ? ([stringToTest length] == 0) : YES;
+}
+
+CG_INLINE BOOL NSStringIsNotEmpty(NSString * stringToTest)
+{
+	return (stringToTest) ? ([stringToTest length] > 0) : NO;
+}
+
+@interface NSString(IsEmpty)
+
++ (BOOL) isEmpty:(NSString *)stringToTest;
+
++ (BOOL) isNotEmpty:(NSString *)stringToTest;
+
+@end
 
 @interface NSString (Containes)
 
@@ -29,7 +42,6 @@
 
 @end
 
-#endif
 
 
 #ifndef NO_NSStringSpecialHTMLCharacters_CATEGORY_OK
@@ -47,7 +59,6 @@
 #endif
 
 
-#ifndef NO_NSStringSystemPaths_CATEGORY_OK
 
 @interface NSString (SystemPaths)
 
@@ -55,7 +66,15 @@
 
 + (NSString *) userCachePath;
 
++ (NSString *) tempFileFullPath;
+
+/// Returns existed path based on user document path with read/write permissions.
+/// Class directory will be created.
++ (NSString *) storageDirFullPathForClass:(Class) targetClass;
+
++ (NSString *) uniqFileFullPathInDirectory:(NSString *) directoryPath;
+
 @end
 
-#endif
+
 
