@@ -30,7 +30,7 @@
 
 
 #import "derived/AnchorPointRotatableUIView.h"
-
+#import "derived/StorageBase.h"
 
 #import "foundation/CLLocation+CategoryOK.h"
 #import "foundation/NSArray+CategoryOK.h"

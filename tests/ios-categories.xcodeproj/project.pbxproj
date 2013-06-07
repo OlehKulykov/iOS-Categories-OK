@@ -10,11 +10,15 @@
 		3D00B2FC1684BCC90004D48D /* NSArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D00B2FB1684BCC90004D48D /* NSArrayTests.m */; };
 		3D02F5B2174CA1C90081F8DE /* NSDictionary+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D02F5B1174CA1C90081F8DE /* NSDictionary+CategoryOK.m */; };
 		3D02F5B3174CA1C90081F8DE /* NSDictionary+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D02F5B1174CA1C90081F8DE /* NSDictionary+CategoryOK.m */; };
-		3D0A1C11168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0A1C10168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m */; };
-		3D0A1C12168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D0A1C10168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m */; };
 		3D354BF5168BDCAF00BB6F9B /* NSStringTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D354BF4168BDCAF00BB6F9B /* NSStringTests.m */; };
 		3D3556FF168C952E00D4462E /* NSData+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3556FE168C952E00D4462E /* NSData+CategoryOK.m */; };
 		3D355700168C952E00D4462E /* NSData+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3556FE168C952E00D4462E /* NSData+CategoryOK.m */; };
+		3D4212AB1761BE46008C07E0 /* StorageBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4212A71761BE46008C07E0 /* StorageBase.m */; };
+		3D4212AC1761BE46008C07E0 /* StorageBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4212A71761BE46008C07E0 /* StorageBase.m */; };
+		3D4212AD1761BE46008C07E0 /* StorageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4212A91761BE46008C07E0 /* StorageItem.m */; };
+		3D4212AE1761BE46008C07E0 /* StorageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4212A91761BE46008C07E0 /* StorageItem.m */; };
+		3D4212B11761BE50008C07E0 /* AnchorPointRotatableUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4212B01761BE50008C07E0 /* AnchorPointRotatableUIView.m */; };
+		3D4212B21761BE50008C07E0 /* AnchorPointRotatableUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4212B01761BE50008C07E0 /* AnchorPointRotatableUIView.m */; };
 		3D4EE612168C9BD60067F698 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4EE611168C9BD60067F698 /* libz.dylib */; };
 		3D4EE614168C9BDC0067F698 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4EE611168C9BD60067F698 /* libz.dylib */; };
 		3D4EE615168C9D170067F698 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7E56921684BB8800E3604A /* Default.png */; };
@@ -80,12 +84,17 @@
 		3D00B2FB1684BCC90004D48D /* NSArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayTests.m; sourceTree = "<group>"; };
 		3D02F5B0174CA1C90081F8DE /* NSDictionary+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+CategoryOK.h"; path = "../../foundation/NSDictionary+CategoryOK.h"; sourceTree = "<group>"; };
 		3D02F5B1174CA1C90081F8DE /* NSDictionary+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+CategoryOK.m"; path = "../../foundation/NSDictionary+CategoryOK.m"; sourceTree = "<group>"; };
-		3D0A1C0F168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnchorPointRotatableUIView.h; path = ../../derived/AnchorPointRotatableUIView.h; sourceTree = "<group>"; };
-		3D0A1C10168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnchorPointRotatableUIView.m; path = ../../derived/AnchorPointRotatableUIView.m; sourceTree = "<group>"; };
 		3D354BF3168BDCAF00BB6F9B /* NSStringTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringTests.h; sourceTree = "<group>"; };
 		3D354BF4168BDCAF00BB6F9B /* NSStringTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringTests.m; sourceTree = "<group>"; };
 		3D3556FD168C952E00D4462E /* NSData+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+CategoryOK.h"; path = "../../foundation/NSData+CategoryOK.h"; sourceTree = "<group>"; };
 		3D3556FE168C952E00D4462E /* NSData+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+CategoryOK.m"; path = "../../foundation/NSData+CategoryOK.m"; sourceTree = "<group>"; };
+		3D4212A61761BE46008C07E0 /* StorageBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StorageBase.h; path = ../StorageBase.h; sourceTree = "<group>"; };
+		3D4212A71761BE46008C07E0 /* StorageBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StorageBase.m; path = ../StorageBase.m; sourceTree = "<group>"; };
+		3D4212A81761BE46008C07E0 /* StorageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StorageItem.h; path = ../StorageItem.h; sourceTree = "<group>"; };
+		3D4212A91761BE46008C07E0 /* StorageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StorageItem.m; path = ../StorageItem.m; sourceTree = "<group>"; };
+		3D4212AA1761BE46008C07E0 /* StorageItemPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StorageItemPrivate.h; path = ../StorageItemPrivate.h; sourceTree = "<group>"; };
+		3D4212AF1761BE50008C07E0 /* AnchorPointRotatableUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnchorPointRotatableUIView.h; path = ../AnchorPointRotatableUIView.h; sourceTree = "<group>"; };
+		3D4212B01761BE50008C07E0 /* AnchorPointRotatableUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnchorPointRotatableUIView.m; path = ../AnchorPointRotatableUIView.m; sourceTree = "<group>"; };
 		3D4EE611168C9BD60067F698 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3D4EE618168C9D2F0067F698 /* NSDataTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataTests.h; sourceTree = "<group>"; };
 		3D4EE619168C9D2F0067F698 /* NSDataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataTests.m; sourceTree = "<group>"; };
@@ -173,10 +182,33 @@
 		3D0A1C0E168C3C9700E8C2A2 /* Derived */ = {
 			isa = PBXGroup;
 			children = (
-				3D0A1C0F168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.h */,
-				3D0A1C10168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m */,
+				3D42129C1761BAC9008C07E0 /* linerstorage */,
+				3D4212971761BAA1008C07E0 /* ui */,
 			);
 			name = Derived;
+			sourceTree = "<group>";
+		};
+		3D4212971761BAA1008C07E0 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				3D4212AF1761BE50008C07E0 /* AnchorPointRotatableUIView.h */,
+				3D4212B01761BE50008C07E0 /* AnchorPointRotatableUIView.m */,
+			);
+			name = ui;
+			path = ../../derived/ui;
+			sourceTree = "<group>";
+		};
+		3D42129C1761BAC9008C07E0 /* linerstorage */ = {
+			isa = PBXGroup;
+			children = (
+				3D4212A61761BE46008C07E0 /* StorageBase.h */,
+				3D4212A71761BE46008C07E0 /* StorageBase.m */,
+				3D4212A81761BE46008C07E0 /* StorageItem.h */,
+				3D4212A91761BE46008C07E0 /* StorageItem.m */,
+				3D4212AA1761BE46008C07E0 /* StorageItemPrivate.h */,
+			);
+			name = linerstorage;
+			path = ../../derived/linerstorage;
 			sourceTree = "<group>";
 		};
 		3D55F38A1688642500B30D8D /* Common */ = {
@@ -452,11 +484,13 @@
 				3DFE0248168BA12400B080FE /* UIImageView+CategoryOK.m in Sources */,
 				3DFE024A168BA12400B080FE /* UITableView+CategoryOK.m in Sources */,
 				3DFE024C168BA12400B080FE /* UIView+CategoryOK.m in Sources */,
-				3D0A1C11168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m in Sources */,
 				3DF0CDA4168C73BC003BFD79 /* JSONObjectToNative.m in Sources */,
 				3D3556FF168C952E00D4462E /* NSData+CategoryOK.m in Sources */,
 				3DD7CF151695B12900581FAB /* UIWebView+CategoryOK.m in Sources */,
 				3D02F5B2174CA1C90081F8DE /* NSDictionary+CategoryOK.m in Sources */,
+				3D4212AB1761BE46008C07E0 /* StorageBase.m in Sources */,
+				3D4212AD1761BE46008C07E0 /* StorageItem.m in Sources */,
+				3D4212B11761BE50008C07E0 /* AnchorPointRotatableUIView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,11 +513,13 @@
 				3DFE024B168BA12400B080FE /* UITableView+CategoryOK.m in Sources */,
 				3DFE024D168BA12400B080FE /* UIView+CategoryOK.m in Sources */,
 				3D354BF5168BDCAF00BB6F9B /* NSStringTests.m in Sources */,
-				3D0A1C12168C3CAE00E8C2A2 /* AnchorPointRotatableUIView.m in Sources */,
 				3DF0CDA5168C73BC003BFD79 /* JSONObjectToNative.m in Sources */,
 				3D355700168C952E00D4462E /* NSData+CategoryOK.m in Sources */,
 				3D4EE61A168C9D2F0067F698 /* NSDataTests.m in Sources */,
 				3D02F5B3174CA1C90081F8DE /* NSDictionary+CategoryOK.m in Sources */,
+				3D4212AC1761BE46008C07E0 /* StorageBase.m in Sources */,
+				3D4212AE1761BE46008C07E0 /* StorageItem.m in Sources */,
+				3D4212B21761BE50008C07E0 /* AnchorPointRotatableUIView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D4212B81761BE98008C07E0 /* StorageBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4212B41761BE98008C07E0 /* StorageBase.m */; };
+		3D4212B91761BE98008C07E0 /* StorageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4212B61761BE98008C07E0 /* StorageItem.m */; };
 		3DBBD20A175C7F710051A020 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD209175C7F710051A020 /* Foundation.framework */; };
 		3DBBD25E175C81420051A020 /* JSONObjectToNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD25B175C81420051A020 /* JSONObjectToNative.m */; };
 		3DBBD25F175C81420051A020 /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD25D175C81420051A020 /* MachTime.m */; };
@@ -42,6 +44,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3D4212B31761BE98008C07E0 /* StorageBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StorageBase.h; path = ../derived/StorageBase.h; sourceTree = SOURCE_ROOT; };
+		3D4212B41761BE98008C07E0 /* StorageBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StorageBase.m; path = ../derived/StorageBase.m; sourceTree = SOURCE_ROOT; };
+		3D4212B51761BE98008C07E0 /* StorageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StorageItem.h; path = ../derived/StorageItem.h; sourceTree = SOURCE_ROOT; };
+		3D4212B61761BE98008C07E0 /* StorageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StorageItem.m; path = ../derived/StorageItem.m; sourceTree = SOURCE_ROOT; };
+		3D4212B71761BE98008C07E0 /* StorageItemPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StorageItemPrivate.h; path = ../derived/StorageItemPrivate.h; sourceTree = SOURCE_ROOT; };
 		3DBBD206175C7F710051A020 /* libiOSCategoriesOKSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiOSCategoriesOKSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DBBD209175C7F710051A020 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3DBBD258175C81420051A020 /* CGRect+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CGRect+CategoryOK.h"; path = "../common/CGRect+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
@@ -160,6 +167,11 @@
 			children = (
 				3DBBD263175C82AF0051A020 /* AnchorPointRotatableUIView.h */,
 				3DBBD264175C82AF0051A020 /* AnchorPointRotatableUIView.m */,
+				3D4212B31761BE98008C07E0 /* StorageBase.h */,
+				3D4212B41761BE98008C07E0 /* StorageBase.m */,
+				3D4212B51761BE98008C07E0 /* StorageItem.h */,
+				3D4212B61761BE98008C07E0 /* StorageItem.m */,
+				3D4212B71761BE98008C07E0 /* StorageItemPrivate.h */,
 			);
 			name = derived;
 			path = ../../derived;
@@ -279,6 +291,8 @@
 				3DBBD28A175C83240051A020 /* UITableView+CategoryOK.m in Sources */,
 				3DBBD28B175C83240051A020 /* UIView+CategoryOK.m in Sources */,
 				3DBBD28C175C83240051A020 /* UIWebView+CategoryOK.m in Sources */,
+				3D4212B81761BE98008C07E0 /* StorageBase.m in Sources */,
+				3D4212B91761BE98008C07E0 /* StorageItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

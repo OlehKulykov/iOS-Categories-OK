@@ -22,7 +22,7 @@
 
 CG_INLINE bool __NSDataDataZIPCompressionAppend(NSMutableData * data, 
 												const void * buff,
-												NSUInteger buffSize)
+												const NSUInteger buffSize)
 {
 	const NSUInteger len = [data length];
 	[data appendBytes:buff length:buffSize];
@@ -33,11 +33,22 @@ CG_INLINE bool __NSDataDataZIPCompressionAppend(NSMutableData * data,
 
 - (NSData *) zipCompressedDataWithRatio:(CGFloat)compressionRatio
 {
-	if ([self length] == 0) return nil;
+	return [NSData zipCompressData:self withRatio:compressionRatio];
+}
+
+- (NSData *) zipDecompressedData
+{
+	return [NSData zipDecompressData:self];
+}
+
++ (NSData *) zipCompressData:(NSData *) dataToCompress withRatio:(CGFloat)compressionRatio
+{
+	if (!dataToCompress) return nil;
+	if ([dataToCompress length] == 0) return nil;
 	
 	z_stream zipStream = { 0 };
-	zipStream.next_in = (Bytef *)[self bytes];
-	zipStream.avail_in = [self length];
+	zipStream.next_in = (Bytef *)[dataToCompress bytes];
+	zipStream.avail_in = [dataToCompress length];
 	
 	const uInt outBufferSize = 32 * 1024;
 	Bytef outBuffer[outBufferSize];
@@ -100,13 +111,14 @@ CG_INLINE bool __NSDataDataZIPCompressionAppend(NSMutableData * data,
 	return compressedBuffer;
 }
 
-- (NSData *) zipDecompressedData
++ (NSData *) zipDecompressData:(NSData *) zipData
 {
-	if ([self length] == 0) return nil;
+	if (!zipData) return nil;
+	if ([zipData length] == 0) return nil;
 	
 	z_stream zipStream = { 0 };
-	zipStream.next_in = (Bytef *)[self bytes];
-	zipStream.avail_in = [self length];
+	zipStream.next_in = (Bytef *)[zipData bytes];
+	zipStream.avail_in = [zipData length];
     int result = inflateInit(&zipStream);
     if (result != Z_OK)
 	{

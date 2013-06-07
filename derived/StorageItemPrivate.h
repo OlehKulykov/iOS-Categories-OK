@@ -16,18 +16,12 @@
 
 
 #import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
+#import "StorageItem.h"
 
-@interface NSData (DataZIPCompression)
+@class StorageBase;
 
-- (NSData *) zipCompressedDataWithRatio:(CGFloat)compressionRatio;
+@interface StorageItem()
 
-- (NSData *) zipDecompressedData;
-
-+ (NSData *) zipCompressData:(NSData *) dataToCompress withRatio:(CGFloat)compressionRatio;
-
-+ (NSData *) zipDecompressData:(NSData *) zipData;
+@property (weak) StorageBase * parentStorageObject;
 
 @end
-
-

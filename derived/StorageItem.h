@@ -16,18 +16,19 @@
 
 
 #import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
 
-@interface NSData (DataZIPCompression)
+@class StorageBase;
 
-- (NSData *) zipCompressedDataWithRatio:(CGFloat)compressionRatio;
+@interface StorageItem : NSObject
 
-- (NSData *) zipDecompressedData;
+- (unsigned long long) storageItemIdentifier;
 
-+ (NSData *) zipCompressData:(NSData *) dataToCompress withRatio:(CGFloat)compressionRatio;
+- (StorageBase *) parentStorage;
 
-+ (NSData *) zipDecompressData:(NSData *) zipData;
+- (NSMutableDictionary *) mutableDictionary;
+
+- (id) initWithDictionary:(NSDictionary *) dictionary;
+
+- (BOOL) isEqualToStorageItem:(StorageItem *) item;
 
 @end
-
-
