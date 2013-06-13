@@ -115,6 +115,18 @@
 	return NO;
 }
 
+- (void) removeAllItems
+{
+	if (NSArrayIsNotEmpty(_storageItemsArray)) 
+	{
+		for (StorageItem * item in _storageItemsArray) 
+		{
+			item.parentStorageObject = nil;
+		}
+		[_storageItemsArray removeAllObjects];
+	}
+}
+
 - (NSArray *) storageItems
 {
 	return (NSArray *)_storageItemsArray;

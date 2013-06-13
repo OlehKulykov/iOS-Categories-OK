@@ -40,6 +40,8 @@
 
 - (BOOL) removeStorageItem:(StorageItem *) item;
 
+- (void) removeAllItems;
+
 - (NSArray *) storageItems;
 
 - (BOOL) load;
