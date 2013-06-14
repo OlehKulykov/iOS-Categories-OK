@@ -31,6 +31,13 @@ CG_INLINE BOOL NSArrayIsNotEmpty(NSArray * array)
 	return (array) ? ([array count] > 0) : NO;
 }
 
+/// Returns array object with index or nil.
+CG_INLINE id NSArrayObjectAtIndex(NSArray * array, const NSUInteger index)
+{
+	const NSUInteger count = array ? [array count] : 0;
+	return (index < count) ? [array objectAtIndex:index] : nil;
+}
+
 @interface NSArray (StaticInfo)
 
 /// Check is array has no objects
@@ -38,6 +45,9 @@ CG_INLINE BOOL NSArrayIsNotEmpty(NSArray * array)
 
 /// Check is array has objects
 + (BOOL) isNotEmpty:(NSArray *)array;
+
+/// Returns array object with index or nil.
++ (id) array:(NSArray *)array objectAtIndex:(NSUInteger)index;
 
 /// Return previous array index from incoming or NSNotFound if index can't be found
 + (NSUInteger) array:(NSArray *)array previousIndexFrom:(NSUInteger)index;

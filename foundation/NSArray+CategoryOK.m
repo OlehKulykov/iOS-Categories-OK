@@ -29,6 +29,11 @@
 	return NSArrayIsNotEmpty(array);
 }
 
++ (id) array:(NSArray *)array objectAtIndex:(NSUInteger)index
+{
+	return NSArrayObjectAtIndex(array, index);
+}
+
 + (NSUInteger) array:(NSArray *)array previousIndexFrom:(NSUInteger)index
 {
 	if (index > 0 && index < NSNotFound)
