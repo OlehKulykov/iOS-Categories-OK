@@ -42,6 +42,8 @@
 		3D7E56A11684BB8800E3604A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D7E56821684BB8800E3604A /* Foundation.framework */; };
 		3D7E56A91684BB8800E3604A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3D7E56A71684BB8800E3604A /* InfoPlist.strings */; };
 		3DD7CF151695B12900581FAB /* UIWebView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DD7CF141695B12900581FAB /* UIWebView+CategoryOK.m */; };
+		3DEABF3A17748CBF00824B60 /* NotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEABF3917748CBF00824B60 /* NotificationManager.m */; };
+		3DEABF3B17748CBF00824B60 /* NotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEABF3917748CBF00824B60 /* NotificationManager.m */; };
 		3DF034FC168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */; };
 		3DF034FD168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */; };
 		3DF034FE168ADBAB0056FEDB /* RequestGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034FB168ADBAB0056FEDB /* RequestGenerator.m */; };
@@ -121,6 +123,8 @@
 		3D7E56A81684BB8800E3604A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3DD7CF131695B12900581FAB /* UIWebView+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIWebView+CategoryOK.h"; path = "../../ui/UIWebView+CategoryOK.h"; sourceTree = "<group>"; };
 		3DD7CF141695B12900581FAB /* UIWebView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+CategoryOK.m"; path = "../../ui/UIWebView+CategoryOK.m"; sourceTree = "<group>"; };
+		3DEABF3817748CBF00824B60 /* NotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationManager.h; path = ../derived/NotificationManager.h; sourceTree = SOURCE_ROOT; };
+		3DEABF3917748CBF00824B60 /* NotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationManager.m; path = ../derived/NotificationManager.m; sourceTree = SOURCE_ROOT; };
 		3DF034F8168ADBAB0056FEDB /* RequestFieldsContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestFieldsContainer.h; path = ../../net/RequestFieldsContainer.h; sourceTree = "<group>"; };
 		3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequestFieldsContainer.m; path = ../../net/RequestFieldsContainer.m; sourceTree = "<group>"; };
 		3DF034FA168ADBAB0056FEDB /* RequestGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestGenerator.h; path = ../../net/RequestGenerator.h; sourceTree = "<group>"; };
@@ -201,6 +205,8 @@
 		3D42129C1761BAC9008C07E0 /* linerstorage */ = {
 			isa = PBXGroup;
 			children = (
+				3DEABF3817748CBF00824B60 /* NotificationManager.h */,
+				3DEABF3917748CBF00824B60 /* NotificationManager.m */,
 				3D6BCD211761C27500EA24E9 /* StorageBase.h */,
 				3D6BCD221761C27500EA24E9 /* StorageBase.m */,
 				3D6BCD231761C27500EA24E9 /* StorageItem.h */,
@@ -491,6 +497,7 @@
 				3D6BCD1F1761C26C00EA24E9 /* AnchorPointRotatableUIView.m in Sources */,
 				3D6BCD261761C27500EA24E9 /* StorageBase.m in Sources */,
 				3D6BCD281761C27500EA24E9 /* StorageItem.m in Sources */,
+				3DEABF3A17748CBF00824B60 /* NotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +527,7 @@
 				3D6BCD201761C26C00EA24E9 /* AnchorPointRotatableUIView.m in Sources */,
 				3D6BCD271761C27500EA24E9 /* StorageBase.m in Sources */,
 				3D6BCD291761C27500EA24E9 /* StorageItem.m in Sources */,
+				3DEABF3B17748CBF00824B60 /* NotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
