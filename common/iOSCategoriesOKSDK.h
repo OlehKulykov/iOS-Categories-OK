@@ -30,6 +30,7 @@
 
 
 #import "derived/AnchorPointRotatableUIView.h"
+#import "derived/NotificationManager.h"
 #import "derived/StorageBase.h"
 
 #import "foundation/CLLocation+CategoryOK.h"

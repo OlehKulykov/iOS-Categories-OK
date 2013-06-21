@@ -29,6 +29,7 @@
 		3DBBD291175C8DF50051A020 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD28E175C8DF50051A020 /* CoreGraphics.framework */; };
 		3DBBD292175C8DF50051A020 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD28F175C8DF50051A020 /* CoreLocation.framework */; };
 		3DBBD294175C8DFF0051A020 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD293175C8DFF0051A020 /* UIKit.framework */; };
+		3DEABF3E17749A0800824B60 /* NotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEABF3D17749A0800824B60 /* NotificationManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -88,6 +89,8 @@
 		3DBBD28E175C8DF50051A020 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3DBBD28F175C8DF50051A020 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3DBBD293175C8DFF0051A020 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3DEABF3C17749A0800824B60 /* NotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationManager.h; path = ../derived/NotificationManager.h; sourceTree = SOURCE_ROOT; };
+		3DEABF3D17749A0800824B60 /* NotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationManager.m; path = ../derived/NotificationManager.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +170,8 @@
 			children = (
 				3DBBD263175C82AF0051A020 /* AnchorPointRotatableUIView.h */,
 				3DBBD264175C82AF0051A020 /* AnchorPointRotatableUIView.m */,
+				3DEABF3C17749A0800824B60 /* NotificationManager.h */,
+				3DEABF3D17749A0800824B60 /* NotificationManager.m */,
 				3D4212B31761BE98008C07E0 /* StorageBase.h */,
 				3D4212B41761BE98008C07E0 /* StorageBase.m */,
 				3D4212B51761BE98008C07E0 /* StorageItem.h */,
@@ -293,6 +298,7 @@
 				3DBBD28C175C83240051A020 /* UIWebView+CategoryOK.m in Sources */,
 				3D4212B81761BE98008C07E0 /* StorageBase.m in Sources */,
 				3D4212B91761BE98008C07E0 /* StorageItem.m in Sources */,
+				3DEABF3E17749A0800824B60 /* NotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
