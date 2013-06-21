@@ -60,25 +60,34 @@
 	return nil;
 }
 
-+ (void) sendNotificationNumber:(int)notificationNumber withObject:(id)object
++ (BOOL) sendNotificationNumber:(int)notificationNumber withObject:(id)object
 {
+	return [[NotificationManager defaultManager] sendNotificationNumber:notificationNumber withObject:object];
+}
+
+- (BOOL) sendNotificationNumber:(int)notificationNumber withObject:(id)object
+{
+	__block BOOL res = NO;
 	// sync not async
 	dispatch_sync(dispatch_get_main_queue(), ^{
 		[[NSNotificationCenter defaultCenter] postNotificationName:[NotificationManager notificationNameFromNumber:notificationNumber] 
 															object:self
 														  userInfo:object ? [NSDictionary dictionaryWithObject:object forKey:OBJECT_KEY] : nil];
+		res = YES;
 	});
+	return NO;
 }
 
-- (void) sendNotificationNumber:(int)notificationNumber withObject:(id)object
-{
-	[NotificationManager sendNotificationNumber:notificationNumber withObject:object];
-}
-
-+ (void) addListener:(id)listener 
++ (BOOL) addListener:(id)listener 
 		withSelector:(SEL)listenerSelector 
 forNotificationNumber:(int)notificationNumber
 {
+	return [[NotificationManager defaultManager] addListener:listener withSelector:listenerSelector forNotificationNumber:notificationNumber];
+}
+
+- (BOOL) addListener:(id)listener withSelector:(SEL)listenerSelector forNotificationNumber:(int)notificationNumber
+{
+	__block BOOL res = NO;
 	if (listener && listenerSelector)
 	{
 		if ([listener respondsToSelector:listenerSelector])
@@ -89,34 +98,40 @@ forNotificationNumber:(int)notificationNumber
 														 selector:listenerSelector
 															 name:[NotificationManager notificationNameFromNumber:notificationNumber]
 														   object:self];
+				res = YES;
 			});
 		}
 	}
+	return res;
 }
 
-- (void) addListener:(id)listener withSelector:(SEL)listenerSelector forNotificationNumber:(int)notificationNumber
++ (BOOL) removeListener:(id)listener
 {
-	[NotificationManager addListener:listener withSelector:listenerSelector forNotificationNumber:notificationNumber];
+	return [[NotificationManager defaultManager] removeListener:listener];
 }
 
-+ (void) removeListener:(id)listener
+- (BOOL) removeListener:(id)listener
 {
+	__block BOOL res = NO;
 	if (listener)
 	{
 		// sync not async
 		dispatch_sync(dispatch_get_main_queue(), ^{
 			[[NSNotificationCenter defaultCenter] removeObserver:listener];
+			res = YES;
 		});
 	}
+	return res;
 }
 
-- (void) removeListener:(id)listener
++ (BOOL) removeListener:(id)listener forNotificationNumber:(int)notificationNumber
 {
-	[NotificationManager removeListener:listener];
+	return [[NotificationManager defaultManager] removeListener:listener forNotificationNumber:notificationNumber];
 }
 
-+ (void) removeListener:(id)listener forNotificationNumber:(int)notificationNumber
+- (BOOL) removeListener:(id)listener forNotificationNumber:(int)notificationNumber
 {
+	__block BOOL res = NO;
 	if (listener)
 	{
 		// sync not async
@@ -124,13 +139,10 @@ forNotificationNumber:(int)notificationNumber
 			[[NSNotificationCenter defaultCenter] removeObserver:listener 
 															name:[NotificationManager notificationNameFromNumber:notificationNumber]
 														  object:self];
+			res = YES;
 		});
 	}
-}
-
-- (void) removeListener:(id)listener forNotificationNumber:(int)notificationNumber
-{
-	[NotificationManager removeListener:listener forNotificationNumber:notificationNumber];
+	return res;
 }
 
 static NotificationManager * _manager = nil;
