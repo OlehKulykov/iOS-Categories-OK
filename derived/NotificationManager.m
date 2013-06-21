@@ -34,14 +34,103 @@
 
 @end
 
+#define OBJECT_KEY @"n0t1f1c@Ti0N_0bjecT"
+
 @implementation NotificationManager
 
 - (void) dealloc
 {
-	
 #ifndef __ARC__
 	[super dealloc];
 #endif	
+}
+
++ (NSString *) notificationNameFromNumber:(int)notificationNumber
+{
+	return [NSString stringWithFormat:@"n0t1f1c@Ti0N_%i", notificationNumber];
+}
+
++ (id) objectFromNotification:(NSNotification *)notification
+{
+	if (notification)
+	{
+		NSDictionary * userInfo = [notification userInfo];
+		return userInfo ? [userInfo objectForKey:OBJECT_KEY] : nil;
+	}
+	return nil;
+}
+
++ (void) sendNotificationNumber:(int)notificationNumber withObject:(id)object
+{
+	// sync not async
+	dispatch_sync(dispatch_get_main_queue(), ^{
+		[[NSNotificationCenter defaultCenter] postNotificationName:[NotificationManager notificationNameFromNumber:notificationNumber] 
+															object:self
+														  userInfo:object ? [NSDictionary dictionaryWithObject:object forKey:OBJECT_KEY] : nil];
+	});
+}
+
+- (void) sendNotificationNumber:(int)notificationNumber withObject:(id)object
+{
+	[NotificationManager sendNotificationNumber:notificationNumber withObject:object];
+}
+
++ (void) addListener:(id)listener 
+		withSelector:(SEL)listenerSelector 
+forNotificationNumber:(int)notificationNumber
+{
+	if (listener && listenerSelector)
+	{
+		if ([listener respondsToSelector:listenerSelector])
+		{
+			// sync not async
+			dispatch_sync(dispatch_get_main_queue(), ^{
+				[[NSNotificationCenter defaultCenter] addObserver:listener 
+														 selector:listenerSelector
+															 name:[NotificationManager notificationNameFromNumber:notificationNumber]
+														   object:self];
+			});
+		}
+	}
+}
+
+- (void) addListener:(id)listener withSelector:(SEL)listenerSelector forNotificationNumber:(int)notificationNumber
+{
+	[NotificationManager addListener:listener withSelector:listenerSelector forNotificationNumber:notificationNumber];
+}
+
++ (void) removeListener:(id)listener
+{
+	if (listener)
+	{
+		// sync not async
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[[NSNotificationCenter defaultCenter] removeObserver:listener];
+		});
+	}
+}
+
+- (void) removeListener:(id)listener
+{
+	[NotificationManager removeListener:listener];
+}
+
++ (void) removeListener:(id)listener forNotificationNumber:(int)notificationNumber
+{
+	if (listener)
+	{
+		// sync not async
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[[NSNotificationCenter defaultCenter] removeObserver:listener 
+															name:[NotificationManager notificationNameFromNumber:notificationNumber]
+														  object:self];
+		});
+	}
+}
+
+- (void) removeListener:(id)listener forNotificationNumber:(int)notificationNumber
+{
+	[NotificationManager removeListener:listener forNotificationNumber:notificationNumber];
 }
 
 static NotificationManager * _manager = nil;

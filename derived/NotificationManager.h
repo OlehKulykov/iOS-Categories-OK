@@ -20,6 +20,24 @@
 
 @interface NotificationManager : NSObject
 
++ (void) sendNotificationNumber:(int)notificationNumber withObject:(id)object;
+
+- (void) sendNotificationNumber:(int)notificationNumber withObject:(id)object;
+
++ (void) addListener:(id)listener withSelector:(SEL)listenerSelector forNotificationNumber:(int)notificationNumber;
+
+- (void) addListener:(id)listener withSelector:(SEL)listenerSelector forNotificationNumber:(int)notificationNumber;
+
++ (void) removeListener:(id)listener;
+
+- (void) removeListener:(id)listener;
+
++ (void) removeListener:(id)listener forNotificationNumber:(int)notificationNumber;
+
+- (void) removeListener:(id)listener forNotificationNumber:(int)notificationNumber;
+
++ (id) objectFromNotification:(NSNotification *)notification;
+
 + (NotificationManager *) defaultManager;
 
 + (void) releaseDefaultManager;
