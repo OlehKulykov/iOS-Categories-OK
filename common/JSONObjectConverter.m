@@ -15,9 +15,11 @@
  */
 
 
-#import "JSONObjectToNative.h"
+#import "JSONObjectConverter.h"
 
-NSInteger JSONObjectToInteger(id object)
+@implementation JSONObjectConverter
+
++ (NSInteger) toInteger:(id) object
 {
 	if ([object isKindOfClass:[NSNumber class]] || [object isKindOfClass:[NSString class]])
 	{
@@ -26,7 +28,7 @@ NSInteger JSONObjectToInteger(id object)
 	return 0;
 }
 
-NSUInteger JSONObjectToUInteger(id object)
++ (NSUInteger) toUInteger:(id) object
 {
 	if ([object isKindOfClass:[NSNumber class]])
 	{
@@ -40,12 +42,12 @@ NSUInteger JSONObjectToUInteger(id object)
 	return 0;
 }
 
-CGFloat JSONObjectToFloat(id object)
++ (CGFloat) toFloat:(id) object
 {
-	return (CGFloat)JSONObjectToDouble(object);
+	return [JSONObjectConverter toDouble:object];
 }
 
-double_t JSONObjectToDouble(id object)
++ (double_t) toDouble:(id) object
 {
 	if ([object isKindOfClass:[NSNumber class]] || [object isKindOfClass:[NSString class]])
 	{
@@ -54,7 +56,7 @@ double_t JSONObjectToDouble(id object)
 	return 0.0;
 }
 
-BOOL JSONObjectToBoolean(id object)
++ (BOOL) toBoolean:(id) object
 {
 	if ([object isKindOfClass:[NSNumber class]])
 	{
@@ -70,12 +72,12 @@ BOOL JSONObjectToBoolean(id object)
 	return NO;
 }
 
-NSString * JSONObjectToString(id object)
++ (NSString *) toString:(id) object
 {
 	return ([object isKindOfClass:[NSString class]]) ? (NSString *)object : nil;
 }
 
-NSString * JSONObjectToNonEmptyString(id object)
++ (NSString *) toNonEmptyString:(id) object
 {
 	if ([object isKindOfClass:[NSString class]])
 	{
@@ -84,7 +86,7 @@ NSString * JSONObjectToNonEmptyString(id object)
 	return nil;
 }
 
-NSDictionary * JSONObjectToDictionary(id object)
++ (NSDictionary *) toDictionary:(id) object
 {
 	if ([object isKindOfClass:[NSDictionary class]] || [object isKindOfClass:[NSMutableDictionary class]]) 
 	{
@@ -93,7 +95,7 @@ NSDictionary * JSONObjectToDictionary(id object)
 	return nil;
 }
 
-NSArray * JSONObjectToArray(id object)
++ (NSArray *) toArray:(id) object
 {
 	if ([object isKindOfClass:[NSArray class]] || [object isKindOfClass:[NSMutableArray class]]) 
 	{
@@ -115,7 +117,7 @@ static const char ** __commonDateFormatStrings()
 	return formats;
 }
 
-NSDate * JSONObjectToDate(id object)
++ (NSDate *) toDate:(id) object
 {
 	if ([object isKindOfClass:[NSString class]]) 
 	{
@@ -137,5 +139,7 @@ NSDate * JSONObjectToDate(id object)
 	}
 	return nil;
 }
+
+@end
 
 

@@ -53,8 +53,8 @@
 		3DF03510168AE4520056FEDB /* UIColorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0350F168AE4520056FEDB /* UIColorTests.m */; };
 		3DF0352A168AF0FE0056FEDB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF03529168AF0FE0056FEDB /* CoreLocation.framework */; };
 		3DF0352B168AF35A0056FEDB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF03529168AF0FE0056FEDB /* CoreLocation.framework */; };
-		3DF0CDA4168C73BC003BFD79 /* JSONObjectToNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0CDA3168C73BC003BFD79 /* JSONObjectToNative.m */; };
-		3DF0CDA5168C73BC003BFD79 /* JSONObjectToNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0CDA3168C73BC003BFD79 /* JSONObjectToNative.m */; };
+		3DF0CDA4168C73BC003BFD79 /* JSONObjectConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0CDA3168C73BC003BFD79 /* JSONObjectConverter.m */; };
+		3DF0CDA5168C73BC003BFD79 /* JSONObjectConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0CDA3168C73BC003BFD79 /* JSONObjectConverter.m */; };
 		3DFE0235168BA11600B080FE /* CLLocation+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE022E168BA11600B080FE /* CLLocation+CategoryOK.m */; };
 		3DFE0236168BA11600B080FE /* CLLocation+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE022E168BA11600B080FE /* CLLocation+CategoryOK.m */; };
 		3DFE0237168BA11600B080FE /* NSArray+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0230168BA11600B080FE /* NSArray+CategoryOK.m */; };
@@ -136,8 +136,8 @@
 		3DF0350E168AE4520056FEDB /* UIColorTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIColorTests.h; sourceTree = "<group>"; };
 		3DF0350F168AE4520056FEDB /* UIColorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColorTests.m; sourceTree = "<group>"; };
 		3DF03529168AF0FE0056FEDB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		3DF0CDA2168C73BC003BFD79 /* JSONObjectToNative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONObjectToNative.h; path = ../../common/JSONObjectToNative.h; sourceTree = "<group>"; };
-		3DF0CDA3168C73BC003BFD79 /* JSONObjectToNative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONObjectToNative.m; path = ../../common/JSONObjectToNative.m; sourceTree = "<group>"; };
+		3DF0CDA2168C73BC003BFD79 /* JSONObjectConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONObjectConverter.h; path = ../../common/JSONObjectConverter.h; sourceTree = "<group>"; };
+		3DF0CDA3168C73BC003BFD79 /* JSONObjectConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONObjectConverter.m; path = ../../common/JSONObjectConverter.m; sourceTree = "<group>"; };
 		3DFE022D168BA11600B080FE /* CLLocation+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLLocation+CategoryOK.h"; path = "../../foundation/CLLocation+CategoryOK.h"; sourceTree = "<group>"; };
 		3DFE022E168BA11600B080FE /* CLLocation+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLLocation+CategoryOK.m"; path = "../../foundation/CLLocation+CategoryOK.m"; sourceTree = "<group>"; };
 		3DFE022F168BA11600B080FE /* NSArray+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+CategoryOK.h"; path = "../../foundation/NSArray+CategoryOK.h"; sourceTree = "<group>"; };
@@ -222,8 +222,8 @@
 			children = (
 				3DF03500168ADBDD0056FEDB /* CGRect+CategoryOK.h */,
 				3DF03501168ADBDD0056FEDB /* CustomMath.h */,
-				3DF0CDA2168C73BC003BFD79 /* JSONObjectToNative.h */,
-				3DF0CDA3168C73BC003BFD79 /* JSONObjectToNative.m */,
+				3DF0CDA2168C73BC003BFD79 /* JSONObjectConverter.h */,
+				3DF0CDA3168C73BC003BFD79 /* JSONObjectConverter.m */,
 				3DF03502168ADBDD0056FEDB /* MachTime.h */,
 				3DF03503168ADBDD0056FEDB /* MachTime.m */,
 			);
@@ -490,7 +490,7 @@
 				3DFE0248168BA12400B080FE /* UIImageView+CategoryOK.m in Sources */,
 				3DFE024A168BA12400B080FE /* UITableView+CategoryOK.m in Sources */,
 				3DFE024C168BA12400B080FE /* UIView+CategoryOK.m in Sources */,
-				3DF0CDA4168C73BC003BFD79 /* JSONObjectToNative.m in Sources */,
+				3DF0CDA4168C73BC003BFD79 /* JSONObjectConverter.m in Sources */,
 				3D3556FF168C952E00D4462E /* NSData+CategoryOK.m in Sources */,
 				3DD7CF151695B12900581FAB /* UIWebView+CategoryOK.m in Sources */,
 				3D02F5B2174CA1C90081F8DE /* NSDictionary+CategoryOK.m in Sources */,
@@ -520,7 +520,7 @@
 				3DFE024B168BA12400B080FE /* UITableView+CategoryOK.m in Sources */,
 				3DFE024D168BA12400B080FE /* UIView+CategoryOK.m in Sources */,
 				3D354BF5168BDCAF00BB6F9B /* NSStringTests.m in Sources */,
-				3DF0CDA5168C73BC003BFD79 /* JSONObjectToNative.m in Sources */,
+				3DF0CDA5168C73BC003BFD79 /* JSONObjectConverter.m in Sources */,
 				3D355700168C952E00D4462E /* NSData+CategoryOK.m in Sources */,
 				3D4EE61A168C9D2F0067F698 /* NSDataTests.m in Sources */,
 				3D02F5B3174CA1C90081F8DE /* NSDictionary+CategoryOK.m in Sources */,

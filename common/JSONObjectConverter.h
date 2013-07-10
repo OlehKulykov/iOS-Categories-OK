@@ -19,24 +19,28 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-NSInteger JSONObjectToInteger(id object);
+@interface JSONObjectConverter : NSObject
 
-NSUInteger JSONObjectToUInteger(id object);
++ (NSInteger) toInteger:(id) object;
 
-CGFloat JSONObjectToFloat(id object);
++ (NSUInteger) toUInteger:(id) object;
 
-double_t JSONObjectToDouble(id object);
++ (CGFloat) toFloat:(id) object;
 
-BOOL JSONObjectToBoolean(id object);
++ (double_t) toDouble:(id) object;
 
-NSString * JSONObjectToString(id object);
++ (BOOL) toBoolean:(id) object;
 
-NSString * JSONObjectToNonEmptyString(id object);
++ (NSString *) toString:(id) object;
 
-NSDictionary * JSONObjectToDictionary(id object);
++ (NSString *) toNonEmptyString:(id) object;
 
-NSArray * JSONObjectToArray(id object);
++ (NSDictionary *) toDictionary:(id) object;
 
-NSDate * JSONObjectToDate(id object);
++ (NSArray *) toArray:(id) object;
+
++ (NSDate *) toDate:(id) object;
+
+@end
 
 
