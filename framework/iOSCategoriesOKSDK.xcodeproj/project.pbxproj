@@ -10,7 +10,6 @@
 		3D4212B81761BE98008C07E0 /* StorageBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4212B41761BE98008C07E0 /* StorageBase.m */; };
 		3D4212B91761BE98008C07E0 /* StorageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4212B61761BE98008C07E0 /* StorageItem.m */; };
 		3DBBD20A175C7F710051A020 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD209175C7F710051A020 /* Foundation.framework */; };
-		3DBBD25E175C81420051A020 /* JSONObjectToNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD25B175C81420051A020 /* JSONObjectToNative.m */; };
 		3DBBD25F175C81420051A020 /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD25D175C81420051A020 /* MachTime.m */; };
 		3DBBD265175C82AF0051A020 /* AnchorPointRotatableUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD264175C82AF0051A020 /* AnchorPointRotatableUIView.m */; };
 		3DBBD271175C82B90051A020 /* CLLocation+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD268175C82B90051A020 /* CLLocation+CategoryOK.m */; };
@@ -30,6 +29,7 @@
 		3DBBD292175C8DF50051A020 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD28F175C8DF50051A020 /* CoreLocation.framework */; };
 		3DBBD294175C8DFF0051A020 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD293175C8DFF0051A020 /* UIKit.framework */; };
 		3DEABF3E17749A0800824B60 /* NotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEABF3D17749A0800824B60 /* NotificationManager.m */; };
+		3DFD298E178D51CC00A1CA27 /* JSONObjectConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD298D178D51CC00A1CA27 /* JSONObjectConverter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -54,8 +54,6 @@
 		3DBBD209175C7F710051A020 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3DBBD258175C81420051A020 /* CGRect+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CGRect+CategoryOK.h"; path = "../common/CGRect+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
 		3DBBD259175C81420051A020 /* CustomMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomMath.h; path = ../common/CustomMath.h; sourceTree = SOURCE_ROOT; };
-		3DBBD25A175C81420051A020 /* JSONObjectToNative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONObjectToNative.h; path = ../common/JSONObjectToNative.h; sourceTree = SOURCE_ROOT; };
-		3DBBD25B175C81420051A020 /* JSONObjectToNative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONObjectToNative.m; path = ../common/JSONObjectToNative.m; sourceTree = SOURCE_ROOT; };
 		3DBBD25C175C81420051A020 /* MachTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachTime.h; path = ../common/MachTime.h; sourceTree = SOURCE_ROOT; };
 		3DBBD25D175C81420051A020 /* MachTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MachTime.m; path = ../common/MachTime.m; sourceTree = SOURCE_ROOT; };
 		3DBBD261175C81D70051A020 /* iOSCategoriesOKSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = iOSCategoriesOKSDK.h; path = ../common/iOSCategoriesOKSDK.h; sourceTree = SOURCE_ROOT; };
@@ -91,6 +89,8 @@
 		3DBBD293175C8DFF0051A020 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3DEABF3C17749A0800824B60 /* NotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationManager.h; path = ../derived/NotificationManager.h; sourceTree = SOURCE_ROOT; };
 		3DEABF3D17749A0800824B60 /* NotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationManager.m; path = ../derived/NotificationManager.m; sourceTree = SOURCE_ROOT; };
+		3DFD298C178D51CC00A1CA27 /* JSONObjectConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONObjectConverter.h; path = ../common/JSONObjectConverter.h; sourceTree = SOURCE_ROOT; };
+		3DFD298D178D51CC00A1CA27 /* JSONObjectConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONObjectConverter.m; path = ../common/JSONObjectConverter.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,11 +153,11 @@
 		3DBBD257175C81420051A020 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				3DFD298C178D51CC00A1CA27 /* JSONObjectConverter.h */,
+				3DFD298D178D51CC00A1CA27 /* JSONObjectConverter.m */,
 				3DBBD261175C81D70051A020 /* iOSCategoriesOKSDK.h */,
 				3DBBD258175C81420051A020 /* CGRect+CategoryOK.h */,
 				3DBBD259175C81420051A020 /* CustomMath.h */,
-				3DBBD25A175C81420051A020 /* JSONObjectToNative.h */,
-				3DBBD25B175C81420051A020 /* JSONObjectToNative.m */,
 				3DBBD25C175C81420051A020 /* MachTime.h */,
 				3DBBD25D175C81420051A020 /* MachTime.m */,
 			);
@@ -281,7 +281,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DBBD25E175C81420051A020 /* JSONObjectToNative.m in Sources */,
 				3DBBD25F175C81420051A020 /* MachTime.m in Sources */,
 				3DBBD265175C82AF0051A020 /* AnchorPointRotatableUIView.m in Sources */,
 				3DBBD271175C82B90051A020 /* CLLocation+CategoryOK.m in Sources */,
@@ -299,6 +298,7 @@
 				3D4212B81761BE98008C07E0 /* StorageBase.m in Sources */,
 				3D4212B91761BE98008C07E0 /* StorageItem.m in Sources */,
 				3DEABF3E17749A0800824B60 /* NotificationManager.m in Sources */,
+				3DFD298E178D51CC00A1CA27 /* JSONObjectConverter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
