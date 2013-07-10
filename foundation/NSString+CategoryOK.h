@@ -29,6 +29,35 @@ CG_INLINE BOOL NSStringIsNotEmpty(NSString * stringToTest)
 	return (stringToTest) ? ([stringToTest length] > 0) : NO;
 }
 
+CG_INLINE BOOL NSStringIsFilePathExists(NSString * pathForTest)
+{
+	if (NSStringIsNotEmpty(pathForTest)) 
+	{
+		BOOL isDir = YES;
+		if ([[NSFileManager defaultManager] fileExistsAtPath:pathForTest 
+												 isDirectory:&isDir]) 
+		{
+			return isDir ? NO : YES;
+		}
+	}
+	return NO;
+}
+
+CG_INLINE BOOL NSStringIsDirPathExists(NSString * pathForTest)
+{
+	if (NSStringIsNotEmpty(pathForTest)) 
+	{
+		BOOL isDir = NO;
+		if ([[NSFileManager defaultManager] fileExistsAtPath:pathForTest 
+												 isDirectory:&isDir]) 
+		{
+			return isDir ? YES : NO;
+		}
+	}
+	return NO;
+}
+
+
 @interface NSString(IsEmpty)
 
 + (BOOL) isEmpty:(NSString *)stringToTest;
@@ -58,6 +87,10 @@ CG_INLINE BOOL NSStringIsNotEmpty(NSString * stringToTest)
 
 
 @interface NSString (SystemPaths)
+
++ (BOOL) isFilePathExists:(NSString *) pathForTest;
+
++ (BOOL) isDirPathExists:(NSString *) pathForTest;
 
 + (NSString *) userDocumentPath;
 

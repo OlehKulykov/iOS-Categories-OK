@@ -393,6 +393,16 @@ static NSString * __NSStringSystemPathsGetFirstPathFromArray(NSArray * pathsArra
 
 @implementation NSString (SystemPaths)
 
++ (BOOL) isFilePathExists:(NSString *) pathForTest
+{
+	return NSStringIsFilePathExists(pathForTest);
+}
+
++ (BOOL) isDirPathExists:(NSString *) pathForTest
+{
+	return NSStringIsDirPathExists(pathForTest);
+}
+
 + (NSString *) userDocumentPath
 {
 	NSArray * pathsArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
