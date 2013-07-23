@@ -17,18 +17,6 @@
 
 #import "NotificationManager.h"
 
-#if !defined(__has_feature)
-#define __has_feature(feature) 0
-#endif
-
-#if __has_feature(objc_arc)
-
-#ifndef __ARC__
-#define __ARC__
-#endif
-
-#endif
-
 
 @interface NotificationManager()
 
@@ -40,9 +28,7 @@
 
 - (void) dealloc
 {
-#ifndef __ARC__
-	[super dealloc];
-#endif	
+
 }
 
 + (NSString *) notificationNameFromNumber:(int)notificationNumber
@@ -170,26 +156,5 @@ static NotificationManager * _manager = nil;
     return self;
 }
 
-#ifndef __ARC__
-- (id) retain
-{
-    return self;	
-}
-
-- (NSUInteger) retainCount
-{
-    return NSUIntegerMax;
-}
-
-- (void) release
-{
-	
-}
-
-- (id) autorelease
-{
-    return self;	
-}
-#endif
 
 @end
