@@ -119,11 +119,12 @@
 {
 	if (NSArrayIsNotEmpty(_storageItemsArray)) 
 	{
-		for (StorageItem * item in _storageItemsArray) 
+		while ([_storageItemsArray count] > 0) 
 		{
+			StorageItem * item = [_storageItemsArray lastObject];
 			item.parentStorageObject = nil;
+			[_storageItemsArray removeLastObject];
 		}
-		[_storageItemsArray removeAllObjects];
 	}
 }
 
