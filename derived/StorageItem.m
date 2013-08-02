@@ -52,7 +52,7 @@
 	self = [super init];
 	if (self) 
 	{
-		_i = [MachTime machAbsoluteTime];
+		_i = [StorageItem generateIdentifier];
 	}
 	return self;
 }
@@ -65,11 +65,11 @@
 		if (dictionary)
 		{
 			NSNumber * num = [dictionary objectForKey:ITEM_ID_KEY];
-			_i = num ? [num unsignedLongLongValue] : [MachTime machAbsoluteTime];
+			_i = num ? [num unsignedLongLongValue] : [StorageItem generateIdentifier];
 		}
 		else
 		{
-			_i = [MachTime machAbsoluteTime];
+			_i = [StorageItem generateIdentifier];
 		}
 	}
 	return self;
@@ -97,6 +97,18 @@
 - (NSString *) debugDescription
 {
 	return [NSString stringWithFormat:@"Item: %llu", _i];
+}
+
++ (unsigned long long) generateIdentifier
+{
+	static unsigned long long lastId = 0;
+	unsigned long long newId = [MachTime machAbsoluteTime];
+	while (lastId == newId) 
+	{
+		newId = [MachTime machAbsoluteTime];
+	}
+	lastId = newId;
+	return newId;
 }
 
 @end
