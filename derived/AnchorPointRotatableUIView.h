@@ -17,10 +17,18 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ @brief Class of the rotetable view.
+ @detailed View can be rotated using radian angle arround anchor point.
+ */
 @interface AnchorPointRotatableUIView : UIView
 
-/// Rotates view layer by angle in radians using anchor point coordinates
-/// in view coordinate system e.g. point inside view bounds
+/**
+ @brief Rotates view using radian angle arround anchor point.
+ @detailed Rotates view layer by angle in radians using anchor point coordinates in view coordinate system e.g. point inside view bounds.
+ @param radianAngle radian angle.
+ @param anchorPoint anchor point coordinates in view coordinate system.
+ */ 
 - (void) rotateByAngle:(CGFloat)radianAngle withAnchorPoint:(CGPoint)anchorPoint;
 
 @end
