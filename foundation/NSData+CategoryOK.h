@@ -31,3 +31,10 @@
 @end
 
 
+@interface NSData (MainBundle)
+
+- (NSData *) dataFromBunbledFilePath:(NSString *) filePath;
+
+@end
+
+

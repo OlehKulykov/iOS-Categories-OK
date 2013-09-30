@@ -20,6 +20,66 @@
 #include <zlib.h>
 #import <CoreFoundation/CoreFoundation.h>
 
+CG_INLINE NSData * __NSDataMainBundleDataFromFullPathString(NSString * fullPath)
+{
+	if (fullPath && [fullPath length] > 0) 
+	{
+		NSError * error = nil;
+		NSData * data = [NSData dataWithContentsOfFile:fullPath 
+											   options:NSDataReadingUncached
+												 error:&error];
+		if (!error && data && [data length] > 0) return data;
+	}
+	return nil;
+}
+
+CG_INLINE NSString * __NSDataMainBundleProcessedBunbledFilePath(NSString * filePath)
+{
+	if (filePath && [filePath length] > 0) 
+	{
+		const unichar firstChar = [filePath characterAtIndex:0];
+		if (firstChar == '/' || firstChar == '\\') 
+		{
+			NSString * newPath = [filePath substringFromIndex:1];
+			if (newPath && [newPath length] > 0) return newPath;
+		}
+		return filePath;
+	}
+	return nil;
+}
+
+@implementation NSData (MainBundle)
+
+- (NSData *) dataFromBunbledFilePath:(NSString *) filePath
+{
+	filePath = __NSDataMainBundleProcessedBunbledFilePath(filePath);
+	if (filePath)
+	{
+		NSString * fileName = [[filePath lastPathComponent] stringByDeletingPathExtension];
+		NSString * fileExtension = [filePath pathExtension];
+		
+		NSArray * components = [filePath pathComponents];
+		switch ([components count]) 
+		{
+			case 0:
+				return nil;
+				break;
+			case 1:
+				return __NSDataMainBundleDataFromFullPathString([[NSBundle bundleForClass:[self class]] pathForResource:fileName 
+																												 ofType:fileExtension]);
+				break;
+			default:
+				return __NSDataMainBundleDataFromFullPathString([[NSBundle bundleForClass:[self class]] pathForResource:fileName
+																												 ofType:fileExtension
+																											inDirectory:[filePath stringByDeletingLastPathComponent]]);
+				break;
+		}
+	}
+	return nil;
+}
+
+@end
+
 CG_INLINE bool __NSDataDataZIPCompressionAppend(NSMutableData * data, 
 												const void * buff,
 												const NSUInteger buffSize)
