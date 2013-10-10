@@ -2,7 +2,7 @@ rm -rf iOSCategoriesOKSDK.framework
 rm -f *.a
 
 xcodebuild -configuration Release -project iOSCategoriesOKSDK.xcodeproj -target iOSCategoriesOKSDK -arch i386 -sdk iphonesimulator OBJROOT=obj SYMROOT=sym clean build
-mv sym/Release-iphonesimulator/libiOSCategoriesOKSDK.a libiOSCategoriesOKSDK-iphonesimulator.a
+xcodebuild -configuration Release -project ../thirdpartylibs/webp.xcodeproj -target webp -arch i386 -sdk iphonesimulator OBJROOT=../framework/obj SYMROOT=../framework/sym clean build
 cd obj
 find . -type f -iregex '.*\.o$' | xargs -I @ ar -q -v ../all-i386.a @
 cd ..
@@ -10,7 +10,7 @@ rm -rf obj
 rm -rf sym
 
 xcodebuild -configuration Release -project iOSCategoriesOKSDK.xcodeproj -target iOSCategoriesOKSDK -arch armv7 -sdk iphoneos OBJROOT=obj SYMROOT=sym clean build
-mv sym/Release-iphoneos/libiOSCategoriesOKSDK.a libiOSCategoriesOKSDK-armv7.a
+xcodebuild -configuration Release -project ../thirdpartylibs/webp.xcodeproj -target webp -arch armv7 -sdk iphoneos OBJROOT=../framework/obj SYMROOT=../framework/sym clean build
 cd obj
 find . -type f -iregex '.*\.o$' | xargs -I @ ar -q -v ../all-armv7.a @
 cd ..
@@ -18,26 +18,27 @@ rm -rf obj
 rm -rf sym
 
 xcodebuild -configuration Release -project iOSCategoriesOKSDK.xcodeproj -target iOSCategoriesOKSDK -arch armv7s -sdk iphoneos OBJROOT=obj SYMROOT=sym clean build
-mv sym/Release-iphoneos/libiOSCategoriesOKSDK.a libiOSCategoriesOKSDK-armv7s.a
+xcodebuild -configuration Release -project ../thirdpartylibs/webp.xcodeproj -target webp -arch armv7s -sdk iphoneos OBJROOT=../framework/obj SYMROOT=../framework/sym clean build
 cd obj
 find . -type f -iregex '.*\.o$' | xargs -I @ ar -q -v ../all-armv7s.a @
 cd ..
 rm -rf obj
 rm -rf sym
 
+xcodebuild -configuration Release -project iOSCategoriesOKSDK.xcodeproj -target iOSCategoriesOKSDK -arch arm64 -sdk iphoneos OBJROOT=obj SYMROOT=sym IPHONEOS_DEPLOYMENT_TARGET=7.0.0 clean build
+xcodebuild -configuration Release -project ../thirdpartylibs/webp.xcodeproj -target webp -arch arm64 -sdk iphoneos OBJROOT=../framework/obj SYMROOT=../framework/sym IPHONEOS_DEPLOYMENT_TARGET=7.0.0 clean build
+cd obj
+find . -type f -iregex '.*\.o$' | xargs -I @ ar -q -v ../all-arm64.a @
+cd ..
+rm -rf obj
+rm -rf sym
 
-lipo -create libiOSCategoriesOKSDK-iphonesimulator.a libiOSCategoriesOKSDK-armv7.a libiOSCategoriesOKSDK-armv7s.a -output libiOSCategoriesOKSDK.a
-rm -f libiOSCategoriesOKSDK-iphonesimulator.a
-rm -f libiOSCategoriesOKSDK-armv7.a
-rm -f libiOSCategoriesOKSDK-armv7s.a
 
-
-
-lipo -create all-i386.a all-armv7.a all-armv7s.a -output all.a
+lipo -create all-i386.a all-armv7.a all-armv7s.a all-arm64.a -output all.a
 rm -f all-i386.a
 rm -f all-armv7.a
 rm -f all-armv7s.a
-
+rm -f all-arm64.a
 
 
 rm -rf iOSCategoriesOKSDK.framework

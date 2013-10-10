@@ -49,6 +49,6 @@
 #import "ui/UITableView+CategoryOK.h"
 #import "ui/UIView+CategoryOK.h"
 #import "ui/UIWebView+CategoryOK.h"
-
+#import "ui/UIImage+CategoryOK.h"
 
 #endif 

@@ -108,7 +108,7 @@ CG_INLINE bool __NSDataDataZIPCompressionAppend(NSMutableData * data,
 	
 	z_stream zipStream = { 0 };
 	zipStream.next_in = (Bytef *)[dataToCompress bytes];
-	zipStream.avail_in = [dataToCompress length];
+	zipStream.avail_in = (uInt)[dataToCompress length];
 	
 	const uInt outBufferSize = 32 * 1024;
 	Bytef outBuffer[outBufferSize];
@@ -178,7 +178,7 @@ CG_INLINE bool __NSDataDataZIPCompressionAppend(NSMutableData * data,
 	
 	z_stream zipStream = { 0 };
 	zipStream.next_in = (Bytef *)[zipData bytes];
-	zipStream.avail_in = [zipData length];
+	zipStream.avail_in = (uInt)[zipData length];
     int result = inflateInit(&zipStream);
     if (result != Z_OK)
 	{

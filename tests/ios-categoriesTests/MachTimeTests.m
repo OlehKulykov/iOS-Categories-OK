@@ -10,9 +10,9 @@
 {
 	@try 
 	{
-		NSTimeInterval currentTime = GetMachTime();
+		NSTimeInterval currentTime = [MachTime currentTime];
 		[NSThread sleepForTimeInterval:1.0 / 1000.0];
-		if ( currentTime >= GetMachTime() ) 
+		if ( currentTime >= [MachTime currentTime] ) 
 		{
 			STFail(@"MachTimeTests: current time calculation not correct.");
 		}
