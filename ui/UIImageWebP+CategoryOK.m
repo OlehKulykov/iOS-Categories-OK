@@ -15,6 +15,45 @@
  */
 
 
+/* If you are using UIImage with WebP support read Google licence,
+ * otherwise remove file UIImageWebP+CategoryOK.m from build phase.
+ */
+
+
+/* 
+ * Google Webp decoder
+ */
+// Copyright 2010 Google Inc. All Rights Reserved.
+//
+// Use of this source code is governed by a BSD-style license
+// that can be found in the COPYING file in the root of the source
+// tree. An additional intellectual property rights grant can be found
+// in the file PATENTS. All contributing project authors may
+// be found in the AUTHORS file in the root of the source tree.
+// -----------------------------------------------------------------------------
+//
+//  Main decoding functions for WebP images.
+//
+// Author: Skal (pascal.massimino@gmail.com)
+
+
+/* 
+ * Google Webp encoder
+ */
+// Copyright 2011 Google Inc. All Rights Reserved.
+//
+// Use of this source code is governed by a BSD-style license
+// that can be found in the COPYING file in the root of the source
+// tree. An additional intellectual property rights grant can be found
+// in the file PATENTS. All contributing project authors may
+// be found in the AUTHORS file in the root of the source tree.
+// -----------------------------------------------------------------------------
+//
+//   WebP encoder: main interface
+//
+// Author: Skal (pascal.massimino@gmail.com)
+
+
 #import "UIImage+CategoryOK.h"
 
 #import "libwebp/src/webp/decode.h"
