@@ -20,12 +20,6 @@
 
 @interface UIImage (WebP)
 
-- (id) initWithWebPData:(NSData *) data;
-
-- (id) initWithWebPData:(NSData *) data scale:(CGFloat) scale;
-
-- (id) initWithContentsOfWebPFile:(NSString *) path;
-
 + (id) imageWithWebPData:(NSData *) data;
 
 + (id) imageWithWebPData:(NSData *) data scale:(CGFloat) scale;
@@ -34,12 +28,12 @@
 
 + (BOOL) isWebPData:(NSData *) data;
 
-- (NSData *) imageWebPLosslessRepresentation;
+- (NSData *) losslessWebPRepresentation;
 
-- (NSData *) imageWebPRepresentationWithCompressionQuality:(CGFloat) compressionQuality;
+- (NSData *) lossyWebPRepresentationWithCompressionQuality:(CGFloat) compressionQuality;
 
 + (NSData *) losslessWebPRepresentationOfImage:(UIImage *) image;
 
-+ (NSData *) imageWebPRepresentation:(UIImage *) image withCompressionQuality:(CGFloat) compressionQuality;
++ (NSData *) lossyWebPRepresentation:(UIImage *) image withCompressionQuality:(CGFloat) compressionQuality;
 
 @end

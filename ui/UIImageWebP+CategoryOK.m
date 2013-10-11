@@ -268,21 +268,6 @@ static BOOL ___UIImageWebPIsWebPData(NSData * data, int * width, int * height)
 
 @implementation UIImage (WebP)
 
-- (id) initWithWebPData:(NSData *)data
-{
-	return [UIImage imageWithWebPData:data];
-}
-
-- (id) initWithWebPData:(NSData *) data scale:(CGFloat) scale
-{
-	return [UIImage imageWithWebPData:data scale:scale];
-}
-
-- (id) initWithContentsOfWebPFile:(NSString *)path
-{
-	return [UIImage imageWithContentsOfWebPFile:path];
-}
-
 + (id) imageWithWebPData:(NSData *) data
 {
 	if (___UIImageWebPIsWebPData(data, NULL, NULL)) 
@@ -325,12 +310,12 @@ static BOOL ___UIImageWebPIsWebPData(NSData * data, int * width, int * height)
 	return ___UIImageWebPIsWebPData(data, NULL, NULL);
 }
 
-- (NSData *) imageWebPLosslessRepresentation
+- (NSData *) losslessWebPRepresentation
 {
 	return ___UIImageWebPDataFromImage(self, FLT_MAX);
 }
 
-- (NSData *) imageWebPRepresentationWithCompressionQuality:(CGFloat) compressionQuality
+- (NSData *) lossyWebPRepresentationWithCompressionQuality:(CGFloat) compressionQuality
 {
 	if (compressionQuality < 0.0f) compressionQuality = 80.0f;
 	else if (compressionQuality > 100.0f) compressionQuality = FLT_MAX;
@@ -342,7 +327,7 @@ static BOOL ___UIImageWebPIsWebPData(NSData * data, int * width, int * height)
 	return image ? ___UIImageWebPDataFromImage(image, FLT_MAX) : nil;
 }
 
-+ (NSData *) imageWebPRepresentation:(UIImage *) image withCompressionQuality:(CGFloat) compressionQuality
++ (NSData *) lossyWebPRepresentation:(UIImage *) image withCompressionQuality:(CGFloat) compressionQuality
 {
 	if (image) 
 	{
