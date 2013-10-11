@@ -82,3 +82,30 @@
 }
 
 @end
+
+
+#define DICT_TYPED_OBJECT_FOR_KEY(t,k) id o=[self objectForKey:k]; return(o&&[o isKindOfClass:[t class]])?((t*)o):nil; \
+
+@implementation NSDictionary(TypedObjects)
+
+- (NSNumber *) numberForKey:(id) aKey
+{
+	DICT_TYPED_OBJECT_FOR_KEY(NSNumber,aKey)
+}
+
+- (NSString *) stringForKey:(id) aKey
+{
+	DICT_TYPED_OBJECT_FOR_KEY(NSString,aKey)
+}
+
+- (NSArray *) arrayForKey:(id) aKey
+{
+	DICT_TYPED_OBJECT_FOR_KEY(NSArray,aKey)
+}
+
+- (NSDictionary *) dictionaryForKey:(id) aKey
+{
+	DICT_TYPED_OBJECT_FOR_KEY(NSDictionary,aKey)
+}
+
+@end

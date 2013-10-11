@@ -30,3 +30,17 @@
 + (NSData *) binaryPropertyListDataWithDictionary:(NSDictionary *) dictionary;
 
 @end
+
+
+@interface NSDictionary(TypedObjects)
+
+- (NSNumber *) numberForKey:(id) aKey;
+
+- (NSString *) stringForKey:(id) aKey;
+
+- (NSArray *) arrayForKey:(id) aKey;
+
+- (NSDictionary *) dictionaryForKey:(id) aKey;
+
+@end
+
