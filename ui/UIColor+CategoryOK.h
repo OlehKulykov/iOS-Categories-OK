@@ -17,6 +17,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "../common/iOS_Categories_OK_CommonHeader.h"
 
 typedef struct _rgbaByteColor
 {
@@ -34,7 +35,7 @@ typedef struct _rgbaByteColor
 	};
 } RGBAByteColor;
 
-CG_INLINE BOOL IsValidRGBAByteColorDictionary(NSDictionary * dict)
+IOS_CATEGORIES_INLINE BOOL IsValidRGBAByteColorDictionary(NSDictionary * dict)
 {
 	if (dict)
 	{
@@ -44,13 +45,13 @@ CG_INLINE BOOL IsValidRGBAByteColorDictionary(NSDictionary * dict)
 	return NO;
 }
 
-CG_INLINE NSDictionary * RGBAByteColorToDictionary(const RGBAByteColor color)
+IOS_CATEGORIES_INLINE NSDictionary * RGBAByteColorToDictionary(const RGBAByteColor color)
 {
 	return [NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInt:(uint32_t)color.value] 
 									   forKey:@"RGBAByteColorValue"];
 }
 
-CG_INLINE RGBAByteColor RGBAByteColorFromDict(NSDictionary * dict)
+IOS_CATEGORIES_INLINE RGBAByteColor RGBAByteColorFromDict(NSDictionary * dict)
 {
 	RGBAByteColor c;
 	if (IsValidRGBAByteColorDictionary(dict))
@@ -65,15 +66,15 @@ CG_INLINE RGBAByteColor RGBAByteColorFromDict(NSDictionary * dict)
 	return c;
 }
 
-CG_INLINE BOOL RGBAByteColorsIsEqual(const RGBAByteColor c1, 
-									 const RGBAByteColor c2)
+IOS_CATEGORIES_INLINE BOOL RGBAByteColorsIsEqual(const RGBAByteColor c1, 
+												 const RGBAByteColor c2)
 {
 	return ( c1.value == c2.value );
 }
 
-CG_INLINE RGBAByteColor RGBAByteColorMakeWithRGBBytes(const uint8_t red,
-													  const uint8_t green,
-													  const uint8_t blue)
+IOS_CATEGORIES_INLINE RGBAByteColor RGBAByteColorMakeWithRGBBytes(const uint8_t red,
+																  const uint8_t green,
+																  const uint8_t blue)
 {
 	RGBAByteColor c;
 	c.red = red;
@@ -83,10 +84,10 @@ CG_INLINE RGBAByteColor RGBAByteColorMakeWithRGBBytes(const uint8_t red,
 	return c;
 }
 
-CG_INLINE RGBAByteColor RGBAByteColorMakeWithRGBABytes(const uint8_t red,
-													   const uint8_t green,
-													   const uint8_t blue,
-													   const uint8_t alpha)
+IOS_CATEGORIES_INLINE RGBAByteColor RGBAByteColorMakeWithRGBABytes(const uint8_t red,
+																   const uint8_t green,
+																   const uint8_t blue,
+																   const uint8_t alpha)
 {
 	RGBAByteColor c;
 	c.red = red;
@@ -96,9 +97,9 @@ CG_INLINE RGBAByteColor RGBAByteColorMakeWithRGBABytes(const uint8_t red,
 	return c;
 }
 
-CG_INLINE RGBAByteColor RGBAByteColorMakeWithRGB(const float red,
-												 const float green,
-												 const float blue)
+IOS_CATEGORIES_INLINE RGBAByteColor RGBAByteColorMakeWithRGB(const float red,
+															 const float green,
+															 const float blue)
 {
 	RGBAByteColor c;
 	c.red = (uint8_t)(red * 255);
@@ -108,10 +109,10 @@ CG_INLINE RGBAByteColor RGBAByteColorMakeWithRGB(const float red,
 	return c;
 }
 
-CG_INLINE RGBAByteColor RGBAByteColorMakeWithRGBA(const float red,
-												  const float green,
-												  const float blue,
-												  const float alpha)
+IOS_CATEGORIES_INLINE RGBAByteColor RGBAByteColorMakeWithRGBA(const float red,
+															  const float green,
+															  const float blue,
+															  const float alpha)
 {
 	RGBAByteColor c;
 	c.red = (uint8_t)(red * 255);

@@ -20,6 +20,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import "iOS_Categories_OK_CommonHeader.h"
 
 /// 180/pi
 #ifndef MATH_RADIAN
@@ -66,14 +67,14 @@
 
 
 /// Returns distance between two float values.
-CG_INLINE CGFloat DistanceBetweenFloatValues(const CGFloat firstValue, const CGFloat secondValue)
+IOS_CATEGORIES_INLINE CGFloat DistanceBetweenFloatValues(const CGFloat firstValue, const CGFloat secondValue)
 {
 	const CGFloat subResult = firstValue - secondValue;
 	return ABS(subResult);
 }
 
 /// Returns distance between two points.
-CG_INLINE CGFloat AngleBetweenPoints(const CGPoint first, const CGPoint second)
+IOS_CATEGORIES_INLINE CGFloat AngleBetweenPoints(const CGPoint first, const CGPoint second)
 {
 	const CGFloat dx = first.x - second.x;
 	const CGFloat dy = first.y - second.y;

@@ -62,6 +62,8 @@
 		3DF0352B168AF35A0056FEDB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF03529168AF0FE0056FEDB /* CoreLocation.framework */; };
 		3DF0CDA4168C73BC003BFD79 /* JSONObjectConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0CDA3168C73BC003BFD79 /* JSONObjectConverter.m */; };
 		3DF0CDA5168C73BC003BFD79 /* JSONObjectConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0CDA3168C73BC003BFD79 /* JSONObjectConverter.m */; };
+		3DF97D18180AB00A004FD2F4 /* EnvironmentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF97D16180AB00A004FD2F4 /* EnvironmentInfo.m */; };
+		3DF97D19180AB00A004FD2F4 /* EnvironmentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF97D16180AB00A004FD2F4 /* EnvironmentInfo.m */; };
 		3DFE0235168BA11600B080FE /* CLLocation+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE022E168BA11600B080FE /* CLLocation+CategoryOK.m */; };
 		3DFE0236168BA11600B080FE /* CLLocation+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE022E168BA11600B080FE /* CLLocation+CategoryOK.m */; };
 		3DFE0237168BA11600B080FE /* NSArray+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0230168BA11600B080FE /* NSArray+CategoryOK.m */; };
@@ -164,6 +166,9 @@
 		3DF03529168AF0FE0056FEDB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3DF0CDA2168C73BC003BFD79 /* JSONObjectConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONObjectConverter.h; path = ../../common/JSONObjectConverter.h; sourceTree = "<group>"; };
 		3DF0CDA3168C73BC003BFD79 /* JSONObjectConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONObjectConverter.m; path = ../../common/JSONObjectConverter.m; sourceTree = "<group>"; };
+		3DF97D15180AB00A004FD2F4 /* EnvironmentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnvironmentInfo.h; path = ../../common/EnvironmentInfo.h; sourceTree = "<group>"; };
+		3DF97D16180AB00A004FD2F4 /* EnvironmentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EnvironmentInfo.m; path = ../../common/EnvironmentInfo.m; sourceTree = "<group>"; };
+		3DF97D17180AB00A004FD2F4 /* iOS_Categories_OK_CommonHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iOS_Categories_OK_CommonHeader.h; path = ../../common/iOS_Categories_OK_CommonHeader.h; sourceTree = "<group>"; };
 		3DFE022D168BA11600B080FE /* CLLocation+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLLocation+CategoryOK.h"; path = "../../foundation/CLLocation+CategoryOK.h"; sourceTree = "<group>"; };
 		3DFE022E168BA11600B080FE /* CLLocation+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLLocation+CategoryOK.m"; path = "../../foundation/CLLocation+CategoryOK.m"; sourceTree = "<group>"; };
 		3DFE022F168BA11600B080FE /* NSArray+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+CategoryOK.h"; path = "../../foundation/NSArray+CategoryOK.h"; sourceTree = "<group>"; };
@@ -248,6 +253,9 @@
 		3D55F38A1688642500B30D8D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				3DF97D15180AB00A004FD2F4 /* EnvironmentInfo.h */,
+				3DF97D16180AB00A004FD2F4 /* EnvironmentInfo.m */,
+				3DF97D17180AB00A004FD2F4 /* iOS_Categories_OK_CommonHeader.h */,
 				3DF03500168ADBDD0056FEDB /* CGRect+CategoryOK.h */,
 				3DF03501168ADBDD0056FEDB /* CustomMath.h */,
 				3DF0CDA2168C73BC003BFD79 /* JSONObjectConverter.h */,
@@ -572,6 +580,7 @@
 				3D6BCD261761C27500EA24E9 /* StorageBase.m in Sources */,
 				3D6BCD281761C27500EA24E9 /* StorageItem.m in Sources */,
 				3DEABF3A17748CBF00824B60 /* NotificationManager.m in Sources */,
+				3DF97D18180AB00A004FD2F4 /* EnvironmentInfo.m in Sources */,
 				3D79BD5F1806D58900E60D19 /* UIImageWebP+CategoryOK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -581,6 +590,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D00B2FC1684BCC90004D48D /* NSArrayTests.m in Sources */,
+				3DF97D19180AB00A004FD2F4 /* EnvironmentInfo.m in Sources */,
 				3D55F3921688662300B30D8D /* MachTimeTests.m in Sources */,
 				3D79BD601806D58900E60D19 /* UIImageWebP+CategoryOK.m in Sources */,
 				3D55F39C16886C3F00B30D8D /* CGRectAdditionsTests.m in Sources */,

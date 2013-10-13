@@ -18,6 +18,7 @@
 #ifndef __IOSCATEGORIESOKSDK_H__
 #define __IOSCATEGORIESOKSDK_H__
 
+
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreFoundation/CoreFoundation.h>
@@ -27,11 +28,13 @@
 #import "common/CustomMath.h"
 #import "common/JSONObjectConverter.h"
 #import "common/MachTime.h"
+#import "common/EnvironmentInfo.h"
 
 
 #import "derived/AnchorPointRotatableUIView.h"
 #import "derived/NotificationManager.h"
 #import "derived/StorageBase.h"
+
 
 #import "foundation/CLLocation+CategoryOK.h"
 #import "foundation/NSArray+CategoryOK.h"
@@ -50,5 +53,6 @@
 #import "ui/UIView+CategoryOK.h"
 #import "ui/UIWebView+CategoryOK.h"
 #import "ui/UIImage+CategoryOK.h"
+
 
 #endif 
