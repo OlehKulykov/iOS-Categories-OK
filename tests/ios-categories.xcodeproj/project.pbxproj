@@ -13,6 +13,8 @@
 		3D354BF5168BDCAF00BB6F9B /* NSStringTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D354BF4168BDCAF00BB6F9B /* NSStringTests.m */; };
 		3D3556FF168C952E00D4462E /* NSData+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3556FE168C952E00D4462E /* NSData+CategoryOK.m */; };
 		3D355700168C952E00D4462E /* NSData+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3556FE168C952E00D4462E /* NSData+CategoryOK.m */; };
+		3D3E2170180B5DCD0068C7E6 /* UIViewSubviewsStoredProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E216F180B5DCD0068C7E6 /* UIViewSubviewsStoredProperties.m */; };
+		3D3E2171180B5DCD0068C7E6 /* UIViewSubviewsStoredProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E216F180B5DCD0068C7E6 /* UIViewSubviewsStoredProperties.m */; };
 		3D4EE612168C9BD60067F698 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4EE611168C9BD60067F698 /* libz.dylib */; };
 		3D4EE614168C9BDC0067F698 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4EE611168C9BD60067F698 /* libz.dylib */; };
 		3D4EE615168C9D170067F698 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D7E56921684BB8800E3604A /* Default.png */; };
@@ -113,6 +115,8 @@
 		3D354BF4168BDCAF00BB6F9B /* NSStringTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringTests.m; sourceTree = "<group>"; };
 		3D3556FD168C952E00D4462E /* NSData+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+CategoryOK.h"; path = "../../foundation/NSData+CategoryOK.h"; sourceTree = "<group>"; };
 		3D3556FE168C952E00D4462E /* NSData+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+CategoryOK.m"; path = "../../foundation/NSData+CategoryOK.m"; sourceTree = "<group>"; };
+		3D3E216E180B5DCD0068C7E6 /* UIViewSubviewsStoredProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIViewSubviewsStoredProperties.h; path = ../../derived/UIViewSubviewsStoredProperties.h; sourceTree = "<group>"; };
+		3D3E216F180B5DCD0068C7E6 /* UIViewSubviewsStoredProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIViewSubviewsStoredProperties.m; path = ../../derived/UIViewSubviewsStoredProperties.m; sourceTree = "<group>"; };
 		3D4EE611168C9BD60067F698 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3D4EE618168C9D2F0067F698 /* NSDataTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataTests.h; sourceTree = "<group>"; };
 		3D4EE619168C9D2F0067F698 /* NSDataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataTests.m; sourceTree = "<group>"; };
@@ -219,6 +223,8 @@
 		3D0A1C0E168C3C9700E8C2A2 /* Derived */ = {
 			isa = PBXGroup;
 			children = (
+				3D3E216E180B5DCD0068C7E6 /* UIViewSubviewsStoredProperties.h */,
+				3D3E216F180B5DCD0068C7E6 /* UIViewSubviewsStoredProperties.m */,
 				3D42129C1761BAC9008C07E0 /* linerstorage */,
 				3D4212971761BAA1008C07E0 /* ui */,
 			);
@@ -579,6 +585,7 @@
 				3D6BCD1F1761C26C00EA24E9 /* AnchorPointRotatableUIView.m in Sources */,
 				3D6BCD261761C27500EA24E9 /* StorageBase.m in Sources */,
 				3D6BCD281761C27500EA24E9 /* StorageItem.m in Sources */,
+				3D3E2170180B5DCD0068C7E6 /* UIViewSubviewsStoredProperties.m in Sources */,
 				3DEABF3A17748CBF00824B60 /* NotificationManager.m in Sources */,
 				3DF97D18180AB00A004FD2F4 /* EnvironmentInfo.m in Sources */,
 				3D79BD5F1806D58900E60D19 /* UIImageWebP+CategoryOK.m in Sources */,
@@ -605,6 +612,7 @@
 				3DFE0247168BA12400B080FE /* UIColor+CategoryOK.m in Sources */,
 				3DFE0249168BA12400B080FE /* UIImageView+CategoryOK.m in Sources */,
 				3DFE024B168BA12400B080FE /* UITableView+CategoryOK.m in Sources */,
+				3D3E2171180B5DCD0068C7E6 /* UIViewSubviewsStoredProperties.m in Sources */,
 				3DFE024D168BA12400B080FE /* UIView+CategoryOK.m in Sources */,
 				3D354BF5168BDCAF00BB6F9B /* NSStringTests.m in Sources */,
 				3D79BD6E1806D65300E60D19 /* UIImageWebPTests.m in Sources */,

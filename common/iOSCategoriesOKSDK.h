@@ -34,6 +34,7 @@
 #import "derived/AnchorPointRotatableUIView.h"
 #import "derived/NotificationManager.h"
 #import "derived/StorageBase.h"
+#import "derived/UIViewSubviewsStoredProperties.h"
 
 
 #import "foundation/CLLocation+CategoryOK.h"

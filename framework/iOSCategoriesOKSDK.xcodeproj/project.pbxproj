@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D3E216C180B5BCF0068C7E6 /* UIViewSubviewsStoredProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3E216B180B5BCF0068C7E6 /* UIViewSubviewsStoredProperties.m */; };
 		3D4212B81761BE98008C07E0 /* StorageBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4212B41761BE98008C07E0 /* StorageBase.m */; };
 		3D4212B91761BE98008C07E0 /* StorageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4212B61761BE98008C07E0 /* StorageItem.m */; };
 		3D79BC0B1806B99300E60D19 /* UIImage+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D79BC0A1806B99300E60D19 /* UIImage+CategoryOK.m */; };
@@ -48,6 +49,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3D3E216A180B5BCF0068C7E6 /* UIViewSubviewsStoredProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIViewSubviewsStoredProperties.h; path = ../derived/UIViewSubviewsStoredProperties.h; sourceTree = SOURCE_ROOT; };
+		3D3E216B180B5BCF0068C7E6 /* UIViewSubviewsStoredProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIViewSubviewsStoredProperties.m; path = ../derived/UIViewSubviewsStoredProperties.m; sourceTree = SOURCE_ROOT; };
 		3D4212B31761BE98008C07E0 /* StorageBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StorageBase.h; path = ../derived/StorageBase.h; sourceTree = SOURCE_ROOT; };
 		3D4212B41761BE98008C07E0 /* StorageBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StorageBase.m; path = ../derived/StorageBase.m; sourceTree = SOURCE_ROOT; };
 		3D4212B51761BE98008C07E0 /* StorageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StorageItem.h; path = ../derived/StorageItem.h; sourceTree = SOURCE_ROOT; };
@@ -158,6 +161,7 @@
 		3DBBD20B175C7F710051A020 /* iOSCategoriesOKSDK */ = {
 			isa = PBXGroup;
 			children = (
+				3DBBD261175C81D70051A020 /* iOSCategoriesOKSDK.h */,
 				3DBBD27D175C83240051A020 /* ui */,
 				3DBBD276175C831B0051A020 /* net */,
 				3DBBD266175C82B90051A020 /* foundation */,
@@ -175,7 +179,6 @@
 				3DF97D12180AAF89004FD2F4 /* EnvironmentInfo.m */,
 				3DFD298C178D51CC00A1CA27 /* JSONObjectConverter.h */,
 				3DFD298D178D51CC00A1CA27 /* JSONObjectConverter.m */,
-				3DBBD261175C81D70051A020 /* iOSCategoriesOKSDK.h */,
 				3DBBD258175C81420051A020 /* CGRect+CategoryOK.h */,
 				3DBBD259175C81420051A020 /* CustomMath.h */,
 				3DBBD25C175C81420051A020 /* MachTime.h */,
@@ -197,6 +200,8 @@
 				3D4212B51761BE98008C07E0 /* StorageItem.h */,
 				3D4212B61761BE98008C07E0 /* StorageItem.m */,
 				3D4212B71761BE98008C07E0 /* StorageItemPrivate.h */,
+				3D3E216A180B5BCF0068C7E6 /* UIViewSubviewsStoredProperties.h */,
+				3D3E216B180B5BCF0068C7E6 /* UIViewSubviewsStoredProperties.m */,
 			);
 			name = derived;
 			path = ../../derived;
@@ -314,6 +319,7 @@
 				3DBBD27B175C831B0051A020 /* RequestFieldsContainer.m in Sources */,
 				3DBBD27C175C831B0051A020 /* RequestGenerator.m in Sources */,
 				3DBBD288175C83240051A020 /* UIColor+CategoryOK.m in Sources */,
+				3D3E216C180B5BCF0068C7E6 /* UIViewSubviewsStoredProperties.m in Sources */,
 				3DBBD289175C83240051A020 /* UIImageView+CategoryOK.m in Sources */,
 				3DBBD28A175C83240051A020 /* UITableView+CategoryOK.m in Sources */,
 				3DBBD28B175C83240051A020 /* UIView+CategoryOK.m in Sources */,
