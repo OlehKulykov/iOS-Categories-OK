@@ -18,21 +18,22 @@
 #import <Foundation/Foundation.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import "../common/iOS_Categories_OK_CommonHeader.h"
 
 /// Check is array has no objects
-CG_INLINE BOOL NSArrayIsEmpty(NSArray * array)
+IOS_CATEGORIES_INLINE BOOL NSArrayIsEmpty(NSArray * array)
 {
 	return (array) ? ([array count] == 0) : YES;
 }
 
 /// Check is array has objects
-CG_INLINE BOOL NSArrayIsNotEmpty(NSArray * array)
+IOS_CATEGORIES_INLINE BOOL NSArrayIsNotEmpty(NSArray * array)
 {
 	return (array) ? ([array count] > 0) : NO;
 }
 
 /// Returns array object with index or nil.
-CG_INLINE id NSArrayObjectAtIndex(NSArray * array, const NSUInteger index)
+IOS_CATEGORIES_INLINE id NSArrayObjectAtIndex(NSArray * array, const NSUInteger index)
 {
 	const NSUInteger count = array ? [array count] : 0;
 	return (index < count) ? [array objectAtIndex:index] : nil;

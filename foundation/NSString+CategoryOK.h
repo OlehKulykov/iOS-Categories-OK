@@ -18,18 +18,19 @@
 #import <Foundation/Foundation.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import "../common/iOS_Categories_OK_CommonHeader.h"
 
-CG_INLINE BOOL NSStringIsEmpty(NSString * stringToTest)
+IOS_CATEGORIES_INLINE BOOL NSStringIsEmpty(NSString * stringToTest)
 {
 	return (stringToTest) ? ([stringToTest length] == 0) : YES;
 }
 
-CG_INLINE BOOL NSStringIsNotEmpty(NSString * stringToTest)
+IOS_CATEGORIES_INLINE BOOL NSStringIsNotEmpty(NSString * stringToTest)
 {
 	return (stringToTest) ? ([stringToTest length] > 0) : NO;
 }
 
-CG_INLINE BOOL NSStringIsFilePathExists(NSString * pathForTest)
+IOS_CATEGORIES_INLINE BOOL NSStringIsFilePathExists(NSString * pathForTest)
 {
 	if (NSStringIsNotEmpty(pathForTest)) 
 	{
@@ -43,7 +44,7 @@ CG_INLINE BOOL NSStringIsFilePathExists(NSString * pathForTest)
 	return NO;
 }
 
-CG_INLINE BOOL NSStringIsDirPathExists(NSString * pathForTest)
+IOS_CATEGORIES_INLINE BOOL NSStringIsDirPathExists(NSString * pathForTest)
 {
 	if (NSStringIsNotEmpty(pathForTest)) 
 	{

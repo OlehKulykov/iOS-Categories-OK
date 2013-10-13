@@ -17,12 +17,13 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "../common/iOS_Categories_OK_CommonHeader.h"
 
-CLLocationDistance GetDistanceBetweenCoordinates(const CLLocationCoordinate2D firstCoord, 
-												 const CLLocationCoordinate2D secondCoord);
+IOS_CATEGORIES_INLINE CLLocationDistance GetDistanceBetweenCoordinates(const CLLocationCoordinate2D firstCoord, 
+																	   const CLLocationCoordinate2D secondCoord);
 
-CLLocationDistance GetDistanceBetweenLocations(CLLocation * firstLocation, 
-											   CLLocation * secondLocation);
+IOS_CATEGORIES_INLINE CLLocationDistance GetDistanceBetweenLocations(CLLocation * firstLocation, 
+																	 CLLocation * secondLocation);
 
 
 @interface CLLocation(DistancePrevTo_iOS_3_2)
