@@ -43,7 +43,7 @@
 	if (subString) 
 	{
 		const NSRange r = [self rangeOfString:subString options:NSCaseInsensitiveSearch];
-		return (r.location != NSNotFound) && r.length;
+		return (r.location != NSNotFound && r.length != 0);
 	}
 	return NO;
 }
