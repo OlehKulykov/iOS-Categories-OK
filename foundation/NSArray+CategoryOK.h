@@ -20,19 +20,35 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import "../common/iOS_Categories_OK_CommonHeader.h"
 
-/// Check is array has no objects
+
+/**
+ @brief Check is array has no objects or nil.
+ @param array An array for test.
+ @return YES if no objects or nil, othervice NO.
+ */
 IOS_CATEGORIES_INLINE BOOL NSArrayIsEmpty(NSArray * array)
 {
 	return (array) ? ([array count] == 0) : YES;
 }
 
-/// Check is array has objects
+
+/**
+ @brief Check is array has objects and not nil.
+ @param array An array for test.
+ @return YES if not nil and have objects, othervice NO.
+ */
 IOS_CATEGORIES_INLINE BOOL NSArrayIsNotEmpty(NSArray * array)
 {
 	return (array) ? ([array count] > 0) : NO;
 }
 
-/// Returns array object with index or nil.
+
+/**
+ @brief Get array object at index.
+ @param array The target array.
+ @param index Index of required object.
+ @return Object or nil if array empty or index dosn't exists.
+ */
 IOS_CATEGORIES_INLINE id NSArrayObjectAtIndex(NSArray * array, const NSUInteger index)
 {
 	const NSUInteger count = array ? [array count] : 0;
@@ -41,19 +57,43 @@ IOS_CATEGORIES_INLINE id NSArrayObjectAtIndex(NSArray * array, const NSUInteger 
 
 @interface NSArray (StaticInfo)
 
-/// Check is array has no objects
+/**
+ @brief Check is array has no objects.
+ @return YES if no objects, othervice NO.
+ */
 + (BOOL) isEmpty:(NSArray *)array;
 
-/// Check is array has objects
+
+/**
+ @brief Check is array has objects.
+ @return YES if have objects, othervice NO.
+ */
 + (BOOL) isNotEmpty:(NSArray *)array;
 
-/// Returns array object with index or nil.
+
+/**
+ @brief Get array object at index.
+ @param index Index of required object.
+ @return Object or nil if index dosn't exists.
+ */
 + (id) array:(NSArray *)array objectAtIndex:(NSUInteger)index;
 
-/// Return previous array index from incoming or NSNotFound if index can't be found
+
+/**
+ @brief Get array previous index from started index.
+ @param array The target array.
+ @param index Started index.
+ @return Previous array index from started or NSNotFound on error.
+ */
 + (NSUInteger) array:(NSArray *)array previousIndexFrom:(NSUInteger)index;
 
-/// Retun next array index from incoming or NSNotFound if index can't be found
+
+/**
+ @brief Get array next index from started index.
+ @param array The target array.
+ @param index Started index.
+ @return Next array index from started or NSNotFound on error.
+ */
 + (NSUInteger) array:(NSArray *)array nextIndexFrom:(NSUInteger)index;
 
 @end

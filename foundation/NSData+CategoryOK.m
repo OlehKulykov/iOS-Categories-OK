@@ -65,13 +65,13 @@ CG_INLINE NSString * __NSDataMainBundleProcessedBunbledFilePath(NSString * fileP
 				return nil;
 				break;
 			case 1:
-				return __NSDataMainBundleDataFromFullPathString([[NSBundle bundleForClass:[self class]] pathForResource:fileName 
-																												 ofType:fileExtension]);
+				return __NSDataMainBundleDataFromFullPathString([[NSBundle mainBundle] pathForResource:fileName 
+																								ofType:fileExtension]);
 				break;
 			default:
-				return __NSDataMainBundleDataFromFullPathString([[NSBundle bundleForClass:[self class]] pathForResource:fileName
-																												 ofType:fileExtension
-																											inDirectory:[filePath stringByDeletingLastPathComponent]]);
+				return __NSDataMainBundleDataFromFullPathString([[NSBundle mainBundle] pathForResource:fileName
+																								ofType:fileExtension
+																						   inDirectory:[filePath stringByDeletingLastPathComponent]]);
 				break;
 		}
 	}
