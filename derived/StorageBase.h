@@ -65,9 +65,9 @@
 
 /**
  @brief Adding new item to storage.
- @detailed Adding new not nil item to storage only ones, next adding the same item will do nothing.
+ @detailed Adding not nil item to storage. Check dublicates manually using method storageItemIndex.
  @param Item object.
- @return Yes if item not contained and successfully added, othervice NO.
+ @return YES if item successfully added, othervice NO.
  */
 - (BOOL) addStorageItem:(StorageItem *) item;
 
@@ -82,7 +82,7 @@
  @brief Removing item from storage.
  @detailed Removing not nil item from storage.
  @param Item object.
- @return Yes if item contained and successfully removed, othervice NO.
+ @return YES if item contained and successfully removed, othervice NO.
  */
 - (BOOL) removeStorageItem:(StorageItem *) item;
 

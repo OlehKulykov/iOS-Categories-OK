@@ -19,16 +19,45 @@
 #import <UIKit/UIKit.h>
 #import "iOS_Categories_OK_CommonHeader.h"
 
-
+/**
+ @brief Checks for horizontal orientation.
+ @param orientation interface orientation for checking.
+ @return YES if orientation horizontal, othervice NO.
+ */ 
 IOS_CATEGORIES_OK_EXTERN BOOL isEnvironmentInfoHorizontalInteraceOrientation(const UIInterfaceOrientation orientation);
 
+
+/**
+ @brief Checks current interface orientation horizontal.
+ @return YES if orientation horizontal, othervice NO.
+ */ 
 IOS_CATEGORIES_OK_EXTERN BOOL isEnvironmentInfoHorizontalCurrentInteraceOrientation();
 
+
+/**
+ @brief Checks user interface idiom is iPad.
+ @return YES if iPad, othervice NO.
+ */ 
 IOS_CATEGORIES_OK_EXTERN BOOL isEnvironmentInfoIpad();
 
+
+/**
+ @brief Checks version of the operating system equal or greater than 7.0.
+ @return YES if equal or greater than 7.0, othervice NO.
+ */ 
 IOS_CATEGORIES_OK_EXTERN BOOL isEnvironmentInfoIOS7OrUpper();
 
+
+/**
+ @brief Checks for execution on the iPhone 4 inch.
+ @return YES if not iPad and screen resolution satisfies 4 inch, othervice NO.
+ */ 
 IOS_CATEGORIES_OK_EXTERN BOOL isEnvironmentInfoIPhone4Inch();
 
+
+/**
+ @brief Checks screen for Retina.
+ @return YES if screen retina (mean scaling equal or greater 2.0), othervice NO.
+ */ 
 IOS_CATEGORIES_OK_EXTERN BOOL isEnvironmentInfoRetinaDisplay();
 

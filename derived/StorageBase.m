@@ -73,8 +73,7 @@
 
 - (BOOL) addStorageItem:(StorageItem *) item
 {
-	const NSUInteger index = [self storageItemIndex:item];
-	if (index == NSNotFound)
+	if (item)
 	{
 		NSUInteger count = 0;
 		if (_storageItemsArray)
