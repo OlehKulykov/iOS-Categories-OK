@@ -17,6 +17,11 @@
 
 #import <Foundation/Foundation.h>
 
+
+/**
+ @brief Class for holding POST fields and it's values.
+ @detailed Simply using strings and data as values.
+ */
 @interface RequestFieldsContainer : NSObject
 {
 @protected
@@ -27,19 +32,46 @@
 	NSMutableDictionary * _textFields;
 }
 
-/// Clear all fields
+/**
+ @brief Clear all fields
+ */
 - (void) clearAllFields;
 
-/// Add binary data field
+
+/**
+ @brief Add binary data field.
+ @param fieldName Name of the field.
+ @param data Field value as data.
+ @result YES if added, othervice NO.
+ */
 - (BOOL) addFieldWithName:(NSString *)fieldName andData:(NSData *)data;
 
-/// Add binary data field
+
+/**
+ @brief Add binary data field with file name.
+ @param fieldName Name of the field.
+ @param data Field value as data.
+ @param fileName File name of the data.
+ @result YES if added, othervice NO.
+ */
 - (BOOL) addFieldWithName:(NSString *)fieldName data:(NSData *)data andFileName:(NSString *)fileName;
 
-/// Add text field
+
+/**
+ @brief Add text field.
+ @param fieldName Name of the field.
+ @param fieldValue String value of the field.
+ @result YES if added, othervice NO.
+ */
 - (BOOL) addFieldWithName:(NSString *)fieldName andStringValue:(NSString *)fieldValue;
 
-/// Add field array with array of values
+
+/**
+ @brief Add field array with array of values.
+ @param fieldName Name of the field.
+ @param fieldValues Array with field values as strings.
+ @result YES if added, othervice NO.
+ */
 - (BOOL) addArrayFieldWithName:(NSString *)fieldName andValues:(NSArray *)fieldValues;
 
 

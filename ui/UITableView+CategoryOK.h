@@ -19,10 +19,13 @@
 
 @interface UITableView (FullContentHeight)
 
-/// Return full table view content height by
-/// calculating height of each cell
+
+/**
+ @brief Height of the table view content.
+ @detailed Height of the table view content calculated as summ of each cell in each section using data source method heightForRowAtIndexPath.
+ @result Height of the table view content event if some cells is not visible or 0.0f if there is no data source.
+ */
 - (CGFloat) fullContentHeight;
 
 @end
-
 

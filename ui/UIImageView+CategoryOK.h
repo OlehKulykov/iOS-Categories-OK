@@ -21,6 +21,18 @@
 
 @interface UIImageView (LoadFromURL)
 
+
+/**
+ @brief Loads image from URL in separate thread.
+ @detailed Loads image from URL in separate thread using activity indicator, it's color and callback selectors
+ @param url The image URL, should not be nil.
+ @param isUseActivityIndicator The flag indication using of the activity inside this image view.
+ @param activityIndicatorColor The color of the activity indicator or nil for default color.
+ @param target Target object for sending events.
+ @param onStartSelector Selector for indication start.
+ @param onDoneSelector Selector for indication finishing loading.
+ @result Thread object which used for loading or nil on error. If code compiled with non ARC this thread is autorelesable.
+*/
 - (NSThread *) loadFromURL:(NSURL *)url
 	  useActivityIndicator:(BOOL)isUseActivityIndicator
 	activityIndicatorColor:(UIColor *)activityIndicatorColor
@@ -29,6 +41,17 @@
 			onDoneSelector:(SEL)onDoneSelector;
 
 
+
+/**
+ @brief Loads image from URL in separate thread.
+ @detailed Loads image from URL in separate thread using activity indicator, it's color and callback selectors
+ @param url The image URL, should not be nil.
+ @param isUseActivityIndicator The flag indication using of the activity inside this image view.
+ @param target Target object for sending events.
+ @param onStartSelector Selector for indication start.
+ @param onDoneSelector Selector for indication finishing loading.
+ @result Thread object which used for loading or nil on error. If code compiled with non ARC this thread is autorelesable.
+ */
 - (NSThread *) loadFromURL:(NSURL *)url
 	  useActivityIndicator:(BOOL)isUseActivityIndicator
 				withTarget:(id)target

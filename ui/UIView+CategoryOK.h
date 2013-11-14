@@ -20,7 +20,11 @@
 
 @interface UIView (BackgroundImage)
 
-/// Sets background view color as image. Image scales to content.
+/**
+ @brief Set background view image.
+ @detailed Set background image to the view layer using setContents. Image scales to content.
+ @param backgroundImage The view background image.
+ */
 - (void) setBackgroundImage:(UIImage *)backgroundImage;
 
 @end
@@ -28,13 +32,30 @@
 
 @interface UIView (SimpleFrame)
 
+/**
+ @brief View read/write property for it's frame coordinate X.
+ */
 @property CGFloat x;
+
+
+/**
+ @brief View read/write property for it's frame coordinate Y.
+ */
 @property CGFloat y;
+
+
+/**
+ @brief View read/write property for it's frame size Width.
+ */
 @property CGFloat width;
+
+
+/**
+ @brief View read/write property for it's frame size Height.
+ */
 @property CGFloat height;
 
+
 @end
-
-
 
 

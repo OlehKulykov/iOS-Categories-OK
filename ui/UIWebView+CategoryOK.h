@@ -21,6 +21,11 @@
 
 @interface UIWebView (ContentSize)
 
+
+/**
+ @brief Get web view content size.
+ @result Size of the content.
+ */
 - (CGSize) contentSize;
 
 @end

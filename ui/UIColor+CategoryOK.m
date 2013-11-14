@@ -75,14 +75,6 @@ UIColor * UIColorMakeWithHEX(NSString * hexString)
 
 @implementation UIColor (RGBA)
 
-+ (UIColor *) colorWithRGBAByteColor:(RGBAByteColor) byteColor
-{
-	return [UIColor colorWithRed:(CGFloat)byteColor.red / 255.0f 
-						   green:(CGFloat)byteColor.green / 255.0f
-							blue:(CGFloat)byteColor.blue / 255.0f
-						   alpha:(CGFloat)byteColor.alpha / 255.0f];
-}
-
 - (RGBAByteColor) colorGetRGBAByteColor
 {
 	RGBAByteColor c;
@@ -114,26 +106,6 @@ UIColor * UIColorMakeWithHEX(NSString * hexString)
 		}
 	}
 	return c;
-}
-
-+ (UIColor *) colorWithRedByte:(uint8_t)red 
-					 greenByte:(uint8_t)green 
-					  blueByte:(uint8_t)blue 
-					 alphaByte:(uint8_t)alpha
-{
-	return UIColorMakeWithRGBA(red, green, blue, alpha);
-}
-
-+ (UIColor *) colorWithRedByte:(uint8_t)red 
-					 greenByte:(uint8_t)green 
-					  blueByte:(uint8_t)blue
-{
-	return UIColorMakeWithRGB(red, green, blue);
-}
-
-+ (UIColor *) colorWithHEXString:(NSString *)hexString
-{
-	return UIColorMakeWithHEX(hexString);
 }
 
 @end

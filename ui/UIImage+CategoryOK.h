@@ -59,20 +59,68 @@
 
 @interface UIImage (WebP)
 
+/**
+ @brief Creates image object from Google WebP image data.
+ @param data The data of the WebP image file.
+ @result Image object or nil on error or if data is not WebP image file.
+ */
 + (id) imageWithWebPData:(NSData *) data;
 
+
+/**
+ @brief Creates image object from Google WebP image data scaled to size.
+ @param data The data of the WebP image file.
+ @param scale The size of the result image.
+ @result Image object or nil on error or if data is not WebP image file or size not positive.
+ */
 + (id) imageWithWebPData:(NSData *) data scale:(CGFloat) scale;
 
+
+/**
+ @brief Creates image object from Google WebP image data loaded from path.
+ @param path The path of the WebP image file.
+ @result Image object or nil on error or if data is not WebP image file.
+ */
 + (id) imageWithContentsOfWebPFile:(NSString *) path;
 
+
+/**
+ @brief Check is data WebP image file.
+ @result YES if data not nil and data is WebP image, othervice NO.
+ */
 + (BOOL) isWebPData:(NSData *) data;
 
+
+/**
+ @brief Lossless encoding image to WebP image file data.
+ @result Data with lossless WebP image file or nil on error.
+ */
 - (NSData *) losslessWebPRepresentation;
 
+
+/**
+ @brief Lossy encoding image to WebP image file data with quality.
+ @param compressionQuality The quality compression factor [0.0f; 100.0f]. If quality is wrong less then zero - quality will be 80.0 if greater 100.0f you will get lossless image.
+ @result Data with lossy WebP image file or nil on error.
+ */
 - (NSData *) lossyWebPRepresentationWithCompressionQuality:(CGFloat) compressionQuality;
 
+
+/**
+ @brief Lossless encoding image to WebP image file data.
+ @param image The image for encoding.
+ @result Data with lossless WebP image file or nil on error or image is nil.
+ */
 + (NSData *) losslessWebPRepresentationOfImage:(UIImage *) image;
 
+
+/**
+ @brief Lossy encoding image to WebP image file data with quality.
+ @param image The image for encoding.
+ @param compressionQuality The quality compression factor [0.0f; 100.0f]. If quality is wrong less then zero - quality will be 80.0 if greater 100.0f you will get lossless image.
+ @result Data with lossy WebP image file or nil on error or image is nil.
+ */
 + (NSData *) lossyWebPRepresentation:(UIImage *) image withCompressionQuality:(CGFloat) compressionQuality;
+
 
 @end

@@ -18,21 +18,47 @@
 #import <Foundation/Foundation.h>
 #import "RequestFieldsContainer.h"
 
+
+/**
+ @brief Class generator of the POST requests.
+ */
 @interface RequestGenerator : RequestFieldsContainer
 
-/// Returns multipart data
+
+/**
+ @brief Returns multipart data.
+ @return Multipart HTTP data.
+ */
 - (NSData *) getMultipartHTTPBodyData;
 
-/// Returns multipart string
+
+/**
+ @brief Returns multipart data as string.
+ @return Multipart HTTP string data.
+ */
 - (NSString *) getMultipartHTTPBodyString;
 
-/// Returns request with multipart POST data
+
+/**
+ @brief Returns mutable POST URL request as multipart/form-data.
+ @param requestURLString URL string.
+ @return Mutable POST URL request.
+ */
 - (NSMutableURLRequest *) getMultipartPOSTRequestForURLString:(NSString *)requestURLString;
 
-/// Returns URL encoded data
+
+/**
+ @brief Returns URL encoded data.
+ @return URL encoded data.
+ */
 - (NSData *) getURLEncodedHTTPBodyData;
 
-/// Returns request with URL encoded POST data
+
+/**
+ @brief Returns mutable POST URL request as application/x-www-form-urlencoded.
+ @param requestURLString URL string.
+ @return Mutable POST URL request.
+ */
 - (NSMutableURLRequest *) getURLEncodedPOSTRequestForURLString:(NSString *)requestURLString;
 
 
