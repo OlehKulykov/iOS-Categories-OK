@@ -15,7 +15,6 @@
 		3DBBD20A175C7F710051A020 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD209175C7F710051A020 /* Foundation.framework */; };
 		3DBBD25F175C81420051A020 /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD25D175C81420051A020 /* MachTime.m */; };
 		3DBBD265175C82AF0051A020 /* AnchorPointRotatableUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD264175C82AF0051A020 /* AnchorPointRotatableUIView.m */; };
-		3DBBD271175C82B90051A020 /* CLLocation+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD268175C82B90051A020 /* CLLocation+CategoryOK.m */; };
 		3DBBD272175C82B90051A020 /* NSArray+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD26A175C82B90051A020 /* NSArray+CategoryOK.m */; };
 		3DBBD273175C82B90051A020 /* NSData+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD26C175C82B90051A020 /* NSData+CategoryOK.m */; };
 		3DBBD274175C82B90051A020 /* NSDictionary+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD26E175C82B90051A020 /* NSDictionary+CategoryOK.m */; };
@@ -68,8 +67,6 @@
 		3DBBD261175C81D70051A020 /* iOSCategoriesOKSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = iOSCategoriesOKSDK.h; path = ../common/iOSCategoriesOKSDK.h; sourceTree = SOURCE_ROOT; };
 		3DBBD263175C82AF0051A020 /* AnchorPointRotatableUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnchorPointRotatableUIView.h; path = ../derived/AnchorPointRotatableUIView.h; sourceTree = SOURCE_ROOT; };
 		3DBBD264175C82AF0051A020 /* AnchorPointRotatableUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnchorPointRotatableUIView.m; path = ../derived/AnchorPointRotatableUIView.m; sourceTree = SOURCE_ROOT; };
-		3DBBD267175C82B90051A020 /* CLLocation+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CLLocation+CategoryOK.h"; path = "../foundation/CLLocation+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
-		3DBBD268175C82B90051A020 /* CLLocation+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CLLocation+CategoryOK.m"; path = "../foundation/CLLocation+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
 		3DBBD269175C82B90051A020 /* NSArray+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+CategoryOK.h"; path = "../foundation/NSArray+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
 		3DBBD26A175C82B90051A020 /* NSArray+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+CategoryOK.m"; path = "../foundation/NSArray+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
 		3DBBD26B175C82B90051A020 /* NSData+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+CategoryOK.h"; path = "../foundation/NSData+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
@@ -210,8 +207,6 @@
 		3DBBD266175C82B90051A020 /* foundation */ = {
 			isa = PBXGroup;
 			children = (
-				3DBBD267175C82B90051A020 /* CLLocation+CategoryOK.h */,
-				3DBBD268175C82B90051A020 /* CLLocation+CategoryOK.m */,
 				3DBBD269175C82B90051A020 /* NSArray+CategoryOK.h */,
 				3DBBD26A175C82B90051A020 /* NSArray+CategoryOK.m */,
 				3DBBD26B175C82B90051A020 /* NSData+CategoryOK.h */,
@@ -311,7 +306,6 @@
 			files = (
 				3DBBD25F175C81420051A020 /* MachTime.m in Sources */,
 				3DBBD265175C82AF0051A020 /* AnchorPointRotatableUIView.m in Sources */,
-				3DBBD271175C82B90051A020 /* CLLocation+CategoryOK.m in Sources */,
 				3DBBD272175C82B90051A020 /* NSArray+CategoryOK.m in Sources */,
 				3DBBD273175C82B90051A020 /* NSData+CategoryOK.m in Sources */,
 				3DBBD274175C82B90051A020 /* NSDictionary+CategoryOK.m in Sources */,
