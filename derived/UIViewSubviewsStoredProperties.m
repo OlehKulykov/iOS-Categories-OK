@@ -210,7 +210,11 @@ static void restoreFromArray(UIView * view, NSMutableArray * arr)
 	for (UIView * v in subviews) 
 	{
 		UIViewSubviewStateInfoPrivate * info = stateForSubviewFromArray(v, arr);
-		if (info) { [info restore:v]; count++; }
+		if (info) 
+		{
+			[info restore:v]; 
+			count++; 
+		}
 	}
 	if (count) [view setNeedsLayout];
 }
@@ -221,7 +225,10 @@ static void storeToArray(UIView * view, NSMutableArray * arr, const UIViewSubvie
 	for (UIView * v in subviews) 
 	{
 		UIViewSubviewStateInfoPrivate * info = stateForSubviewFromArray(v, arr);
-		if (info) [info store:v states:states];
+		if (info)
+		{
+			[info store:v states:states];
+		}
 	}
 }
 
