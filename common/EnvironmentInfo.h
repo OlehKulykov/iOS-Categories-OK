@@ -19,6 +19,9 @@
 #import <UIKit/UIKit.h>
 #import "iOS_Categories_OK_CommonHeader.h"
 
+#ifndef __ENVIRONMENTINFO_H__
+#define __ENVIRONMENTINFO_H__
+
 /**
  @brief Checks for horizontal orientation.
  @param orientation interface orientation for checking.
@@ -60,4 +63,6 @@ IOS_CATEGORIES_OK_EXTERN BOOL isEnvironmentInfoIPhone4Inch();
  @return YES if screen retina (mean scaling equal or greater 2.0), othervice NO.
  */ 
 IOS_CATEGORIES_OK_EXTERN BOOL isEnvironmentInfoRetinaDisplay();
+
+#endif /* __ENVIRONMENTINFO_H__ */
 

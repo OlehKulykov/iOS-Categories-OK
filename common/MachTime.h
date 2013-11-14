@@ -17,10 +17,23 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ @brief Class for get current time.
+ @detailed Getting current time based on mach absolute time.
+ */
 @interface MachTime : NSObject
 
+/**
+ @brief Get current time from application start.
+ @result Time interval in seconds.
+ */
 + (NSTimeInterval) currentTime;
 
+
+/**
+ @brief Get current mach absolute as is.
+ @result Unsigned integer of the mach counter.
+ */
 + (uint64_t) machAbsoluteTime;
 
 @end

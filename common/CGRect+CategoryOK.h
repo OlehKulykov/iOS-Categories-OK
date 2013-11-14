@@ -20,6 +20,14 @@
 
 #import "iOS_Categories_OK_CommonHeader.h"
 
+
+/**
+ @brief Sets top right origin of the rectangle.
+ @param rectangle The target rectanle.
+ @param topRightX The top right X coordinate of the updated rectange.
+ @param topRightY The top right Y coordinate of the updated rectange.
+ @return The new updated rectange.
+ */ 
 IOS_CATEGORIES_INLINE CGRect CGRectSetTopRightOrigin(const CGRect rectangle,
 													 const CGFloat topRightX,
 													 const CGFloat topRightY)
@@ -31,6 +39,12 @@ IOS_CATEGORIES_INLINE CGRect CGRectSetTopRightOrigin(const CGRect rectangle,
 }
 
 
+/**
+ @brief Sets top right origin of the rectangle.
+ @param rectangle The target rectanle.
+ @param topRight The top right coordinates of the updated rectange.
+ @return The new updated rectange.
+ */ 
 IOS_CATEGORIES_INLINE CGRect CGRectSetTopRightOriginPoint(const CGRect rectangle,
 														  const CGPoint topRight)
 {
@@ -41,6 +55,13 @@ IOS_CATEGORIES_INLINE CGRect CGRectSetTopRightOriginPoint(const CGRect rectangle
 }
 
 
+/**
+ @brief Sets bottom right origin of the rectangle.
+ @param rectangle The target rectanle.
+ @param bottomRightX The bottom right X coordinate of the updated rectange.
+ @param bottomRightY The bottom right Y coordinate of the updated rectange.
+ @return The new updated rectange.
+ */ 
 IOS_CATEGORIES_INLINE CGRect CGRectSetBottomRightOrigin(const CGRect rectangle,
 														const CGFloat bottomRightX,
 														const CGFloat bottomRightY)
@@ -52,6 +73,12 @@ IOS_CATEGORIES_INLINE CGRect CGRectSetBottomRightOrigin(const CGRect rectangle,
 }
 
 
+/**
+ @brief Sets bottom right origin of the rectangle.
+ @param rectangle The target rectanle.
+ @param bottomRight The bottom right coordinates of the updated rectange.
+ @return The new updated rectange.
+ */ 
 IOS_CATEGORIES_INLINE CGRect CGRectSetBottomRightOriginPoint(const CGRect rectangle,
 															 const CGPoint bottomRight)
 {
@@ -62,6 +89,13 @@ IOS_CATEGORIES_INLINE CGRect CGRectSetBottomRightOriginPoint(const CGRect rectan
 }
 
 
+/**
+ @brief Sets bottom left origin of the rectangle.
+ @param rectangle The target rectanle.
+ @param bottomLeftX The bottom left X coordinate of the updated rectange.
+ @param bottomLeftY The bottom left Y coordinate of the updated rectange.
+ @return The new updated rectange.
+ */ 
 IOS_CATEGORIES_INLINE CGRect CGRectSetBottomLeftOrigin(const CGRect rectangle,
 													   const CGFloat bottomLeftX,
 													   const CGFloat bottomLeftY)
@@ -73,6 +107,12 @@ IOS_CATEGORIES_INLINE CGRect CGRectSetBottomLeftOrigin(const CGRect rectangle,
 }
 
 
+/**
+ @brief Sets bottom left origin of the rectangle.
+ @param rectangle The target rectanle.
+ @param bottomLeft The bottom left coordinates of the updated rectange.
+ @return The new updated rectange.
+ */ 
 IOS_CATEGORIES_INLINE CGRect CGRectSetBottomLeftOriginPoint(const CGRect rectangle,
 															const CGPoint bottomLeft)
 {
@@ -82,6 +122,14 @@ IOS_CATEGORIES_INLINE CGRect CGRectSetBottomLeftOriginPoint(const CGRect rectang
 					  rectangle.size.height);
 }
 
+
+/**
+ @brief Sets center of the rectangle.
+ @param rectangle The target rectanle.
+ @param centerX The center X coordinate of the updated rectange.
+ @param centerY The center Y coordinate of the updated rectange.
+ @return The new updated rectange.
+ */ 
 IOS_CATEGORIES_INLINE CGRect CGRectSetCenter(const CGRect rectangle,
 											 const CGFloat centerX,
 											 const CGFloat centerY)
@@ -93,6 +141,12 @@ IOS_CATEGORIES_INLINE CGRect CGRectSetCenter(const CGRect rectangle,
 }
 
 
+/**
+ @brief Sets center of the rectangle.
+ @param rectangle The target rectanle.
+ @param center The center coordinates of the updated rectange.
+ @return The new updated rectange.
+ */ 
 IOS_CATEGORIES_INLINE CGRect CGRectSetCenterPoint(const CGRect rectangle,
 												  const CGPoint center)
 {
@@ -103,6 +157,11 @@ IOS_CATEGORIES_INLINE CGRect CGRectSetCenterPoint(const CGRect rectangle,
 }
 
 
+/**
+ @brief Get center of the rectangle.
+ @param rectangle The target rectanle.
+ @return The center point of the rectange.
+ */ 
 IOS_CATEGORIES_INLINE CGPoint CGRectGetCenter(const CGRect rectangle)
 {
 	return CGPointMake(rectangle.size.width / 2.0f,
@@ -110,5 +169,5 @@ IOS_CATEGORIES_INLINE CGPoint CGRectGetCenter(const CGRect rectangle)
 }
 
 
-#endif
+#endif /* __CGRECT_CATEGORY_OK_H__ */
 
