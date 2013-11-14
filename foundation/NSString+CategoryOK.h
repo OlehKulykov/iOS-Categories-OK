@@ -113,28 +113,6 @@ IOS_CATEGORIES_INLINE BOOL NSStringIsDirPathExists(NSString * pathForTest)
 @end
 
 
-
-@interface NSString (SpecialHTMLCharacters)
-
-
-/**
-@brief Replaces special HTML characters presentations.
-@return String with special HTML characters.
-*/
-- (NSString *) stringByDecodeSpecialHTMLCharacters;
-
-
-/**
- @brief Replaces special HTML characters.
- @return String without special HTML characters.
- */
-- (NSString *) stringByEncodeSpecialHTMLCharacters;
-
-
-@end
-
-
-
 @interface NSString (SystemPaths)
 
 /**
