@@ -89,7 +89,7 @@ typedef NS_ENUM (int32_t, UIViewSubviewStoreStatePolicy)
 
 /**
  @brief Get option of the store policy.
- @return On of the UIViewSubviewStoreStatePolicy values.
+ @return One of the UIViewSubviewStoreStatePolicy values.
  */
 - (UIViewSubviewStoreStatePolicy) storeStatePolicy;
 
