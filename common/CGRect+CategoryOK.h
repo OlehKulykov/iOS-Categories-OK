@@ -164,8 +164,8 @@ IOS_CATEGORIES_INLINE CGRect CGRectSetCenterPoint(const CGRect rectangle,
  */ 
 IOS_CATEGORIES_INLINE CGPoint CGRectGetCenter(const CGRect rectangle)
 {
-	return CGPointMake(rectangle.size.width / 2.0f,
-					   rectangle.size.height / 2.0f);
+	return CGPointMake(rectangle.origin.x + rectangle.size.width / 2.0f,
+					   rectangle.origin.y + rectangle.size.height / 2.0f);
 }
 
 
