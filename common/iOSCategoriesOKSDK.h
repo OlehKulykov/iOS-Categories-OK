@@ -43,9 +43,6 @@
 #import "foundation/NSString+CategoryOK.h"
 
 
-#import "net/RequestFieldsContainer.h"
-#import "net/RequestGenerator.h"
-
 
 #import "ui/UIColor+CategoryOK.h"
 #import "ui/UIImageView+CategoryOK.h"

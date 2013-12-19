@@ -9,6 +9,14 @@ cd ..
 rm -rf obj
 rm -rf sym
 
+xcodebuild -configuration Release -project iOSCategoriesOKSDK.xcodeproj -target iOSCategoriesOKSDK -arch x86_64 -sdk iphonesimulator OBJROOT=obj SYMROOT=sym clean build
+xcodebuild -configuration Release -project ../thirdpartylibs/webp.xcodeproj -target webp -arch x86_64 -sdk iphonesimulator OBJROOT=../framework/obj SYMROOT=../framework/sym clean build
+cd obj
+find . -type f -iregex '.*\.o$' | xargs -I @ ar -q -v ../all-x86_64.a @
+cd ..
+rm -rf obj
+rm -rf sym
+
 xcodebuild -configuration Release -project iOSCategoriesOKSDK.xcodeproj -target iOSCategoriesOKSDK -arch armv7 -sdk iphoneos OBJROOT=obj SYMROOT=sym clean build
 xcodebuild -configuration Release -project ../thirdpartylibs/webp.xcodeproj -target webp -arch armv7 -sdk iphoneos OBJROOT=../framework/obj SYMROOT=../framework/sym clean build
 cd obj
@@ -34,8 +42,9 @@ rm -rf obj
 rm -rf sym
 
 
-lipo -create all-i386.a all-armv7.a all-armv7s.a all-arm64.a -output all.a
+lipo -create all-i386.a all-x86_64.a all-armv7.a all-armv7s.a all-arm64.a -output all.a
 rm -f all-i386.a
+rm -f all-x86_64.a
 rm -f all-armv7.a
 rm -f all-armv7s.a
 rm -f all-arm64.a
@@ -47,13 +56,11 @@ mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Headers
 mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Headers/common
 mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Headers/derived
 mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Headers/foundation
-mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Headers/net
 mkdir -p iOSCategoriesOKSDK.framework/Versions/A/Headers/ui
 
 cp ../common/*.h iOSCategoriesOKSDK.framework/Versions/A/Headers/common/
 cp ../derived/*.h iOSCategoriesOKSDK.framework/Versions/A/Headers/derived/
 cp ../foundation/*.h iOSCategoriesOKSDK.framework/Versions/A/Headers/foundation/
-cp ../net/*.h iOSCategoriesOKSDK.framework/Versions/A/Headers/net/
 cp ../ui/*.h iOSCategoriesOKSDK.framework/Versions/A/Headers/ui/
 
 mv iOSCategoriesOKSDK.framework/Versions/A/Headers/common/iOSCategoriesOKSDK.h iOSCategoriesOKSDK.framework/Versions/A/Headers/iOSCategoriesOKSDK.h

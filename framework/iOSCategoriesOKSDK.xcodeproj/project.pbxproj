@@ -19,8 +19,6 @@
 		3DBBD273175C82B90051A020 /* NSData+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD26C175C82B90051A020 /* NSData+CategoryOK.m */; };
 		3DBBD274175C82B90051A020 /* NSDictionary+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD26E175C82B90051A020 /* NSDictionary+CategoryOK.m */; };
 		3DBBD275175C82B90051A020 /* NSString+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD270175C82B90051A020 /* NSString+CategoryOK.m */; };
-		3DBBD27B175C831B0051A020 /* RequestFieldsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD278175C831B0051A020 /* RequestFieldsContainer.m */; };
-		3DBBD27C175C831B0051A020 /* RequestGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD27A175C831B0051A020 /* RequestGenerator.m */; };
 		3DBBD288175C83240051A020 /* UIColor+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD27F175C83240051A020 /* UIColor+CategoryOK.m */; };
 		3DBBD289175C83240051A020 /* UIImageView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD281175C83240051A020 /* UIImageView+CategoryOK.m */; };
 		3DBBD28A175C83240051A020 /* UITableView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBD283175C83240051A020 /* UITableView+CategoryOK.m */; };
@@ -75,10 +73,6 @@
 		3DBBD26E175C82B90051A020 /* NSDictionary+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+CategoryOK.m"; path = "../foundation/NSDictionary+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
 		3DBBD26F175C82B90051A020 /* NSString+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+CategoryOK.h"; path = "../foundation/NSString+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
 		3DBBD270175C82B90051A020 /* NSString+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+CategoryOK.m"; path = "../foundation/NSString+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
-		3DBBD277175C831B0051A020 /* RequestFieldsContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestFieldsContainer.h; path = ../net/RequestFieldsContainer.h; sourceTree = SOURCE_ROOT; };
-		3DBBD278175C831B0051A020 /* RequestFieldsContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequestFieldsContainer.m; path = ../net/RequestFieldsContainer.m; sourceTree = SOURCE_ROOT; };
-		3DBBD279175C831B0051A020 /* RequestGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestGenerator.h; path = ../net/RequestGenerator.h; sourceTree = SOURCE_ROOT; };
-		3DBBD27A175C831B0051A020 /* RequestGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequestGenerator.m; path = ../net/RequestGenerator.m; sourceTree = SOURCE_ROOT; };
 		3DBBD27E175C83240051A020 /* UIColor+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+CategoryOK.h"; path = "../ui/UIColor+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
 		3DBBD27F175C83240051A020 /* UIColor+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+CategoryOK.m"; path = "../ui/UIColor+CategoryOK.m"; sourceTree = SOURCE_ROOT; };
 		3DBBD280175C83240051A020 /* UIImageView+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+CategoryOK.h"; path = "../ui/UIImageView+CategoryOK.h"; sourceTree = SOURCE_ROOT; };
@@ -160,7 +154,6 @@
 			children = (
 				3DBBD261175C81D70051A020 /* iOSCategoriesOKSDK.h */,
 				3DBBD27D175C83240051A020 /* ui */,
-				3DBBD276175C831B0051A020 /* net */,
 				3DBBD266175C82B90051A020 /* foundation */,
 				3DBBD262175C82AF0051A020 /* derived */,
 				3DBBD257175C81420051A020 /* common */,
@@ -218,18 +211,6 @@
 			);
 			name = foundation;
 			path = ../../foundation;
-			sourceTree = "<group>";
-		};
-		3DBBD276175C831B0051A020 /* net */ = {
-			isa = PBXGroup;
-			children = (
-				3DBBD277175C831B0051A020 /* RequestFieldsContainer.h */,
-				3DBBD278175C831B0051A020 /* RequestFieldsContainer.m */,
-				3DBBD279175C831B0051A020 /* RequestGenerator.h */,
-				3DBBD27A175C831B0051A020 /* RequestGenerator.m */,
-			);
-			name = net;
-			path = ../../net;
 			sourceTree = "<group>";
 		};
 		3DBBD27D175C83240051A020 /* ui */ = {
@@ -310,8 +291,6 @@
 				3DBBD273175C82B90051A020 /* NSData+CategoryOK.m in Sources */,
 				3DBBD274175C82B90051A020 /* NSDictionary+CategoryOK.m in Sources */,
 				3DBBD275175C82B90051A020 /* NSString+CategoryOK.m in Sources */,
-				3DBBD27B175C831B0051A020 /* RequestFieldsContainer.m in Sources */,
-				3DBBD27C175C831B0051A020 /* RequestGenerator.m in Sources */,
 				3DBBD288175C83240051A020 /* UIColor+CategoryOK.m in Sources */,
 				3D3E216C180B5BCF0068C7E6 /* UIViewSubviewsStoredProperties.m in Sources */,
 				3DBBD289175C83240051A020 /* UIImageView+CategoryOK.m in Sources */,
@@ -335,6 +314,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -355,7 +335,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
@@ -368,6 +348,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -382,7 +363,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;

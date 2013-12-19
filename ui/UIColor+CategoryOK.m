@@ -81,7 +81,7 @@ UIColor * UIColorMakeWithHEX(NSString * hexString)
 	c.value = 0;
 	if ([self respondsToSelector:@selector(getRed:green:blue:alpha:)])
 	{
-		float r, g, b, a;
+		CGFloat r, g, b, a;
 		if ([self getRed:&r green:&g blue:&b alpha:&a])
 		{
 			c = RGBAByteColorMakeWithRGBA(r, g, b, a);

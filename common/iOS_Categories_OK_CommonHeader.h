@@ -22,10 +22,10 @@
 #import <UIKit/UIKit.h>
 
 
-#if defined(FOUNDATION_EXTERN)
-#define IOS_CATEGORIES_OK_EXTERN FOUNDATION_EXTERN 
-#elif defined(UIKIT_EXTERN)
+#if defined(UIKIT_EXTERN)
 #define IOS_CATEGORIES_OK_EXTERN UIKIT_EXTERN 
+#elif defined(FOUNDATION_EXTERN)
+#define IOS_CATEGORIES_OK_EXTERN FOUNDATION_EXTERN
 #else
 #ifdef __cplusplus
 #define IOS_CATEGORIES_OK_EXTERN extern "C" 
