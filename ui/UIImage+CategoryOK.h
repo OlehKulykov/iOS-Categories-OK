@@ -124,3 +124,29 @@
 
 
 @end
+
+
+@interface UIImage (ColorizedCreation)
+
+/**
+ @brief Creates and return opaque image filled with specific color.
+ @param color Color of the image.
+ @param size Size of the new image.
+ @result Image object or nil. Nil will be returned on negative/null size, empty color or on error.
+ */
++ (UIImage *) imageWithColor:(UIColor *) color
+					 andSize:(CGSize) size;
+
+/**
+ @brief Creates and return image filled with specific color.
+ @param color Color of the image.
+ @param size Size of the new image.
+ @param opaque Flag indicating whether the image is opaque.
+ @result Image object or nil. Nil will be returned on negative/null size, empty color or on error.
+ */
++ (UIImage *) imageWithColor:(UIColor *) color
+						size:(CGSize) size
+				   andOpaque:(BOOL) opaque;
+
+@end
+

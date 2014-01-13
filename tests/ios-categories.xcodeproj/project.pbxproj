@@ -53,10 +53,6 @@
 		3DD7CF151695B12900581FAB /* UIWebView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DD7CF141695B12900581FAB /* UIWebView+CategoryOK.m */; };
 		3DEABF3A17748CBF00824B60 /* NotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEABF3917748CBF00824B60 /* NotificationManager.m */; };
 		3DEABF3B17748CBF00824B60 /* NotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEABF3917748CBF00824B60 /* NotificationManager.m */; };
-		3DF034FC168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */; };
-		3DF034FD168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */; };
-		3DF034FE168ADBAB0056FEDB /* RequestGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034FB168ADBAB0056FEDB /* RequestGenerator.m */; };
-		3DF034FF168ADBAB0056FEDB /* RequestGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF034FB168ADBAB0056FEDB /* RequestGenerator.m */; };
 		3DF03504168ADBDD0056FEDB /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03503168ADBDD0056FEDB /* MachTime.m */; };
 		3DF03505168ADBDD0056FEDB /* MachTime.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF03503168ADBDD0056FEDB /* MachTime.m */; };
 		3DF03510168AE4520056FEDB /* UIColorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF0350F168AE4520056FEDB /* UIColorTests.m */; };
@@ -155,10 +151,6 @@
 		3DD7CF141695B12900581FAB /* UIWebView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+CategoryOK.m"; path = "../../ui/UIWebView+CategoryOK.m"; sourceTree = "<group>"; };
 		3DEABF3817748CBF00824B60 /* NotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationManager.h; path = ../derived/NotificationManager.h; sourceTree = SOURCE_ROOT; };
 		3DEABF3917748CBF00824B60 /* NotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationManager.m; path = ../derived/NotificationManager.m; sourceTree = SOURCE_ROOT; };
-		3DF034F8168ADBAB0056FEDB /* RequestFieldsContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestFieldsContainer.h; path = ../../net/RequestFieldsContainer.h; sourceTree = "<group>"; };
-		3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequestFieldsContainer.m; path = ../../net/RequestFieldsContainer.m; sourceTree = "<group>"; };
-		3DF034FA168ADBAB0056FEDB /* RequestGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RequestGenerator.h; path = ../../net/RequestGenerator.h; sourceTree = "<group>"; };
-		3DF034FB168ADBAB0056FEDB /* RequestGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RequestGenerator.m; path = ../../net/RequestGenerator.m; sourceTree = "<group>"; };
 		3DF03500168ADBDD0056FEDB /* CGRect+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CGRect+CategoryOK.h"; path = "../../common/CGRect+CategoryOK.h"; sourceTree = "<group>"; };
 		3DF03501168ADBDD0056FEDB /* CustomMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomMath.h; path = ../../common/CustomMath.h; sourceTree = "<group>"; };
 		3DF03502168ADBDD0056FEDB /* MachTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MachTime.h; path = ../../common/MachTime.h; sourceTree = "<group>"; };
@@ -324,7 +316,6 @@
 				3D0A1C0E168C3C9700E8C2A2 /* Derived */,
 				3DFE023D168BA11C00B080FE /* UI */,
 				3DFE022C168BA10A00B080FE /* Foundation */,
-				3DF034F6168ADBA00056FEDB /* Net */,
 				3D55F38A1688642500B30D8D /* Common */,
 				3D7E568F1684BB8800E3604A /* AppDelegate.h */,
 				3D7E56901684BB8800E3604A /* AppDelegate.m */,
@@ -376,17 +367,6 @@
 				3D7E56A71684BB8800E3604A /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		3DF034F6168ADBA00056FEDB /* Net */ = {
-			isa = PBXGroup;
-			children = (
-				3DF034F8168ADBAB0056FEDB /* RequestFieldsContainer.h */,
-				3DF034F9168ADBAB0056FEDB /* RequestFieldsContainer.m */,
-				3DF034FA168ADBAB0056FEDB /* RequestGenerator.h */,
-				3DF034FB168ADBAB0056FEDB /* RequestGenerator.m */,
-			);
-			name = Net;
 			sourceTree = "<group>";
 		};
 		3DFE022C168BA10A00B080FE /* Foundation */ = {
@@ -561,8 +541,6 @@
 			files = (
 				3D7E568D1684BB8800E3604A /* main.m in Sources */,
 				3D7E56911684BB8800E3604A /* AppDelegate.m in Sources */,
-				3DF034FC168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */,
-				3DF034FE168ADBAB0056FEDB /* RequestGenerator.m in Sources */,
 				3DF03504168ADBDD0056FEDB /* MachTime.m in Sources */,
 				3DFE0237168BA11600B080FE /* NSArray+CategoryOK.m in Sources */,
 				3DFE0239168BA11600B080FE /* NSString+CategoryOK.m in Sources */,
@@ -595,8 +573,6 @@
 				3D79BD601806D58900E60D19 /* UIImageWebP+CategoryOK.m in Sources */,
 				3D55F39C16886C3F00B30D8D /* CGRectAdditionsTests.m in Sources */,
 				3D79BD5E1806D58900E60D19 /* UIImage+CategoryOK.m in Sources */,
-				3DF034FD168ADBAB0056FEDB /* RequestFieldsContainer.m in Sources */,
-				3DF034FF168ADBAB0056FEDB /* RequestGenerator.m in Sources */,
 				3DF03505168ADBDD0056FEDB /* MachTime.m in Sources */,
 				3DF03510168AE4520056FEDB /* UIColorTests.m in Sources */,
 				3DFE0238168BA11600B080FE /* NSArray+CategoryOK.m in Sources */,

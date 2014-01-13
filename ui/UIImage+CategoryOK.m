@@ -16,5 +16,36 @@
 
 
 #import "UIImage+CategoryOK.h"
+#import <CoreGraphics/CoreGraphics.h>
 
+@implementation UIImage (ColorizedCreation)
+
++ (UIImage *) imageWithColor:(UIColor *) color
+					 andSize:(CGSize) size
+{
+	return [UIImage imageWithColor:color size:size andOpaque:YES];
+}
+
++ (UIImage *) imageWithColor:(UIColor *) color
+						size:(CGSize) size
+				   andOpaque:(BOOL) opaque
+{
+	if (color && ((size.width > 0.0f) && (size.height > 0.0))) 
+	{
+		const CGRect rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
+		UIGraphicsBeginImageContextWithOptions(size, opaque, [[UIScreen mainScreen] scale]);
+		CGContextRef context = UIGraphicsGetCurrentContext();
+		
+		CGContextSetFillColorWithColor(context, [color CGColor]);
+		CGContextFillRect(context, rect);
+		
+		UIImage * image = UIGraphicsGetImageFromCurrentImageContext();
+		UIGraphicsEndImageContext();
+		return image;
+	}
+	return nil;
+}
+
+
+@end
 
