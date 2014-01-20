@@ -59,3 +59,14 @@
 @end
 
 
+@interface UIView (SubviewWithClassType)
+
+/**
+ @brief Subiew with reqired class type.
+ @param svClass Reqired class type.
+ @return Subview or nil if not found or svClass is nil.
+ */
+- (id) subviewWithClass:(Class) svClass;
+
+@end
+

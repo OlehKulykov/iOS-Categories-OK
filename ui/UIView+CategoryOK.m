@@ -16,6 +16,7 @@
 
 
 #import "UIView+CategoryOK.h"
+#import "NSArray+CategoryOK.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation UIView (BackgroundImage)
@@ -78,6 +79,29 @@
 	CGRect selfFrame = [self frame];
 	selfFrame.size.height = newHeight;
 	[self setFrame:selfFrame];
+}
+
+@end
+
+@implementation UIView (SubviewWithClassType)
+
+- (id) subviewWithClass:(Class) svClass
+{
+	if (svClass) 
+	{
+		NSArray * sviews = [self subviews];
+		if (NSArrayIsNotEmpty(sviews)) 
+		{
+			for (id obj in sviews) 
+			{
+				if ([obj isKindOfClass:svClass]) 
+				{
+					return obj;
+				}
+			}
+		}
+	}
+	return nil;
 }
 
 @end
