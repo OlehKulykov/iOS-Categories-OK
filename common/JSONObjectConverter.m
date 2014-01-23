@@ -42,6 +42,42 @@
 	return 0;
 }
 
++ (int64_t) toInt64:(id) object
+{
+	if ([object isKindOfClass:[NSNumber class]])
+	{
+		return (int64_t)[(NSNumber *)object longLongValue];
+	}
+	else if ([object isKindOfClass:[NSString class]])
+	{
+		const char * s = [(NSString *)object UTF8String];
+		long long int v = 0;
+		if (sscanf(s, "%lli", &v) == 1) 
+		{
+			return (int64_t)v;
+		}
+	}
+	return 0;
+}
+
++ (uint64_t) toUInt64:(id) object
+{
+	if ([object isKindOfClass:[NSNumber class]])
+	{
+		return (uint64_t)[(NSNumber *)object unsignedLongLongValue];
+	}
+	else if ([object isKindOfClass:[NSString class]])
+	{
+		const char * s = [(NSString *)object UTF8String];
+		unsigned long long int v = 0;
+		if (sscanf(s, "%llu", &v) == 1) 
+		{
+			return (uint64_t)v;
+		}
+	}
+	return 0;
+}
+
 + (CGFloat) toFloat:(id) object
 {
 	return [JSONObjectConverter toDouble:object];

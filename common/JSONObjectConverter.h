@@ -45,6 +45,24 @@
 
 
 /**
+ @brief Get integer 64 bit value from JSON object.
+ @detailed Checking for nil and object type for getting value. 
+ @param object from JSON parser.
+ @return Integer 64 bit value if object not nil and have type as NSNumber or NSString, othervice 0.
+ */ 
++ (int64_t) toInt64:(id) object;
+
+
+/**
+ @brief Get unsigned integer 64 bit value from JSON object.
+ @detailed Checking for nil and object type for getting value. In case if object is NSString getting integer value and casting to unsigned.
+ @param object from JSON parser.
+ @return Unsigned integer 64 bit value if object not nil and have type as NSNumber or NSString, othervice 0.
+ */ 
++ (uint64_t) toUInt64:(id) object;
+
+
+/**
  @brief Get float value from JSON object.
  @detailed Checking for nil and object type for getting value. In all cases getting double value and casting to float.
  @param object from JSON parser.
