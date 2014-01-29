@@ -109,16 +109,12 @@ Functionality
 Installation
 ------------
 
-1. Clone this repository:
+1. Clone this repository.
+2. Go to framework folder.
+3. Execute build framework script.
 ```sh
 git clone https://github.com/OlehKulykov/iOS-Categories-OK.git
-```
-2. Go to framework folder:
-```sh
 cd iOS-Categories-OK/framework
-```
-3. Execute build framework script:
-```sh
 ./build_ios_static.sh
 ```
 
