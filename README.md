@@ -4,7 +4,7 @@
 ## Functionality
 ----------------
 ### Foundation
-* #### NSArray ####
+* **NSArray**
  * ```BOOL NSArrayIsEmpty(NSArray * array)``` or ```+ (BOOL) isEmpty:(NSArray *)array``` Check is array has no objects or nil.
  * ```BOOL NSArrayIsNotEmpty(NSArray * array)``` or ```+ (BOOL) isNotEmpty:(NSArray *)array``` Check is array has objects and not nil.
  * ```id NSArrayObjectAtIndex(NSArray * array, const NSUInteger index)``` or ```+ (id) array:(NSArray *)array objectAtIndex:(NSUInteger)index``` Get array object at index. Return object or nil if array empty or index dosn't exists.
