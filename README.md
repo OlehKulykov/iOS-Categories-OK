@@ -39,11 +39,37 @@
  * ```+ (NSString *) uniqFileFullPathInDirectory:(NSString *) directoryPath``` Generates uniq file path in directory. Return string with nonexisted uniq file path in directory.
 ### UI
 * **UIColor**
+ * ```RGBAByteColor```  Structure for holding color RGBA components. Each RGBA component stored as 8 bit unsigned integer at the same time as 4 dimension array of the 8 bit components and one single unsigned 32 bit integer.
+ * ```BOOL RGBAByteColorsIsEqual(const RGBAByteColor c1, const RGBAByteColor c2)``` Compare two color structures by them 32 bit unsigned integer representation.
+ * ```RGBAByteColor RGBAByteColorMakeWithRGBBytes(const uint8_t red, const uint8_t green, const uint8_t blue)``` Create color structure from RGB components.
+ * ```RGBAByteColor RGBAByteColorMakeWithRGBABytes(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t alpha) ``` Create color structure from RGBA components.
+ * ```RGBAByteColor RGBAByteColorMakeWithRGB(const float red, const float green, const float blue)``` Create color structure from RGB components.
+ * ``` RGBAByteColor RGBAByteColorMakeWithRGBA(const float red, const float green, const float blue, const float alpha)``` Create color structure from RGBA components.
+ * ``` UIColor * UIColorMakeWithRGB(uint8_t red, uint8_t green, uint8_t blue)``` Create color object from RGB components.
+ * ```UIColor * UIColorMakeWithRGBA(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)``` Create color object from RGBA components.
+ * ```UIColor * UIColorMakeWithHEX(NSString * hexString)``` Create color object from HEX string. HEX string with format: @"FF00FF" or @"#FF00FF". Case is ignored.
+ * ```- (RGBAByteColor) colorGetRGBAByteColor``` Get 8 bit unsigned integer RGBA structure.
 * **UIImage**
+ * ```+ (id) imageWithWebPData:(NSData *) data``` Creates image object from Google WebP image data.
+ * ```+ (id) imageWithWebPData:(NSData *) data scale:(CGFloat) scale``` Creates image object from Google WebP image data scaled to size.
+ * ```+ (id) imageWithContentsOfWebPFile:(NSString *) path``` Creates image object from Google WebP image data loaded from path.
+ * ```+ (BOOL) isWebPData:(NSData *) data``` Check is data WebP image file.
+ * ```- (NSData *) losslessWebPRepresentation``` Lossless encoding image to WebP image file data. 
+ * ```- (NSData *) lossyWebPRepresentationWithCompressionQuality:(CGFloat) compressionQuality``` Lossy encoding image to WebP image file data with quality.
+ * ```+ (NSData *) losslessWebPRepresentationOfImage:(UIImage *) image``` Lossless encoding image to WebP image file data.
+ * ```+ (NSData *) lossyWebPRepresentation:(UIImage *) image withCompressionQuality:(CGFloat) compressionQuality``` Lossy encoding image to WebP image file data with quality.
+ * ```+ (UIImage *) imageWithColor:(UIColor *) color andSize:(CGSize) size``` Creates and return opaque image filled with specific color.
+ * ```+ (UIImage *) imageWithColor:(UIColor *) color size:(CGSize) size andOpaque:(BOOL) opaque``` Creates and return image filled with specific color. 
 * **UIImageView**
+ * ```- (NSThread *) loadFromURL:(NSURL *)url useActivityIndicator:(BOOL)isUseActivityIndicator activityIndicatorColor:(UIColor *)activityIndicatorColor withTarget:(id)target onStartSelector:(SEL)onStartSelector onDoneSelector:(SEL)onDoneSelector``` Loads image from URL in separate thread.
 * **UITableView**
+ * ```- (CGFloat) fullContentHeight``` Height of the table view content even if some cells is not visible or 0.0f if there is no data source.
 * **UIView**
+ * ```- (void) setBackgroundImage:(UIImage *)backgroundImage``` Set background image to the view layer using setContents. Image scales to content.
+ * ```x```, ```y```, ```width```, ```height``` View read/write propertys for view frame size components.
+ * ```- (id) subviewWithClass:(Class) svClass``` Subiew with reqired class type.
 * **UIWebView**
+ * ```- (CGSize) contentSize``` Get web view content size.
 ### Common
 * **CGRect**
 * **Custom Math**
