@@ -1,6 +1,49 @@
 iOS-Categories-OK
 =================
 
+
+Installation
+------------
+
+1. Clone this repository.
+2. Go to **framework** folder.
+3. Execute build script.
+```sh
+git clone https://github.com/OlehKulykov/iOS-Categories-OK.git
+cd iOS-Categories-OK/framework
+./build_ios_static.sh
+```
+
+
+Linking framework with your project
+-----------------------------------
+
+1. Select required target
+2. Select "**Build Phases**"
+3. Press "**Add item**" button
+4. Press "**Add Other...**" button
+5. Locate "**iOSCategoriesOKSDK.framework**" and click "**Open**". As a result framework will be added to the list
+6. Add **framework header** file to project **precompile header**
+7. Add to "**Other Linker Flags**" next two flags: **-ObjC** **-all_load**
+
+> **TIP:**
+> 
+>  This framework **required** linking standard iOS library called **libz.dylib**. Link this library with your project as described above.
+
+
+Additional Dependencies
+-----------------------
+
+1. Standard iOS library **libz.dylib**
+
+
+License
+-------
+Apache License
+Version 2.0, January 2004
+http://www.apache.org/licenses/
+
+
 Functionality
 -------------
 
@@ -86,57 +129,54 @@ Functionality
 ### Common
 
 * **CGRect**
+ * ```CGRect CGRectSetTopRightOrigin(const CGRect rectangle, const CGFloat topRightX, const CGFloat topRightY)``` and ```CGRect CGRectSetTopRightOriginPoint(const CGRect rectangle, const CGPoint topRight)``` Sets top right origin of the rectangle.
+ * ```CGRect CGRectSetBottomRightOrigin(const CGRect rectangle, const CGFloat bottomRightX, const CGFloat bottomRightY)``` and ```CGRectSetBottomRightOriginPoint(const CGRect rectangle, const CGPoint bottomRight)``` Sets bottom right origin of the rectangle.
+ * ```CGRect CGRectSetBottomLeftOrigin(const CGRect rectangle, const CGFloat bottomLeftX, const CGFloat bottomLeftY)``` and ```CGRect CGRectSetBottomLeftOriginPoint(const CGRect rectangle, const CGPoint bottomLeft)``` Sets bottom left origin of the rectangle.
+ * CGRect CGRectSetCenter(const CGRect rectangle, const CGFloat centerX, const CGFloat centerY)``` and ```CGRect CGRectSetCenterPoint(const CGRect rectangle, const CGPoint center)``` Sets center of the rectangle.
+ * ``` CGPoint CGRectGetCenter(const CGRect rectangle)``` Get center of the rectangle.
 
 * **Custom Math**
+ * ```#define MATH_RADIAN``` Radian value is: 180.0 devided by PI value.
+ * ```#define MATH_180_DIV_PI``` 180 devided by PI value: 180/PI.
+ * ```#define MATH_PI_DIV_180``` PI devided by 180 value: PI/180.
+ * ```#define DEG_TO_RAD(a)``` Converts degree to radian angle.
+ * ```#define RAD_TO_DEG(a)``` Converts radian to degree angle.
+ * ```CGFloat DistanceBetweenFloatValues(const CGFloat firstValue, const CGFloat secondValue)``` Returns distance between two float values.
+ * ```CGFloat AngleBetweenPoints(const CGPoint first, const CGPoint second)``` Returns angle between two points.
 
 * **Environment Info**
+ * ```BOOL isEnvironmentInfoHorizontalInteraceOrientation(const UIInterfaceOrientation orientation)``` Checks for horizontal orientation.
+ * ```BOOL isEnvironmentInfoHorizontalCurrentInteraceOrientation()```  Checks current interface orientation horizontal.
+ * ```BOOL isEnvironmentInfoIpad()``` Checks user interface idiom is iPad.
+ * ```BOOL isEnvironmentInfoIOS7OrUpper()``` Checks version of the operating system equal or greater than 7.0.
+ * ```BOOL isEnvironmentInfoIPhone4Inch()``` Checks for execution on the iPhone 4 inch.
+ * ```BOOL isEnvironmentInfoRetinaDisplay()``` Checks screen for Retina.
 
 * **JSON Object Converter**
+ * ```+ (NSInteger) toInteger:(id) object``` Integer value if object not nil and have type as NSNumber or NSString, othervice 0.
+ * ```+ (NSUInteger) toUInteger:(id) object``` Unsigned integer value if object not nil and have type as NSNumber or NSString, othervice 0.
+ * ```+ (int64_t) toInt64:(id) object``` Integer 64 bit value if object not nil and have type as NSNumber or NSString, othervice 0.
+ * ```+ (uint64_t) toUInt64:(id) object``` Unsigned integer 64 bit value if object not nil and have type as NSNumber or NSString, othervice 0.
+ * ```+ (CGFloat) toFloat:(id) object``` Float value if object not nil and have type as NSNumber or NSString, othervice 0.0.
+ * ```+ (double_t) toDouble:(id) object``` Double value if object not nil and have type as NSNumber or NSString, othervice 0.0.
+ * ```+ (BOOL) toBoolean:(id) object``` Boolean value if object not nil and have type as NSNumber or NSString, othervice NO. In case if type is NSString trying compare with string "true".
+ * ```+ (NSString *) toString:(id) object``` NSString value if object have type NSString, othervice nil.
+ * ```+ (NSString *) toNonEmptyString:(id) object``` NSString value if have type NSString and it's lenght greater then zero, othervice nil.
+ * ```+ (NSDictionary *) toDictionary:(id) object``` NSDictionary value if object have type NSDictionary or NSMutableDictionary, othervice nil.
+ * ```+ (NSArray *) toArray:(id) object``` NSArray value if object have type NSArray or NSMutableArray, othervice nil.
+ * ```+ (NSDate *) toDate:(id) object``` NSDate value if object have type NSString and date format satisfies next predefined formats:("yyyy-MM-dd'T'HH:mm:sszzzz", "yyyy-MM-dd'T'HH:mm:ssZ", "yyyy-MM-dd'T'HH:mm:ssTZD", "yyyy-MM-dd"), othervice nil.
 
 * **Mach Time**
+ * ```+ (NSTimeInterval) currentTime``` Time interval in seconds from application start.
+ * ```+ (uint64_t) machAbsoluteTime``` Unsigned integer of the mach counter.
 
 ### Derived
 
 * **Anchor Point Rotatable UIView**
-
-* **Notification Manager**
-
-* **Storage Base & Storage Item**
-
-* **UIView Subviews Stored Properties**
+ * ```- (void) rotateByAngle:(CGFloat)radianAngle withAnchorPoint:(CGPoint)anchorPoint``` Rotates view using radian angle arround anchor point.
 
 
-Installation
-------------
+### Screenshots with linking process steps
 
-1. Clone this repository.
-2. Go to framework folder.
-3. Execute build framework script.
-```sh
-git clone https://github.com/OlehKulykov/iOS-Categories-OK.git
-cd iOS-Categories-OK/framework
-./build_ios_static.sh
-```
+![Screenshots with linking process steps](https://raw.github.com/OlehKulykov/iOS-Categories-OK/master/README/linking_framework.jpg)
 
-
-Linking framework with your project
------------------------------------
-
-1. Select required target
-2. Select "**Build Phases**"
-3. Press "**Add item**" button
-4. Press "**Add Other...**" button
-5. Locate "**iOSCategoriesOKSDK.framework**" and click "**Open**". As a result framework will be added to the list
-6. Add **framework header** file to project **precompile header**
-7. Add to "**Other Linker Flags**" next two flags: **-ObjC** **-all_load**
-
-> **TIP:**
-> 
->  This framework **required** linking standard iOS library called **libz.dylib**. Link this library with your project as described above.
-
-![Screenshots with linking staps](https://raw.github.com/OlehKulykov/iOS-Categories-OK/master/README/linking_framework.jpg)
-
-Additional Dependencies
------------------------
-
-1. Standard iOS library **libz.dylib**
