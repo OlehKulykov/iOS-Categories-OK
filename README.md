@@ -23,7 +23,7 @@ Linking framework with your project
 3. Press "**Add item**" button
 4. Press "**Add Other...**" button
 5. Locate "**iOSCategoriesOKSDK.framework**" and click "**Open**". As a result framework will be added to the list
-6. Add **framework header** file to project **precompile header**
+6. Import **framework header** file to project **precompile header**
 7. Add to "**Other Linker Flags**" next two flags: **-ObjC** **-all_load**
 
 > **TIP:**
