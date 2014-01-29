@@ -1,8 +1,8 @@
-# iOS-Categories-OK
+iOS-Categories-OK
+=================
 
-
-## Functionality
-----------------
+Functionality
+-------------
 
 ### Foundation
 
@@ -106,8 +106,8 @@
 * **UIView Subviews Stored Properties**
 
 
-## Installation
----------------
+Installation
+------------
 
 1. Clone this repository:
 ```sh
@@ -123,8 +123,8 @@ cd iOS-Categories-OK/framework
 ```
 
 
-## Linking framework with your project
---------------------------------------
+Linking framework with your project
+-----------------------------------
 
 1. Select required target
 2. Select "**Build Phases**"
@@ -140,7 +140,7 @@ cd iOS-Categories-OK/framework
 
 ![Screenshots with linking staps](https://raw.github.com/OlehKulykov/iOS-Categories-OK/master/README/linking_framework.jpg)
 
-## Additional Dependencies
---------------------------
+Additional Dependencies
+-----------------------
 
 1. Standard iOS library **libz.dylib**
