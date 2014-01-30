@@ -53,14 +53,24 @@
 
 - (BOOL) sendNotificationNumber:(int)notificationNumber withObject:(id)object
 {
-	__block BOOL res = NO;
-	// sync not async
-	dispatch_sync(dispatch_get_main_queue(), ^{
+	if ([NSThread isMainThread])
+	{
 		[[NSNotificationCenter defaultCenter] postNotificationName:[NotificationManager notificationNameFromNumber:notificationNumber] 
 															object:self
 														  userInfo:object ? [NSDictionary dictionaryWithObject:object forKey:OBJECT_KEY] : nil];
-		res = YES;
-	});
+	}
+	else
+	{
+		__block BOOL res = NO;
+		// sync not async
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[[NSNotificationCenter defaultCenter] postNotificationName:[NotificationManager notificationNameFromNumber:notificationNumber] 
+																object:self
+															  userInfo:object ? [NSDictionary dictionaryWithObject:object forKey:OBJECT_KEY] : nil];
+			res = YES;
+		});
+		return res;
+	}
 	return NO;
 }
 
@@ -73,22 +83,34 @@ forNotificationNumber:(int)notificationNumber
 
 - (BOOL) addListener:(id)listener withSelector:(SEL)listenerSelector forNotificationNumber:(int)notificationNumber
 {
-	__block BOOL res = NO;
 	if (listener && listenerSelector)
 	{
 		if ([listener respondsToSelector:listenerSelector])
 		{
-			// sync not async
-			dispatch_sync(dispatch_get_main_queue(), ^{
+			if ([NSThread isMainThread])
+			{
 				[[NSNotificationCenter defaultCenter] addObserver:listener 
 														 selector:listenerSelector
 															 name:[NotificationManager notificationNameFromNumber:notificationNumber]
 														   object:self];
-				res = YES;
-			});
+				return YES;
+			}
+			else
+			{
+				__block BOOL res = NO;
+				// sync not async
+				dispatch_sync(dispatch_get_main_queue(), ^{
+					[[NSNotificationCenter defaultCenter] addObserver:listener 
+															 selector:listenerSelector
+																 name:[NotificationManager notificationNameFromNumber:notificationNumber]
+															   object:self];
+					res = YES;
+				});
+				return res;
+			}
 		}
 	}
-	return res;
+	return NO;
 }
 
 + (BOOL) removeListener:(id)listener
@@ -98,16 +120,25 @@ forNotificationNumber:(int)notificationNumber
 
 - (BOOL) removeListener:(id)listener
 {
-	__block BOOL res = NO;
-	if (listener)
+	if (listener) 
 	{
-		// sync not async
-		dispatch_sync(dispatch_get_main_queue(), ^{
+		if ([NSThread isMainThread])
+		{
 			[[NSNotificationCenter defaultCenter] removeObserver:listener];
-			res = YES;
-		});
+			return YES;
+		}
+		else
+		{
+			__block BOOL res = NO;
+			// sync not async
+			dispatch_sync(dispatch_get_main_queue(), ^{
+				[[NSNotificationCenter defaultCenter] removeObserver:listener];
+				res = YES;
+			});
+			return res;
+		}
 	}
-	return res;
+	return NO;
 }
 
 + (BOOL) removeListener:(id)listener forNotificationNumber:(int)notificationNumber
@@ -117,27 +148,40 @@ forNotificationNumber:(int)notificationNumber
 
 - (BOOL) removeListener:(id)listener forNotificationNumber:(int)notificationNumber
 {
-	__block BOOL res = NO;
 	if (listener)
 	{
-		// sync not async
-		dispatch_sync(dispatch_get_main_queue(), ^{
+		if ([NSThread isMainThread])
+		{
 			[[NSNotificationCenter defaultCenter] removeObserver:listener 
 															name:[NotificationManager notificationNameFromNumber:notificationNumber]
 														  object:self];
-			res = YES;
-		});
+			return YES;
+		}
+		else
+		{
+			__block BOOL res = NO;
+			// sync not async
+			dispatch_sync(dispatch_get_main_queue(), ^{
+				[[NSNotificationCenter defaultCenter] removeObserver:listener 
+																name:[NotificationManager notificationNameFromNumber:notificationNumber]
+															  object:self];
+				res = YES;
+			});
+			return res;
+		}
 	}
-	return res;
+	return NO;
 }
 
 static NotificationManager * _manager = nil;
 + (NotificationManager *) defaultManager
 {
-	if (!_manager)
+	if (_manager)
 	{
-		_manager = [[super allocWithZone:NULL] init];
-    }
+		return _manager;
+	}
+	
+	_manager = [[NotificationManager alloc] init];
     return _manager;
 }
 
@@ -145,16 +189,5 @@ static NotificationManager * _manager = nil;
 {
 	_manager = nil;
 }
-
-+ (id) allocWithZone:(NSZone *)zone
-{
-    return [self defaultManager];	
-}
-
-- (id) copyWithZone:(NSZone *)zone
-{
-    return self;
-}
-
 
 @end
