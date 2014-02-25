@@ -59,3 +59,33 @@
 
 @end
 
+
+#import "NSDictionary+CategoryOK.h"
+
+#define NSARRAY_BIN_KEY @"NSArray_BinarySerialized_Array"
+
+@implementation NSArray (BinarySerialization)
+
++ (NSData *) serializeToBinaryData:(NSArray *) array
+{
+	if (NSArrayIsNotEmpty(array)) 
+	{
+		NSDictionary * dict = [NSDictionary dictionaryWithObject:array forKey:NSARRAY_BIN_KEY];
+		return [NSDictionary binaryPropertyListDataWithDictionary:dict];
+	}
+	return nil;
+}
+
++ (NSArray *) deserializeFromBinaryData:(NSData *) binaryData
+{
+	NSDictionary * dict = [NSDictionary dictionaryWithPropertyListData:binaryData];
+	if (dict) 
+	{
+		return [dict objectForKey:NSARRAY_BIN_KEY];
+	}
+	return nil;
+}
+
+@end
+
+

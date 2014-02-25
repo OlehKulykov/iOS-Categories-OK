@@ -22,6 +22,16 @@
 
 
 /**
+ @brief Return number of objects.
+ @param array An array for test.
+ @return Number of objects or 0 on nil array.
+ */
+IOS_CATEGORIES_INLINE NSUInteger NSArrayCount(NSArray * array)
+{
+	return (array) ? [array count] : 0;
+}
+
+/**
  @brief Check is array has no objects or nil.
  @param array An array for test.
  @return YES if no objects or nil, othervice NO.
@@ -97,4 +107,26 @@ IOS_CATEGORIES_INLINE id NSArrayObjectAtIndex(NSArray * array, const NSUInteger 
 + (NSUInteger) array:(NSArray *)array nextIndexFrom:(NSUInteger)index;
 
 @end
+
+
+@interface NSArray (BinarySerialization)
+
+/**
+ @brief Get serialized binary data from array.
+ @param array The array for serialization.
+ @return NSData with binary content.
+ */
++ (NSData *) serializeToBinaryData:(NSArray *) array;
+
+
+/**
+ @brief Get deserialized array from binary data.
+ @param binaryData The binary data for deserialization.
+ @return NSData with binary content.
+ */
++ (NSArray *) deserializeFromBinaryData:(NSData *) binaryData;
+
+@end
+
+
 
