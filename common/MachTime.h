@@ -44,7 +44,7 @@
  @brief Convert time interval in seconds to hours, minutes and seconds.
  @param hours Pointer to hours integer variable, should not be nil.
  @param minutes Pointer to minutes integer variable, should not be nil.
- @param seconds Pointer to minutes integer variable, should not be nil.
+ @param seconds Pointer to seconds integer variable, should not be nil.
  */ 
 IOS_CATEGORIES_OK_EXTERN void TimeIntervalToHMS(const double timeInSeconds,
 												int * hours,
