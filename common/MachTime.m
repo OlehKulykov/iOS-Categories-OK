@@ -58,3 +58,14 @@ static __MachTimeStructPrivate timeStructPrivate = { 0 };
 
 @end
 
+
+void TimeIntervalToHMS(const double timeInSeconds,
+					   int * hours,
+					   int * minutes,
+					   int * seconds)
+{
+	*hours = floor(timeInSeconds / 3600.0);
+	*minutes = floor(fmod(timeInSeconds, 3600.0) / 60.0);
+	*seconds = fmod(timeInSeconds, 60.0);
+}
+
