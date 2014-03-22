@@ -146,6 +146,8 @@ static const char ** __commonDateFormatStrings()
 	{
 		"yyyy-MM-dd'T'HH:mm:sszzzz",
 		"yyyy-MM-dd'T'HH:mm:ssZ",
+		"yyyy-MM-dd'T'HH:mm:ss.SSSZ",
+		"yyyy-MM-dd'T'HH:mm:ss.SSZ",
 		"yyyy-MM-dd'T'HH:mm:ssTZD",
 		"yyyy-MM-dd",
 		0
@@ -170,6 +172,7 @@ static const char ** __commonDateFormatStrings()
 					NSDate * date = [formatter dateFromString:string];
 					if (date) return date;
 				} while (*++format);
+				NSAssert1(NO, @"JSONObjectConverter: Can't find sutable format for date string: %@", string);
 			}
 		}
 	}

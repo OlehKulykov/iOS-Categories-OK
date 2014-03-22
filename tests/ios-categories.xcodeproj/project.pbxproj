@@ -74,6 +74,7 @@
 		3DFE024B168BA12400B080FE /* UITableView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0243168BA12400B080FE /* UITableView+CategoryOK.m */; };
 		3DFE024C168BA12400B080FE /* UIView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0245168BA12400B080FE /* UIView+CategoryOK.m */; };
 		3DFE024D168BA12400B080FE /* UIView+CategoryOK.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFE0245168BA12400B080FE /* UIView+CategoryOK.m */; };
+		3DFEC6F118DD97F3008EF2BF /* NSDateTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFEC6F018DD97F3008EF2BF /* NSDateTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +176,7 @@
 		3DFE0243168BA12400B080FE /* UITableView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableView+CategoryOK.m"; path = "../../ui/UITableView+CategoryOK.m"; sourceTree = "<group>"; };
 		3DFE0244168BA12400B080FE /* UIView+CategoryOK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+CategoryOK.h"; path = "../../ui/UIView+CategoryOK.h"; sourceTree = "<group>"; };
 		3DFE0245168BA12400B080FE /* UIView+CategoryOK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+CategoryOK.m"; path = "../../ui/UIView+CategoryOK.m"; sourceTree = "<group>"; };
+		3DFEC6F018DD97F3008EF2BF /* NSDateTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -342,6 +344,7 @@
 		3D7E56A41684BB8800E3604A /* ios-categoriesTests */ = {
 			isa = PBXGroup;
 			children = (
+				3DFEC6F018DD97F3008EF2BF /* NSDateTests.m */,
 				3D79BD6D1806D65300E60D19 /* UIImageWebPTests.m */,
 				3D00B2FA1684BCC90004D48D /* NSArrayTests.h */,
 				3D00B2FB1684BCC90004D48D /* NSArrayTests.m */,
@@ -591,6 +594,7 @@
 				3D6BCD201761C26C00EA24E9 /* AnchorPointRotatableUIView.m in Sources */,
 				3D6BCD271761C27500EA24E9 /* StorageBase.m in Sources */,
 				3D6BCD291761C27500EA24E9 /* StorageItem.m in Sources */,
+				3DFEC6F118DD97F3008EF2BF /* NSDateTests.m in Sources */,
 				3DEABF3B17748CBF00824B60 /* NotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
