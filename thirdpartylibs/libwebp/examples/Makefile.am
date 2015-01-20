@@ -1,4 +1,4 @@
-AM_CPPFLAGS = -I$(top_srcdir)/src
+AM_CPPFLAGS = -I$(top_builddir)/src -I$(top_srcdir)/src
 
 bin_PROGRAMS = dwebp cwebp
 if BUILD_VWEBP
@@ -32,7 +32,7 @@ cwebp_CPPFLAGS += $(JPEG_INCLUDES) $(PNG_INCLUDES) $(TIFF_INCLUDES)
 cwebp_LDADD  = libexampleutil.la ../src/libwebp.la
 cwebp_LDADD += $(JPEG_LIBS) $(PNG_LIBS) $(TIFF_LIBS)
 
-gif2webp_SOURCES = gif2webp.c gif2webp_util.c
+gif2webp_SOURCES = gif2webp.c gifdec.c gifdec.h
 gif2webp_CPPFLAGS = $(AM_CPPFLAGS) $(USE_EXPERIMENTAL_CODE) $(GIF_INCLUDES)
 gif2webp_LDADD  = libexampleutil.la ../src/mux/libwebpmux.la ../src/libwebp.la
 gif2webp_LDADD += $(GIF_LIBS)

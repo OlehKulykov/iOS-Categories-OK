@@ -17,11 +17,12 @@
 #include <string.h>
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "webp/config.h"
 #endif
 
 #ifdef WEBP_HAVE_PNG
 #include <png.h>
+#include <setjmp.h>   // note: this must be included *after* png.h
 #endif
 
 #ifdef HAVE_WINCODEC_H
@@ -36,11 +37,6 @@
 #include <shlwapi.h>
 #include <windows.h>
 #include <wincodec.h>
-#endif
-
-#if defined(_WIN32)
-#include <fcntl.h>   // for _O_BINARY
-#include <io.h>      // for _setmode()
 #endif
 
 #include "webp/decode.h"
@@ -197,8 +193,8 @@ static int WritePNG(FILE* out_file, const WebPDecBuffer* const buffer) {
   uint8_t* const rgb = buffer->u.RGBA.rgba;
   const int stride = buffer->u.RGBA.stride;
   const int has_alpha = (buffer->colorspace == MODE_RGBA);
-  png_structp png;
-  png_infop info;
+  volatile png_structp png;
+  volatile png_infop info;
   png_uint_32 y;
 
   png = png_create_write_struct(PNG_LIBPNG_VER_STRING,
@@ -208,11 +204,11 @@ static int WritePNG(FILE* out_file, const WebPDecBuffer* const buffer) {
   }
   info = png_create_info_struct(png);
   if (info == NULL) {
-    png_destroy_write_struct(&png, NULL);
+    png_destroy_write_struct((png_structpp)&png, NULL);
     return 0;
   }
   if (setjmp(png_jmpbuf(png))) {
-    png_destroy_write_struct(&png, &info);
+    png_destroy_write_struct((png_structpp)&png, (png_infopp)&info);
     return 0;
   }
   png_init_io(png, out_file);
@@ -226,7 +222,7 @@ static int WritePNG(FILE* out_file, const WebPDecBuffer* const buffer) {
     png_write_rows(png, &row, 1);
   }
   png_write_end(png, info);
-  png_destroy_write_struct(&png, &info);
+  png_destroy_write_struct((png_structpp)&png, (png_infopp)&info);
   return 1;
 }
 #else    // !HAVE_WINCODEC_H && !WEBP_HAVE_PNG
@@ -249,10 +245,10 @@ static int WritePPM(FILE* fout, const WebPDecBuffer* const buffer, int alpha) {
   uint32_t y;
 
   if (alpha) {
-    fprintf(fout, "P7\nWIDTH %d\nHEIGHT %d\nDEPTH 4\nMAXVAL 255\n"
+    fprintf(fout, "P7\nWIDTH %u\nHEIGHT %u\nDEPTH 4\nMAXVAL 255\n"
                   "TUPLTYPE RGB_ALPHA\nENDHDR\n", width, height);
   } else {
-    fprintf(fout, "P6\n%d %d\n255\n", width, height);
+    fprintf(fout, "P6\n%u %u\n255\n", width, height);
   }
   for (y = 0; y < height; ++y) {
     if (fwrite(rgb + y * stride, width, bytes_per_px, fout) != bytes_per_px) {
@@ -409,7 +405,7 @@ static int WriteAlphaPlane(FILE* fout, const WebPDecBuffer* const buffer) {
   const int a_stride = buffer->u.YUVA.a_stride;
   uint32_t y;
   assert(a != NULL);
-  fprintf(fout, "P5\n%d %d\n255\n", width, height);
+  fprintf(fout, "P5\n%u %u\n255\n", width, height);
   for (y = 0; y < height; ++y) {
     if (fwrite(a + y * a_stride, width, 1, fout) != 1) {
       return 0;
@@ -482,15 +478,8 @@ static int SaveOutput(const WebPDecBuffer* const buffer,
   needs_open_file = (format != PNG);
 #endif
 
-#if defined(_WIN32)
-  if (use_stdout && _setmode(_fileno(stdout), _O_BINARY) == -1) {
-    fprintf(stderr, "Failed to reopen stdout in O_BINARY mode.\n");
-    return -1;
-  }
-#endif
-
   if (needs_open_file) {
-    fout = use_stdout ? stdout : fopen(out_file, "wb");
+    fout = use_stdout ? ExUtilSetBinaryMode(stdout) : fopen(out_file, "wb");
     if (fout == NULL) {
       fprintf(stderr, "Error opening output file %s\n", out_file);
       return 0;
@@ -557,6 +546,7 @@ static void Help(void) {
          "  -nofilter .... disable in-loop filtering\n"
          "  -nodither .... disable dithering\n"
          "  -dither <d> .. dithering strength (in 0..100)\n"
+         "  -alpha_dither  use alpha-plane dithering if needed\n"
          "  -mt .......... use multi-threading\n"
          "  -crop <x> <y> <w> <h> ... crop output with the given rectangle\n"
          "  -scale <w> <h> .......... scale the output (*after* any cropping)\n"
@@ -593,6 +583,7 @@ int main(int argc, const char *argv[]) {
   }
 
   for (c = 1; c < argc; ++c) {
+    int parse_error = 0;
     if (!strcmp(argv[c], "-h") || !strcmp(argv[c], "-help")) {
       Help();
       return 0;
@@ -623,20 +614,23 @@ int main(int argc, const char *argv[]) {
       format = YUV;
     } else if (!strcmp(argv[c], "-mt")) {
       config.options.use_threads = 1;
+    } else if (!strcmp(argv[c], "-alpha_dither")) {
+      config.options.alpha_dithering_strength = 100;
     } else if (!strcmp(argv[c], "-nodither")) {
       config.options.dithering_strength = 0;
     } else if (!strcmp(argv[c], "-dither") && c < argc - 1) {
-      config.options.dithering_strength = strtol(argv[++c], NULL, 0);
+      config.options.dithering_strength =
+          ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-crop") && c < argc - 4) {
       config.options.use_cropping = 1;
-      config.options.crop_left   = strtol(argv[++c], NULL, 0);
-      config.options.crop_top    = strtol(argv[++c], NULL, 0);
-      config.options.crop_width  = strtol(argv[++c], NULL, 0);
-      config.options.crop_height = strtol(argv[++c], NULL, 0);
+      config.options.crop_left   = ExUtilGetInt(argv[++c], 0, &parse_error);
+      config.options.crop_top    = ExUtilGetInt(argv[++c], 0, &parse_error);
+      config.options.crop_width  = ExUtilGetInt(argv[++c], 0, &parse_error);
+      config.options.crop_height = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-scale") && c < argc - 2) {
       config.options.use_scaling = 1;
-      config.options.scaled_width  = strtol(argv[++c], NULL, 0);
-      config.options.scaled_height = strtol(argv[++c], NULL, 0);
+      config.options.scaled_width  = ExUtilGetInt(argv[++c], 0, &parse_error);
+      config.options.scaled_height = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-flip")) {
       config.options.flip = 1;
     } else if (!strcmp(argv[c], "-v")) {
@@ -657,6 +651,11 @@ int main(int argc, const char *argv[]) {
     } else {
       in_file = argv[c];
     }
+
+    if (parse_error) {
+      Help();
+      return -1;
+    }
   }
 
   if (in_file == NULL) {
@@ -670,7 +669,7 @@ int main(int argc, const char *argv[]) {
     size_t data_size = 0;
     const uint8_t* data = NULL;
     if (!ExUtilLoadWebP(in_file, &data, &data_size, bitstream)) {
-      goto End;
+      return -1;
     }
 
     switch (format) {
@@ -711,7 +710,7 @@ int main(int argc, const char *argv[]) {
     } else {
       status = ExUtilDecodeWebP(data, data_size, verbose, &config);
     }
- End:
+
     free((void*)data);
     ok = (status == VP8_STATUS_OK);
     if (!ok) {

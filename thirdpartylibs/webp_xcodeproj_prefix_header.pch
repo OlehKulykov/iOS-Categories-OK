@@ -29,14 +29,6 @@
 #warning "__64BIT_MODE__"
 #endif
 
-#if defined(__64BIT_MODE__)
-#undef WEBP_USE_NEON
-#else
-#ifndef WEBP_USE_NEON
-#define WEBP_USE_NEON 1
-#endif
-#endif
-
 #endif
 
 

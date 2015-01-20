@@ -14,6 +14,39 @@
 
 #include <arm_neon.h>
 
+#include "./dsp.h"
+
+// Right now, some intrinsics functions seem slower, so we disable them
+// everywhere except aarch64 where the inline assembly is incompatible.
+#if defined(__aarch64__)
+#define WEBP_USE_INTRINSICS   // use intrinsics when possible
+#endif
+
+#define INIT_VECTOR2(v, a, b) do {  \
+  v.val[0] = a;                     \
+  v.val[1] = b;                     \
+} while (0)
+
+#define INIT_VECTOR3(v, a, b, c) do {  \
+  v.val[0] = a;                        \
+  v.val[1] = b;                        \
+  v.val[2] = c;                        \
+} while (0)
+
+#define INIT_VECTOR4(v, a, b, c, d) do {  \
+  v.val[0] = a;                           \
+  v.val[1] = b;                           \
+  v.val[2] = c;                           \
+  v.val[3] = d;                           \
+} while (0)
+
+// if using intrinsics, this flag avoids some functions that make gcc-4.6.3
+// crash ("internal compiler error: in immed_double_const, at emit-rtl.").
+// (probably similar to gcc.gnu.org/bugzilla/show_bug.cgi?id=48183)
+#if !(LOCAL_GCC_PREREQ(4,8) || defined(__aarch64__))
+#define WORK_AROUND_GCC
+#endif
+
 static WEBP_INLINE int32x4x4_t Transpose4x4(const int32x4x4_t rows) {
   uint64x2x2_t row01, row23;
 

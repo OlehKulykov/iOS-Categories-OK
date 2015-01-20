@@ -1,7 +1,8 @@
-AC_INIT([libwebp], [0.4.0],
+AC_INIT([libwebp], [0.4.2],
         [http://code.google.com/p/webp/issues],,
         [http://developers.google.com/speed/webp])
-AC_CANONICAL_TARGET
+AC_CANONICAL_HOST
+AC_PREREQ([2.60])
 AM_INIT_AUTOMAKE([-Wall foreign subdir-objects])
 
 dnl === automake >= 1.12 requires this for 'unusual archivers' support.
@@ -13,6 +14,9 @@ AM_PROG_CC_C_O
 
 dnl === Enable less verbose output when building.
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+
+dnl == test endianness
+AC_C_BIGENDIAN
 
 dnl === SET_IF_UNSET(shell_var, value)
 dnl ===   Set the shell variable 'shell_var' to 'value' if it is unset.
@@ -31,33 +35,77 @@ AC_ARG_WITH([pkgconfigdir], AS_HELP_STRING([--with-pkgconfigdir=DIR],
             [pkgconfigdir="$withval"], [pkgconfigdir='${libdir}/pkgconfig'])
 AC_SUBST([pkgconfigdir])
 
-dnl === TEST_AND_ADD_CFLAGS(flag)
-dnl ===   Checks whether $CC supports 'flag' and adds it to AM_CFLAGS
+dnl === TEST_AND_ADD_CFLAGS(var, flag)
+dnl ===   Checks whether $CC supports 'flag' and adds it to 'var'
 dnl ===   on success.
 AC_DEFUN([TEST_AND_ADD_CFLAGS],
          [SAVED_CFLAGS="$CFLAGS"
-          CFLAGS="-Werror $1"
-          AC_MSG_CHECKING([whether $CC supports $1])
+          CFLAGS="-Werror $2"
+          AC_MSG_CHECKING([whether $CC supports $2])
           dnl Note AC_LANG_PROGRAM([]) uses an old-style main definition.
           AC_COMPILE_IFELSE([AC_LANG_SOURCE([int main(void) { return 0; }])],
                             [AC_MSG_RESULT([yes])]
                             dnl Simply append the variable avoiding a
                             dnl compatibility ifdef for AS_VAR_APPEND as this
                             dnl variable shouldn't grow all that large.
-                            [AM_CFLAGS="$AM_CFLAGS $1"],
+                            [$1="${$1} $2"],
                             [AC_MSG_RESULT([no])])
           CFLAGS="$SAVED_CFLAGS"])
-TEST_AND_ADD_CFLAGS([-Wall])
-TEST_AND_ADD_CFLAGS([-Wdeclaration-after-statement])
-TEST_AND_ADD_CFLAGS([-Wextra])
-TEST_AND_ADD_CFLAGS([-Wmissing-declarations])
-TEST_AND_ADD_CFLAGS([-Wmissing-prototypes])
-TEST_AND_ADD_CFLAGS([-Wold-style-definition])
-TEST_AND_ADD_CFLAGS([-Wshadow])
-TEST_AND_ADD_CFLAGS([-Wunused-but-set-variable])
-TEST_AND_ADD_CFLAGS([-Wunused])
-TEST_AND_ADD_CFLAGS([-Wvla])
+TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-Wall])
+TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-Wdeclaration-after-statement])
+TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-Wextra])
+TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-Wformat-nonliteral])
+TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-Wformat-security])
+TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-Wmissing-declarations])
+TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-Wmissing-prototypes])
+TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-Wold-style-definition])
+TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-Wshadow])
+TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-Wunused-but-set-variable])
+TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-Wunused])
+TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-Wvla])
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=62040
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61622
+AS_IF([test "$GCC" = "yes" ], [
+       gcc_version=`$CC -dumpversion`
+       gcc_wht_bug=""
+       case "$host_cpu" in
+         aarch64|arm64)
+          case "$gcc_version" in
+            4.9|4.9.0|4.9.1) gcc_wht_bug=yes ;;
+          esac
+       esac
+       AS_IF([test "$gcc_wht_bug" = "yes"], [
+              TEST_AND_ADD_CFLAGS([AM_CFLAGS], [-frename-registers])])])
 AC_SUBST([AM_CFLAGS])
+
+dnl === Check for machine specific flags
+TEST_AND_ADD_CFLAGS([AVX2_FLAGS], [-mavx2])
+AS_IF([test -n "$AVX2_FLAGS"], [
+  SAVED_CFLAGS=$CFLAGS
+  CFLAGS="$CFLAGS $AVX2_FLAGS"
+  AC_CHECK_HEADER([immintrin.h],
+                  [AC_DEFINE(WEBP_HAVE_AVX2, [1],
+                   [Set to 1 if AVX2 is supported])],
+                  [AVX2_FLAGS=""],
+                  dnl it's illegal to directly include avx2intrin.h, but it's
+                  dnl included conditionally in immintrin.h, tricky!
+                  [#ifndef __AVX2__
+                   #error avx2 is not enabled
+                   #endif
+                  ])
+  CFLAGS=$SAVED_CFLAGS])
+AC_SUBST([AVX2_FLAGS])
+
+TEST_AND_ADD_CFLAGS([SSE2_FLAGS], [-msse2])
+AS_IF([test -n "$SSE2_FLAGS"], [
+  SAVED_CFLAGS=$CFLAGS
+  CFLAGS="$CFLAGS $SSE2_FLAGS"
+  AC_CHECK_HEADER([emmintrin.h],
+                  [AC_DEFINE(WEBP_HAVE_SSE2, [1],
+                   [Set to 1 if SSE2 is supported])],
+                  [SSE2_FLAGS=""])
+  CFLAGS=$SAVED_CFLAGS])
+AC_SUBST([SSE2_FLAGS])
 
 dnl === CLEAR_LIBVARS([var_pfx])
 dnl ===   Clears <var_pfx>_{INCLUDES,LIBS}.
@@ -94,6 +142,26 @@ AC_DEFUN([LIBCHECK_EPILOGUE],
           CPPFLAGS=$SAVED_CPPFLAGS
           LIBS=$SAVED_LIBS])
 
+dnl === Check for gcc builtins
+
+dnl === CHECK_FOR_BUILTIN([builtin], [param], [define])
+dnl ===   links a C AC_LANG_PROGRAM, with <builtin>(<param>)
+dnl ===   AC_DEFINE'ing <define> if successful.
+AC_DEFUN([CHECK_FOR_BUILTIN],
+         [AC_LANG_PUSH([C])
+          AC_MSG_CHECKING([for $1])
+          AC_LINK_IFELSE([AC_LANG_PROGRAM([], [$1($2)])],
+                         [AC_MSG_RESULT([yes])
+                          AC_DEFINE([$3], [1],
+                                    [Set to 1 if $1 is available])],
+                         [AC_MSG_RESULT([no])]),
+          AC_LANG_POP])
+
+dnl AC_CHECK_FUNC doesn't work with builtin's.
+CHECK_FOR_BUILTIN([__builtin_bswap16], [1u << 15], [HAVE_BUILTIN_BSWAP16])
+CHECK_FOR_BUILTIN([__builtin_bswap32], [1u << 31], [HAVE_BUILTIN_BSWAP32])
+CHECK_FOR_BUILTIN([__builtin_bswap64], [1ull << 63], [HAVE_BUILTIN_BSWAP64])
+
 dnl === Check for pthread support
 AC_ARG_ENABLE([threading],
               AS_HELP_STRING([--disable-threading],
@@ -107,7 +175,11 @@ if test "$enable_threading" = "yes"; then
               CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
               CC="$PTHREAD_CC"
              ],
-             [enable_threading=no])
+             [AC_CHECK_FUNC([_beginthreadex],
+                            [AC_DEFINE([WEBP_USE_THREAD], [1],
+                                       [Undefine this to disable thread
+                                        support.])],
+                            [enable_threading=no])])
 fi
 AC_MSG_NOTICE([checking if threading is enabled... ${enable_threading-no}])
 
@@ -172,7 +244,7 @@ AS_IF([test "x$enable_gl" != "xno"], [
 
       # find libGL
       GL_SAVED_LIBS="$LIBS"
-      AC_SEARCH_LIBS([glBegin], [GL OpenGL])
+      AC_SEARCH_LIBS([glBegin], [GL OpenGL opengl32])
       LIBS="$GL_SAVED_LIBS"
 
       # A direct link to libGL may not be necessary on e.g., linux.
@@ -225,15 +297,12 @@ AC_ARG_ENABLE([png], AS_HELP_STRING([--disable-png],
                                      @<:@default=auto@:>@]))
 AS_IF([test "x$enable_png" != "xno"], [
   CLEAR_LIBVARS([PNG])
-  AC_PATH_PROGS(LIBPNG_CONFIG,
-                [libpng-config libpng15-config libpng14-config libpng12-config])
+  AC_PATH_PROGS([LIBPNG_CONFIG],
+                [libpng-config libpng16-config libpng15-config libpng14-config \
+                 libpng12-config])
   if test -n "$LIBPNG_CONFIG"; then
     PNG_INCLUDES=`$LIBPNG_CONFIG --cflags`
-    PNG_PREFIX=`$LIBPNG_CONFIG --prefix`
-    if test "${PNG_PREFIX}/lib" != "/usr/lib" ; then
-      PNG_LIBS="-L${PNG_PREFIX}/lib"
-    fi
-    PNG_LIBS="$PNG_LIBS `$LIBPNG_CONFIG --libs`"
+    PNG_LIBS="`$LIBPNG_CONFIG --ldflags`"
   fi
 
   WITHLIB_OPTION([png], [PNG])
@@ -351,7 +420,9 @@ AC_ARG_ENABLE([wic],
                               @<:@default=auto@:>@]),,
               [enable_wic=yes])
 
-if test "$target_os" = "mingw32" -a "$enable_wic" = "yes"; then
+case $host_os in
+mingw*)
+if test "$enable_wic" = "yes"; then
   AC_CHECK_HEADERS([wincodec.h shlwapi.h windows.h])
   if test "$ac_cv_header_wincodec_h" = "yes"; then
     AC_MSG_CHECKING(for Windows Imaging Component support)
@@ -391,6 +462,20 @@ if test "$target_os" = "mingw32" -a "$enable_wic" = "yes"; then
     AC_MSG_RESULT(${wic_support-no})
   fi
 fi
+esac
+
+dnl === If --enable-aligned is defined, define WEBP_FORCE_ALIGNED
+
+AC_MSG_CHECKING(if --enable-aligned option is specified)
+AC_ARG_ENABLE([aligned],
+              AS_HELP_STRING([--enable-aligned],
+                             [Force aligned memory operations in non-dsp code
+                              (may be slower)]))
+if test "$enable_aligned" = "yes"; then
+  AC_DEFINE(WEBP_FORCE_ALIGNED, [1],
+            [Define to 1 to force aligned memory operations])
+fi
+AC_MSG_RESULT(${enable_aligned-no})
 
 dnl === If --enable-swap-16bit-csp is defined, add -DWEBP_SWAP_16BIT_CSP
 
@@ -445,7 +530,7 @@ AM_CONDITIONAL([BUILD_LIBWEBPDECODER], [test "$enable_libwebpdecoder" = "yes"])
 dnl =========================
 
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_HEADERS([src/webp/config.h])
 AC_CONFIG_FILES([Makefile src/Makefile man/Makefile \
                  examples/Makefile src/dec/Makefile \
                  src/enc/Makefile src/dsp/Makefile \
@@ -463,7 +548,7 @@ WebP Configuration Summary
 
 Shared libraries: ${enable_shared}
 Static libraries: ${enable_static}
-Threaded decode: ${enable_threading-no}
+Threading support: ${enable_threading-no}
 libwebp: yes
 libwebpdecoder: ${enable_libwebpdecoder-no}
 libwebpdemux: ${enable_libwebpdemux-no}

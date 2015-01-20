@@ -11,7 +11,8 @@
 //
 // Author: Skal (pascal.massimino@gmail.com)
 
-#include "vp8i.h"
+#include "./vp8i.h"
+#include "../utils/bit_reader_inl.h"
 
 #define USE_GENERIC_TREE
 
@@ -493,6 +494,12 @@ static const uint8_t
 };
 
 // Paragraph 9.9
+
+static const int kBands[16 + 1] = {
+  0, 1, 2, 3, 6, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7,
+  0  // extra entry as sentinel
+};
+
 void VP8ParseProba(VP8BitReader* const br, VP8Decoder* const dec) {
   VP8Proba* const proba = &dec->proba_;
   int t, b, c, p;
@@ -505,6 +512,9 @@ void VP8ParseProba(VP8BitReader* const br, VP8Decoder* const dec) {
           proba->bands_[t][b].probas_[c][p] = v;
         }
       }
+    }
+    for (b = 0; b < 16 + 1; ++b) {
+      proba->bands_ptr_[t][b] = &proba->bands_[t][kBands[b]];
     }
   }
   dec->use_skip_proba_ = VP8Get(br);

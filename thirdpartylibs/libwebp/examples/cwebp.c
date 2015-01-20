@@ -17,11 +17,12 @@
 #include <string.h>
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "webp/config.h"
 #endif
 
 #include "webp/encode.h"
 
+#include "./example_util.h"
 #include "./metadata.h"
 #include "./stopwatch.h"
 
@@ -94,6 +95,9 @@ static int ReadPicture(const char* const filename, WebPPicture* const pic,
   } else {
     // If no size specified, try to decode it using WIC.
     ok = ReadPictureWithWIC(filename, pic, keep_alpha, metadata);
+    if (!ok) {
+      ok = ReadWebP(filename, pic, keep_alpha, metadata);
+    }
   }
   if (!ok) {
     fprintf(stderr, "Error! Could not process file %s\n", filename);
@@ -208,6 +212,8 @@ static void PrintFullLosslessInfo(const WebPAuxStats* const stats,
                                   const char* const description) {
   fprintf(stderr, "Lossless-%s compressed size: %d bytes\n",
           description, stats->lossless_size);
+  fprintf(stderr, "  * Header size: %d bytes, image data size: %d\n",
+          stats->lossless_hdr_size, stats->lossless_data_size);
   if (stats->lossless_features) {
     fprintf(stderr, "  * Lossless features used:");
     if (stats->lossless_features & 1) fprintf(stderr, " PREDICTION");
@@ -272,10 +278,6 @@ static void PrintExtraInfoLossy(const WebPPicture* const pic, int short_output,
       if (stats->alpha_data_size > 0) {
         fprintf(stderr, "             transparency:   %6d (%.1f dB)\n",
                 stats->alpha_data_size, stats->PSNR[4]);
-      }
-      if (stats->layer_data_size) {
-        fprintf(stderr, "             enhancement:    %6d\n",
-                stats->layer_data_size);
       }
       fprintf(stderr, " Residuals bytes  "
                       "|segment 1|segment 2|segment 3"
@@ -559,37 +561,37 @@ static void HelpShort(void) {
 static void HelpLong(void) {
   printf("Usage:\n");
   printf(" cwebp [-preset <...>] [options] in_file [-o out_file]\n\n");
-  printf("If input size (-s) for an image is not specified, "
-         "it is assumed to be a PNG, JPEG, TIFF or WebP file.\n");
+  printf("If input size (-s) for an image is not specified, it is\n"
+         "assumed to be a PNG, JPEG, TIFF or WebP file.\n");
 #ifdef HAVE_WINCODEC_H
-  printf("Windows builds can take as input any of the files handled by WIC\n");
+  printf("Windows builds can take as input any of the files handled by WIC.\n");
 #endif
-  printf("options:\n");
+  printf("\nOptions:\n");
   printf("  -h / -help  ............ short help\n");
   printf("  -H / -longhelp  ........ long help\n");
   printf("  -q <float> ............. quality factor (0:small..100:big)\n");
-  printf("  -alpha_q <int> ......... Transparency-compression quality "
-         "(0..100).\n");
-  printf("  -preset <string> ....... Preset setting, one of:\n");
+  printf("  -alpha_q <int> ......... transparency-compression quality "
+         "(0..100)\n");
+  printf("  -preset <string> ....... preset setting, one of:\n");
   printf("                            default, photo, picture,\n");
   printf("                            drawing, icon, text\n");
-  printf("     -preset must come first, as it overwrites other parameters.");
-  printf("  -z <int> ............... Activates lossless preset with given "
+  printf("     -preset must come first, as it overwrites other parameters\n");
+  printf("  -z <int> ............... activates lossless preset with given\n"
          "                           level in [0:fast, ..., 9:slowest]\n");
   printf("\n");
   printf("  -m <int> ............... compression method (0=fast, 6=slowest)\n");
   printf("  -segments <int> ........ number of segments to use (1..4)\n");
-  printf("  -size <int> ............ Target size (in bytes)\n");
-  printf("  -psnr <float> .......... Target PSNR (in dB. typically: 42)\n");
+  printf("  -size <int> ............ target size (in bytes)\n");
+  printf("  -psnr <float> .......... target PSNR (in dB. typically: 42)\n");
   printf("\n");
-  printf("  -s <int> <int> ......... Input size (width x height) for YUV\n");
-  printf("  -sns <int> ............. Spatial Noise Shaping (0:off, 100:max)\n");
+  printf("  -s <int> <int> ......... input size (width x height) for YUV\n");
+  printf("  -sns <int> ............. spatial noise shaping (0:off, 100:max)\n");
   printf("  -f <int> ............... filter strength (0=off..100)\n");
   printf("  -sharpness <int> ....... "
          "filter sharpness (0:most .. 7:least sharp)\n");
   printf("  -strong ................ use strong filter instead "
-                                     "of simple (default).\n");
-  printf("  -nostrong .............. use simple filter instead of strong.\n");
+                                     "of simple (default)\n");
+  printf("  -nostrong .............. use simple filter instead of strong\n");
   printf("  -partition_limit <int> . limit quality to fit the 512k limit on\n");
   printf("                           "
          "the first partition (0=no degradation ... 100=full)\n");
@@ -598,26 +600,27 @@ static void HelpLong(void) {
   printf("  -resize <w> <h> ........ resize picture (after any cropping)\n");
   printf("  -mt .................... use multi-threading if available\n");
   printf("  -low_memory ............ reduce memory usage (slower encoding)\n");
-#ifdef WEBP_EXPERIMENTAL_FEATURES
-  printf("  -444 / -422 / -gray ..... Change colorspace\n");
-#endif
-  printf("  -map <int> ............. print map of extra info.\n");
-  printf("  -print_psnr ............ prints averaged PSNR distortion.\n");
-  printf("  -print_ssim ............ prints averaged SSIM distortion.\n");
-  printf("  -print_lsim ............ prints local-similarity distortion.\n");
-  printf("  -d <file.pgm> .......... dump the compressed output (PGM file).\n");
-  printf("  -alpha_method <int> .... Transparency-compression method (0..1)\n");
-  printf("  -alpha_filter <string> . predictive filtering for alpha plane.\n");
-  printf("                           One of: none, fast (default) or best.\n");
-  printf("  -alpha_cleanup ......... Clean RGB values in transparent area.\n");
-  printf("  -blend_alpha <hex> ..... Blend colors against background color\n"
+  printf("  -map <int> ............. print map of extra info\n");
+  printf("  -print_psnr ............ prints averaged PSNR distortion\n");
+  printf("  -print_ssim ............ prints averaged SSIM distortion\n");
+  printf("  -print_lsim ............ prints local-similarity distortion\n");
+  printf("  -d <file.pgm> .......... dump the compressed output (PGM file)\n");
+  printf("  -alpha_method <int> .... transparency-compression method (0..1)\n");
+  printf("  -alpha_filter <string> . predictive filtering for alpha plane,\n");
+  printf("                           one of: none, fast (default) or best\n");
+  printf("  -alpha_cleanup ......... clean RGB values in transparent area\n");
+  printf("  -blend_alpha <hex> ..... blend colors against background color\n"
          "                           expressed as RGB values written in\n"
          "                           hexadecimal, e.g. 0xc0e0d0 for red=0xc0\n"
-         "                           green=0xe0 and blue=0xd0.\n");
-  printf("  -noalpha ............... discard any transparency information.\n");
-  printf("  -lossless .............. Encode image losslessly.\n");
-  printf("  -hint <string> ......... Specify image characteristics hint.\n");
-  printf("                           One of: photo, picture or graph\n");
+         "                           green=0xe0 and blue=0xd0\n");
+  printf("  -noalpha ............... discard any transparency information\n");
+  printf("  -lossless .............. encode image losslessly\n");
+#ifdef WEBP_EXPERIMENTAL_FEATURES
+  printf("  -near_lossless ......... use near-lossless image\n"
+         "                           preprocessing (0=off..100)\n");
+#endif
+  printf("  -hint <string> ......... specify image characteristics hint,\n");
+  printf("                           one of: photo, picture or graph\n");
 
   printf("\n");
   printf("  -metadata <string> ..... comma separated list of metadata to\n");
@@ -628,18 +631,18 @@ static void HelpLong(void) {
 
   printf("\n");
   printf("  -short ................. condense printed message\n");
-  printf("  -quiet ................. don't print anything.\n");
-  printf("  -version ............... print version number and exit.\n");
+  printf("  -quiet ................. don't print anything\n");
+  printf("  -version ............... print version number and exit\n");
 #ifndef WEBP_DLL
-  printf("  -noasm ................. disable all assembly optimizations.\n");
+  printf("  -noasm ................. disable all assembly optimizations\n");
 #endif
   printf("  -v ..................... verbose, e.g. print encoding/decoding "
          "times\n");
   printf("  -progress .............. report encoding progress\n");
   printf("\n");
   printf("Experimental Options:\n");
-  printf("  -jpeg_like ............. Roughly match expected JPEG size.\n");
-  printf("  -af .................... auto-adjust filter strength.\n");
+  printf("  -jpeg_like ............. roughly match expected JPEG size\n");
+  printf("  -af .................... auto-adjust filter strength\n");
   printf("  -pre <int> ............. pre-processing filter\n");
   printf("\n");
 }
@@ -647,7 +650,7 @@ static void HelpLong(void) {
 //------------------------------------------------------------------------------
 // Error messages
 
-static const char* const kErrorMessages[] = {
+static const char* const kErrorMessages[VP8_ENC_ERROR_LAST] = {
   "OK",
   "OUT_OF_MEMORY: Out of memory allocating objects",
   "BITSTREAM_OUT_OF_MEMORY: Out of memory re-allocating byte buffer",
@@ -709,6 +712,7 @@ int main(int argc, const char *argv[]) {
   }
 
   for (c = 1; c < argc; ++c) {
+    int parse_error = 0;
     if (!strcmp(argv[c], "-h") || !strcmp(argv[c], "-help")) {
       HelpShort();
       return 0;
@@ -732,26 +736,27 @@ int main(int argc, const char *argv[]) {
     } else if (!strcmp(argv[c], "-short")) {
       ++short_output;
     } else if (!strcmp(argv[c], "-s") && c < argc - 2) {
-      picture.width = strtol(argv[++c], NULL, 0);
-      picture.height = strtol(argv[++c], NULL, 0);
+      picture.width = ExUtilGetInt(argv[++c], 0, &parse_error);
+      picture.height = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-m") && c < argc - 1) {
-      config.method = strtol(argv[++c], NULL, 0);
+      config.method = ExUtilGetInt(argv[++c], 0, &parse_error);
       use_lossless_preset = 0;   // disable -z option
     } else if (!strcmp(argv[c], "-q") && c < argc - 1) {
-      config.quality = (float)strtod(argv[++c], NULL);
+      config.quality = ExUtilGetFloat(argv[++c], &parse_error);
       use_lossless_preset = 0;   // disable -z option
     } else if (!strcmp(argv[c], "-z") && c < argc - 1) {
-      lossless_preset = strtol(argv[++c], NULL, 0);
+      lossless_preset = ExUtilGetInt(argv[++c], 0, &parse_error);
       if (use_lossless_preset != 0) use_lossless_preset = 1;
     } else if (!strcmp(argv[c], "-alpha_q") && c < argc - 1) {
-      config.alpha_quality = strtol(argv[++c], NULL, 0);
+      config.alpha_quality = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-alpha_method") && c < argc - 1) {
-      config.alpha_compression = strtol(argv[++c], NULL, 0);
+      config.alpha_compression = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-alpha_cleanup")) {
       keep_alpha = keep_alpha ? 2 : 0;
     } else if (!strcmp(argv[c], "-blend_alpha") && c < argc - 1) {
       blend_alpha = 1;
-      background_color = strtol(argv[++c], NULL, 16);  // <- parses '0x' prefix
+      // background color is given in hex with an optional '0x' prefix
+      background_color = ExUtilGetInt(argv[++c], 16, &parse_error);
       background_color = background_color & 0x00ffffffu;
     } else if (!strcmp(argv[c], "-alpha_filter") && c < argc - 1) {
       ++c;
@@ -769,6 +774,9 @@ int main(int argc, const char *argv[]) {
       keep_alpha = 0;
     } else if (!strcmp(argv[c], "-lossless")) {
       config.lossless = 1;
+    } else if (!strcmp(argv[c], "-near_lossless") && c < argc - 1) {
+      config.near_lossless = ExUtilGetInt(argv[++c], 0, &parse_error);
+      config.lossless = 1;  // use near-lossless only with lossless
     } else if (!strcmp(argv[c], "-hint") && c < argc - 1) {
       ++c;
       if (!strcmp(argv[c], "photo")) {
@@ -782,13 +790,13 @@ int main(int argc, const char *argv[]) {
         goto Error;
       }
     } else if (!strcmp(argv[c], "-size") && c < argc - 1) {
-      config.target_size = strtol(argv[++c], NULL, 0);
+      config.target_size = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-psnr") && c < argc - 1) {
-      config.target_PSNR = (float)strtod(argv[++c], NULL);
+      config.target_PSNR = ExUtilGetFloat(argv[++c], &parse_error);
     } else if (!strcmp(argv[c], "-sns") && c < argc - 1) {
-      config.sns_strength = strtol(argv[++c], NULL, 0);
+      config.sns_strength = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-f") && c < argc - 1) {
-      config.filter_strength = strtol(argv[++c], NULL, 0);
+      config.filter_strength = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-af")) {
       config.autofilter = 1;
     } else if (!strcmp(argv[c], "-jpeg_like")) {
@@ -802,34 +810,26 @@ int main(int argc, const char *argv[]) {
     } else if (!strcmp(argv[c], "-nostrong")) {
       config.filter_type = 0;
     } else if (!strcmp(argv[c], "-sharpness") && c < argc - 1) {
-      config.filter_sharpness = strtol(argv[++c], NULL, 0);
+      config.filter_sharpness = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-pass") && c < argc - 1) {
-      config.pass = strtol(argv[++c], NULL, 0);
+      config.pass = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-pre") && c < argc - 1) {
-      config.preprocessing = strtol(argv[++c], NULL, 0);
+      config.preprocessing = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-segments") && c < argc - 1) {
-      config.segments = strtol(argv[++c], NULL, 0);
+      config.segments = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-partition_limit") && c < argc - 1) {
-      config.partition_limit = strtol(argv[++c], NULL, 0);
+      config.partition_limit = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-map") && c < argc - 1) {
-      picture.extra_info_type = strtol(argv[++c], NULL, 0);
-#ifdef WEBP_EXPERIMENTAL_FEATURES
-    } else if (!strcmp(argv[c], "-444")) {
-      picture.colorspace = WEBP_YUV444;
-    } else if (!strcmp(argv[c], "-422")) {
-      picture.colorspace = WEBP_YUV422;
-    } else if (!strcmp(argv[c], "-gray")) {
-      picture.colorspace = WEBP_YUV400;
-#endif
+      picture.extra_info_type = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-crop") && c < argc - 4) {
       crop = 1;
-      crop_x = strtol(argv[++c], NULL, 0);
-      crop_y = strtol(argv[++c], NULL, 0);
-      crop_w = strtol(argv[++c], NULL, 0);
-      crop_h = strtol(argv[++c], NULL, 0);
+      crop_x = ExUtilGetInt(argv[++c], 0, &parse_error);
+      crop_y = ExUtilGetInt(argv[++c], 0, &parse_error);
+      crop_w = ExUtilGetInt(argv[++c], 0, &parse_error);
+      crop_h = ExUtilGetInt(argv[++c], 0, &parse_error);
     } else if (!strcmp(argv[c], "-resize") && c < argc - 2) {
-      resize_w = strtol(argv[++c], NULL, 0);
-      resize_h = strtol(argv[++c], NULL, 0);
+      resize_w = ExUtilGetInt(argv[++c], 0, &parse_error);
+      resize_h = ExUtilGetInt(argv[++c], 0, &parse_error);
 #ifndef WEBP_DLL
     } else if (!strcmp(argv[c], "-noasm")) {
       VP8GetCPUInfo = NULL;
@@ -924,6 +924,11 @@ int main(int argc, const char *argv[]) {
     } else {
       in_file = argv[c];
     }
+
+    if (parse_error) {
+      HelpLong();
+      return -1;
+    }
   }
   if (in_file == NULL) {
     fprintf(stderr, "No input file specified!\n");
@@ -983,7 +988,7 @@ int main(int argc, const char *argv[]) {
   // Open the output
   if (out_file != NULL) {
     const int use_stdout = !strcmp(out_file, "-");
-    out = use_stdout ? stdout : fopen(out_file, "wb");
+    out = use_stdout ? ExUtilSetBinaryMode(stdout) : fopen(out_file, "wb");
     if (out == NULL) {
       fprintf(stderr, "Error! Cannot open output file '%s'\n", out_file);
       goto Error;
@@ -1011,7 +1016,7 @@ int main(int argc, const char *argv[]) {
     picture.user_data = (void*)in_file;
   }
 
-  // Compress
+  // Crop & resize.
   if (verbose) {
     StopwatchReset(&stop_watch);
   }
@@ -1028,11 +1033,21 @@ int main(int argc, const char *argv[]) {
       goto Error;
     }
   }
+  if (verbose && (crop != 0 || (resize_w | resize_h) > 0)) {
+    const double preproc_time = StopwatchReadAndReset(&stop_watch);
+    fprintf(stderr, "Time to crop/resize picture: %.3fs\n", preproc_time);
+  }
+
   if (picture.extra_info_type > 0) {
     AllocExtraInfo(&picture);
   }
   if (print_distortion >= 0) {  // Save original picture for later comparison
     WebPPictureCopy(&picture, &original_picture);
+  }
+
+  // Compress.
+  if (verbose) {
+    StopwatchReset(&stop_watch);
   }
   if (!WebPEncode(&config, &picture)) {
     fprintf(stderr, "Error! Cannot encode picture as WebP\n");

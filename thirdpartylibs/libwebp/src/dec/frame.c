@@ -15,7 +15,8 @@
 #include "./vp8i.h"
 #include "../utils/utils.h"
 
-#define ALIGN_MASK (32 - 1)
+#define ALIGN_CST (32 - 1)
+#define DO_ALIGN(PTR) ((uintptr_t)((PTR) + ALIGN_CST) & ~ALIGN_CST)
 
 static void ReconstructRow(const VP8Decoder* const dec,
                            const VP8ThreadContext* ctx);  // TODO(skal): remove
@@ -176,6 +177,13 @@ void VP8InitDithering(const WebPDecoderOptions* const options,
         VP8InitRandom(&dec->dithering_rg_, 1.0f);
         dec->dither_ = 1;
       }
+    }
+    // potentially allow alpha dithering
+    dec->alpha_dithering_ = options->alpha_dithering_strength;
+    if (dec->alpha_dithering_ > 100) {
+      dec->alpha_dithering_ = 100;
+    } else if (dec->alpha_dithering_ < 0) {
+      dec->alpha_dithering_ = 0;
     }
   }
 }
@@ -347,7 +355,7 @@ int VP8ProcessRow(VP8Decoder* const dec, VP8Io* const io) {
   } else {
     WebPWorker* const worker = &dec->worker_;
     // Finish previous job *before* updating context
-    ok &= WebPWorkerSync(worker);
+    ok &= WebPGetWorkerInterface()->Sync(worker);
     assert(worker->status_ == OK);
     if (ok) {   // spawn a new deblocking/output job
       ctx->io_ = *io;
@@ -367,7 +375,8 @@ int VP8ProcessRow(VP8Decoder* const dec, VP8Io* const io) {
         ctx->f_info_ = dec->f_info_;
         dec->f_info_ = tmp;
       }
-      WebPWorkerLaunch(worker);    // (reconstruct)+filter in parallel
+      // (reconstruct)+filter in parallel
+      WebPGetWorkerInterface()->Launch(worker);
       if (++dec->cache_id_ == dec->num_caches_) {
         dec->cache_id_ = 0;
       }
@@ -437,7 +446,7 @@ VP8StatusCode VP8EnterCritical(VP8Decoder* const dec, VP8Io* const io) {
 int VP8ExitCritical(VP8Decoder* const dec, VP8Io* const io) {
   int ok = 1;
   if (dec->mt_method_ > 0) {
-    ok = WebPWorkerSync(&dec->worker_);
+    ok = WebPGetWorkerInterface()->Sync(&dec->worker_);
   }
 
   if (io->teardown != NULL) {
@@ -478,7 +487,7 @@ static int InitThreadContext(VP8Decoder* const dec) {
   dec->cache_id_ = 0;
   if (dec->mt_method_ > 0) {
     WebPWorker* const worker = &dec->worker_;
-    if (!WebPWorkerReset(worker)) {
+    if (!WebPGetWorkerInterface()->Reset(worker)) {
       return VP8SetError(dec, VP8_STATUS_OUT_OF_MEMORY,
                          "thread initialization failed.");
     }
@@ -544,7 +553,7 @@ static int AllocateMemory(VP8Decoder* const dec) {
   const uint64_t needed = (uint64_t)intra_pred_mode_size
                         + top_size + mb_info_size + f_info_size
                         + yuv_size + mb_data_size
-                        + cache_size + alpha_size + ALIGN_MASK;
+                        + cache_size + alpha_size + ALIGN_CST;
   uint8_t* mem;
 
   if (needed != (size_t)needed) return 0;  // check for overflow
@@ -581,8 +590,8 @@ static int AllocateMemory(VP8Decoder* const dec) {
     dec->thread_ctx_.f_info_ += mb_w;
   }
 
-  mem = (uint8_t*)((uintptr_t)(mem + ALIGN_MASK) & ~ALIGN_MASK);
-  assert((yuv_size & ALIGN_MASK) == 0);
+  mem = (uint8_t*)DO_ALIGN(mem);
+  assert((yuv_size & ALIGN_CST) == 0);
   dec->yuv_b_ = (uint8_t*)mem;
   mem += yuv_size;
 

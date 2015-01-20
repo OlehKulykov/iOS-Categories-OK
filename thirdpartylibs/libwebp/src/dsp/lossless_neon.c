@@ -18,15 +18,12 @@
 #include <arm_neon.h>
 
 #include "./lossless.h"
-
-// Right now, some intrinsics function seem slower, so we disable it.
-// Uncomment the following for testing:
-// #define USE_INTRINSICS
+#include "./neon.h"
 
 //------------------------------------------------------------------------------
 // Colorspace conversion functions
 
-#if LOCAL_GCC_PREREQ(4,8)
+#if !defined(WORK_AROUND_GCC)
 // gcc 4.6.0 had some trouble (NDK-r9) with this code. We only use it for
 // gcc-4.8.x at least.
 static void ConvertBGRAToRGBA(const uint32_t* src,
@@ -68,7 +65,7 @@ static void ConvertBGRAToRGB(const uint32_t* src,
   VP8LConvertBGRAToRGB_C(src, num_pixels & 15, dst);  // left-overs
 }
 
-#else
+#else  // WORK_AROUND_GCC
 
 // gcc-4.6.0 fallback
 
@@ -99,11 +96,12 @@ static void ConvertBGRAToBGR(const uint32_t* src,
   const uint8x8_t shuffle1 = vld1_u8(kBGRShuffle[1]);
   const uint8x8_t shuffle2 = vld1_u8(kBGRShuffle[2]);
   for (; src < end; src += 8) {
-    const uint8x8x4_t pixels = {{
-        vld1_u8((const uint8_t*)(src + 0)),
-        vld1_u8((const uint8_t*)(src + 2)),
-        vld1_u8((const uint8_t*)(src + 4)),
-        vld1_u8((const uint8_t*)(src + 6)) }};
+    uint8x8x4_t pixels;
+    INIT_VECTOR4(pixels,
+                 vld1_u8((const uint8_t*)(src + 0)),
+                 vld1_u8((const uint8_t*)(src + 2)),
+                 vld1_u8((const uint8_t*)(src + 4)),
+                 vld1_u8((const uint8_t*)(src + 6)));
     vst1_u8(dst +  0, vtbl4_u8(pixels, shuffle0));
     vst1_u8(dst +  8, vtbl4_u8(pixels, shuffle1));
     vst1_u8(dst + 16, vtbl4_u8(pixels, shuffle2));
@@ -125,11 +123,12 @@ static void ConvertBGRAToRGB(const uint32_t* src,
   const uint8x8_t shuffle1 = vld1_u8(kRGBShuffle[1]);
   const uint8x8_t shuffle2 = vld1_u8(kRGBShuffle[2]);
   for (; src < end; src += 8) {
-    const uint8x8x4_t pixels = {{
-        vld1_u8((const uint8_t*)(src + 0)),
-        vld1_u8((const uint8_t*)(src + 2)),
-        vld1_u8((const uint8_t*)(src + 4)),
-        vld1_u8((const uint8_t*)(src + 6)) }};
+    uint8x8x4_t pixels;
+    INIT_VECTOR4(pixels,
+                 vld1_u8((const uint8_t*)(src + 0)),
+                 vld1_u8((const uint8_t*)(src + 2)),
+                 vld1_u8((const uint8_t*)(src + 4)),
+                 vld1_u8((const uint8_t*)(src + 6)));
     vst1_u8(dst +  0, vtbl4_u8(pixels, shuffle0));
     vst1_u8(dst +  8, vtbl4_u8(pixels, shuffle1));
     vst1_u8(dst + 16, vtbl4_u8(pixels, shuffle2));
@@ -138,30 +137,28 @@ static void ConvertBGRAToRGB(const uint32_t* src,
   VP8LConvertBGRAToRGB_C(src, num_pixels & 7, dst);  // left-overs
 }
 
-#endif   // gcc-4.8
+#endif   // !WORK_AROUND_GCC
 
 //------------------------------------------------------------------------------
 
-#ifdef USE_INTRINSICS
+#ifdef WEBP_USE_INTRINSICS
 
 static WEBP_INLINE uint32_t Average2(const uint32_t* const a,
                                      const uint32_t* const b) {
-  const uint64x1_t a0 = { *a }, b0 = { *b };
-  const uint8x8_t a1 = vreinterpret_u8_u64(a0);
-  const uint8x8_t b1 = vreinterpret_u8_u64(b0);
-  const uint8x8_t avg = vhadd_u8(a1, b1);
+  const uint8x8_t a0 = vreinterpret_u8_u64(vcreate_u64(*a));
+  const uint8x8_t b0 = vreinterpret_u8_u64(vcreate_u64(*b));
+  const uint8x8_t avg = vhadd_u8(a0, b0);
   return vget_lane_u32(vreinterpret_u32_u8(avg), 0);
 }
 
 static WEBP_INLINE uint32_t Average3(const uint32_t* const a,
                                      const uint32_t* const b,
                                      const uint32_t* const c) {
-  const uint64x1_t a0 = { *a }, b0 = { *b }, c0 = { *c };
-  const uint8x8_t a1 = vreinterpret_u8_u64(a0);
-  const uint8x8_t b1 = vreinterpret_u8_u64(b0);
-  const uint8x8_t c1 = vreinterpret_u8_u64(c0);
-  const uint8x8_t avg1 = vhadd_u8(a1, c1);
-  const uint8x8_t avg2 = vhadd_u8(avg1, b1);
+  const uint8x8_t a0 = vreinterpret_u8_u64(vcreate_u64(*a));
+  const uint8x8_t b0 = vreinterpret_u8_u64(vcreate_u64(*b));
+  const uint8x8_t c0 = vreinterpret_u8_u64(vcreate_u64(*c));
+  const uint8x8_t avg1 = vhadd_u8(a0, c0);
+  const uint8x8_t avg2 = vhadd_u8(avg1, b0);
   return vget_lane_u32(vreinterpret_u32_u8(avg2), 0);
 }
 
@@ -169,13 +166,12 @@ static WEBP_INLINE uint32_t Average4(const uint32_t* const a,
                                      const uint32_t* const b,
                                      const uint32_t* const c,
                                      const uint32_t* const d) {
-  const uint64x1_t a0 = { *a }, b0 = { *b }, c0 = { *c }, d0 = { *d };
-  const uint8x8_t a1 = vreinterpret_u8_u64(a0);
-  const uint8x8_t b1 = vreinterpret_u8_u64(b0);
-  const uint8x8_t c1 = vreinterpret_u8_u64(c0);
-  const uint8x8_t d1 = vreinterpret_u8_u64(d0);
-  const uint8x8_t avg1 = vhadd_u8(a1, b1);
-  const uint8x8_t avg2 = vhadd_u8(c1, d1);
+  const uint8x8_t a0 = vreinterpret_u8_u64(vcreate_u64(*a));
+  const uint8x8_t b0 = vreinterpret_u8_u64(vcreate_u64(*b));
+  const uint8x8_t c0 = vreinterpret_u8_u64(vcreate_u64(*c));
+  const uint8x8_t d0 = vreinterpret_u8_u64(vcreate_u64(*d));
+  const uint8x8_t avg1 = vhadd_u8(a0, b0);
+  const uint8x8_t avg2 = vhadd_u8(c0, d0);
   const uint8x8_t avg3 = vhadd_u8(avg1, avg2);
   return vget_lane_u32(vreinterpret_u32_u8(avg3), 0);
 }
@@ -211,10 +207,9 @@ static uint32_t Predictor10(uint32_t left, const uint32_t* const top) {
 static WEBP_INLINE uint32_t Select(const uint32_t* const c0,
                                    const uint32_t* const c1,
                                    const uint32_t* const c2) {
-  const uint64x1_t C0 = { *c0 }, C1 = { *c1 }, C2 = { *c2 };
-  const uint8x8_t p0 = vreinterpret_u8_u64(C0);
-  const uint8x8_t p1 = vreinterpret_u8_u64(C1);
-  const uint8x8_t p2 = vreinterpret_u8_u64(C2);
+  const uint8x8_t p0 = vreinterpret_u8_u64(vcreate_u64(*c0));
+  const uint8x8_t p1 = vreinterpret_u8_u64(vcreate_u64(*c1));
+  const uint8x8_t p2 = vreinterpret_u8_u64(vcreate_u64(*c2));
   const uint8x8_t bc = vabd_u8(p1, p2);   // |b-c|
   const uint8x8_t ac = vabd_u8(p0, p2);   // |a-c|
   const int16x4_t sum_bc = vreinterpret_s16_u16(vpaddl_u8(bc));
@@ -231,10 +226,9 @@ static uint32_t Predictor11(uint32_t left, const uint32_t* const top) {
 static WEBP_INLINE uint32_t ClampedAddSubtractFull(const uint32_t* const c0,
                                                    const uint32_t* const c1,
                                                    const uint32_t* const c2) {
-  const uint64x1_t C0 = { *c0 }, C1 = { *c1 }, C2 = { *c2 };
-  const uint8x8_t p0 = vreinterpret_u8_u64(C0);
-  const uint8x8_t p1 = vreinterpret_u8_u64(C1);
-  const uint8x8_t p2 = vreinterpret_u8_u64(C2);
+  const uint8x8_t p0 = vreinterpret_u8_u64(vcreate_u64(*c0));
+  const uint8x8_t p1 = vreinterpret_u8_u64(vcreate_u64(*c1));
+  const uint8x8_t p2 = vreinterpret_u8_u64(vcreate_u64(*c2));
   const uint16x8_t sum0 = vaddl_u8(p0, p1);                // add and widen
   const uint16x8_t sum1 = vqsubq_u16(sum0, vmovl_u8(p2));  // widen and subtract
   const uint8x8_t out = vqmovn_u16(sum1);                  // narrow and clamp
@@ -248,10 +242,9 @@ static uint32_t Predictor12(uint32_t left, const uint32_t* const top) {
 static WEBP_INLINE uint32_t ClampedAddSubtractHalf(const uint32_t* const c0,
                                                    const uint32_t* const c1,
                                                    const uint32_t* const c2) {
-  const uint64x1_t C0 = { *c0 }, C1 = { *c1 }, C2 = { *c2 };
-  const uint8x8_t p0 = vreinterpret_u8_u64(C0);
-  const uint8x8_t p1 = vreinterpret_u8_u64(C1);
-  const uint8x8_t p2 = vreinterpret_u8_u64(C2);
+  const uint8x8_t p0 = vreinterpret_u8_u64(vcreate_u64(*c0));
+  const uint8x8_t p1 = vreinterpret_u8_u64(vcreate_u64(*c1));
+  const uint8x8_t p2 = vreinterpret_u8_u64(vcreate_u64(*c2));
   const uint8x8_t avg = vhadd_u8(p0, p1);                  // Average(c0,c1)
   const uint8x8_t ab = vshr_n_u8(vqsub_u8(avg, p2), 1);    // (a-b)>>1 saturated
   const uint8x8_t ba = vshr_n_u8(vqsub_u8(p2, avg), 1);    // (b-a)>>1 saturated
@@ -265,6 +258,9 @@ static uint32_t Predictor13(uint32_t left, const uint32_t* const top) {
 
 //------------------------------------------------------------------------------
 // Subtract-Green Transform
+
+// vtbl? are unavailable in iOS/arm64 builds.
+#if !defined(__aarch64__)
 
 // 255 = byte will be zero'd
 static const uint8_t kGreenShuffle[8] = { 1, 255, 1, 255, 5, 255, 5, 255  };
@@ -297,21 +293,23 @@ static void AddGreenToBlueAndRed(uint32_t* argb_data, int num_pixels) {
   VP8LAddGreenToBlueAndRed_C(argb_data, num_pixels & 3);
 }
 
-#endif   // USE_INTRINSICS
+#endif   // !__aarch64__
+
+#endif   // WEBP_USE_INTRINSICS
 
 #endif   // WEBP_USE_NEON
 
 //------------------------------------------------------------------------------
 
-extern void VP8LDspInitNEON(void);
+extern WEBP_TSAN_IGNORE_FUNCTION void VP8LDspInitNEON(void);
 
-void VP8LDspInitNEON(void) {
+WEBP_TSAN_IGNORE_FUNCTION void VP8LDspInitNEON(void) {
 #if defined(WEBP_USE_NEON)
   VP8LConvertBGRAToRGBA = ConvertBGRAToRGBA;
   VP8LConvertBGRAToBGR = ConvertBGRAToBGR;
   VP8LConvertBGRAToRGB = ConvertBGRAToRGB;
 
-#ifdef USE_INTRINSICS
+#ifdef WEBP_USE_INTRINSICS
   VP8LPredictors[5] = Predictor5;
   VP8LPredictors[6] = Predictor6;
   VP8LPredictors[7] = Predictor7;
@@ -322,8 +320,10 @@ void VP8LDspInitNEON(void) {
   VP8LPredictors[12] = Predictor12;
   VP8LPredictors[13] = Predictor13;
 
+#if !defined(__aarch64__)
   VP8LSubtractGreenFromBlueAndRed = SubtractGreenFromBlueAndRed;
   VP8LAddGreenToBlueAndRed = AddGreenToBlueAndRed;
+#endif
 #endif
 
 #endif   // WEBP_USE_NEON

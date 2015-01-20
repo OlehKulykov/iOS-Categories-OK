@@ -32,16 +32,18 @@ extern "C" {
 typedef struct {
   // literal_ contains green literal, palette-code and
   // copy-length-prefix histogram
-  int* literal_;         // Pointer to the allocated buffer for literal.
-  int red_[256];
-  int blue_[256];
-  int alpha_[256];
+  uint32_t* literal_;         // Pointer to the allocated buffer for literal.
+  uint32_t red_[NUM_LITERAL_CODES];
+  uint32_t blue_[NUM_LITERAL_CODES];
+  uint32_t alpha_[NUM_LITERAL_CODES];
   // Backward reference prefix-code histogram.
-  int distance_[NUM_DISTANCE_CODES];
+  uint32_t distance_[NUM_DISTANCE_CODES];
   int palette_code_bits_;
-  double bit_cost_;      // cached value of VP8LHistogramEstimateBits(this)
-  double literal_cost_;  // Cached values of dominant entropy costs:
-  double red_cost_;      //   literal, red & blue.
+  uint32_t trivial_symbol_;  // True, if histograms for Red, Blue & Alpha
+                             // literal symbols are single valued.
+  double bit_cost_;          // cached value of bit cost.
+  double literal_cost_;      // Cached values of dominant entropy costs:
+  double red_cost_;          // literal, red & blue.
   double blue_cost_;
 } VP8LHistogram;
 
@@ -63,7 +65,7 @@ void VP8LHistogramCreate(VP8LHistogram* const p,
                          int palette_code_bits);
 
 // Return the size of the histogram for a given palette_code_bits.
-uint64_t VP8LGetHistogramSize(int palette_code_bits);
+int VP8LGetHistogramSize(int palette_code_bits);
 
 // Set the palette_code_bits and reset the stats.
 void VP8LHistogramInit(VP8LHistogram* const p, int palette_code_bits);
@@ -91,14 +93,6 @@ VP8LHistogram* VP8LAllocateHistogram(int cache_bits);
 void VP8LHistogramAddSinglePixOrCopy(VP8LHistogram* const histo,
                                      const PixOrCopy* const v);
 
-// Estimate how many bits the combined entropy of literals and distance
-// approximately maps to.
-double VP8LHistogramEstimateBits(const VP8LHistogram* const p);
-
-// This function estimates the cost in bits excluding the bits needed to
-// represent the entropy code itself.
-double VP8LHistogramEstimateBitsBulk(const VP8LHistogram* const p);
-
 static WEBP_INLINE int VP8LHistogramNumCodes(int palette_code_bits) {
   return NUM_LITERAL_CODES + NUM_LENGTH_CODES +
       ((palette_code_bits > 0) ? (1 << palette_code_bits) : 0);
@@ -107,8 +101,10 @@ static WEBP_INLINE int VP8LHistogramNumCodes(int palette_code_bits) {
 // Builds the histogram image.
 int VP8LGetHistoImageSymbols(int xsize, int ysize,
                              const VP8LBackwardRefs* const refs,
-                             int quality, int histogram_bits, int cache_bits,
+                             int quality, int low_effort,
+                             int histogram_bits, int cache_bits,
                              VP8LHistogramSet* const image_in,
+                             VP8LHistogramSet* const tmp_histos,
                              uint16_t* const histogram_symbols);
 
 #ifdef __cplusplus

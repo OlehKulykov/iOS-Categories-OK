@@ -17,8 +17,9 @@
 
 #include <math.h>
 #include <stdlib.h>
-#include "./lossless.h"
 #include "../dec/vp8li.h"
+#include "../utils/endian_inl.h"
+#include "./lossless.h"
 #include "./yuv.h"
 
 #define MAX_DIFF_COST (1e30f)
@@ -332,14 +333,14 @@ const uint8_t kPrefixEncodeExtraBitsValue[PREFIX_LOOKUP_IDX_MAX] = {
 #define APPROX_LOG_WITH_CORRECTION_MAX  65536
 #define APPROX_LOG_MAX                   4096
 #define LOG_2_RECIPROCAL 1.44269504088896338700465094007086
-static float FastSLog2Slow(int v) {
+static float FastSLog2Slow(uint32_t v) {
   assert(v >= LOG_LOOKUP_IDX_MAX);
   if (v < APPROX_LOG_WITH_CORRECTION_MAX) {
     int log_cnt = 0;
-    int y = 1;
+    uint32_t y = 1;
     int correction = 0;
     const float v_f = (float)v;
-    const int orig_v = v;
+    const uint32_t orig_v = v;
     do {
       ++log_cnt;
       v = v >> 1;
@@ -358,12 +359,12 @@ static float FastSLog2Slow(int v) {
   }
 }
 
-static float FastLog2Slow(int v) {
+static float FastLog2Slow(uint32_t v) {
   assert(v >= LOG_LOOKUP_IDX_MAX);
   if (v < APPROX_LOG_WITH_CORRECTION_MAX) {
     int log_cnt = 0;
-    int y = 1;
-    const int orig_v = v;
+    uint32_t y = 1;
+    const uint32_t orig_v = v;
     double log_2;
     do {
       ++log_cnt;
@@ -432,7 +433,7 @@ static WEBP_INLINE uint32_t ClampedAddSubtractFull(uint32_t c0, uint32_t c1,
                                          (c1 >> 8) & 0xff,
                                          (c2 >> 8) & 0xff);
   const int b = AddSubtractComponentFull(c0 & 0xff, c1 & 0xff, c2 & 0xff);
-  return (a << 24) | (r << 16) | (g << 8) | b;
+  return ((uint32_t)a << 24) | (r << 16) | (g << 8) | b;
 }
 
 static WEBP_INLINE int AddSubtractComponentHalf(int a, int b) {
@@ -446,14 +447,23 @@ static WEBP_INLINE uint32_t ClampedAddSubtractHalf(uint32_t c0, uint32_t c1,
   const int r = AddSubtractComponentHalf((ave >> 16) & 0xff, (c2 >> 16) & 0xff);
   const int g = AddSubtractComponentHalf((ave >> 8) & 0xff, (c2 >> 8) & 0xff);
   const int b = AddSubtractComponentHalf((ave >> 0) & 0xff, (c2 >> 0) & 0xff);
-  return (a << 24) | (r << 16) | (g << 8) | b;
+  return ((uint32_t)a << 24) | (r << 16) | (g << 8) | b;
 }
 
-static WEBP_INLINE int Sub3(int a, int b, int c) {
+// gcc-4.9 on ARM generates incorrect code in Select() when Sub3() is inlined.
+#if defined(__arm__) && LOCAL_GCC_VERSION == 0x409
+# define LOCAL_INLINE __attribute__ ((noinline))
+#else
+# define LOCAL_INLINE WEBP_INLINE
+#endif
+
+static LOCAL_INLINE int Sub3(int a, int b, int c) {
   const int pb = b - c;
   const int pa = a - c;
   return abs(pb) - abs(pa);
 }
+
+#undef LOCAL_INLINE
 
 static WEBP_INLINE uint32_t Select(uint32_t a, uint32_t b, uint32_t c) {
   const int pa_minus_pb =
@@ -535,6 +545,9 @@ static const VP8LPredictorFunc kPredictorsC[16] = {
   Predictor0, Predictor0    // <- padding security sentinels
 };
 
+//------------------------------------------------------------------------------
+// Methods to calculate Entropy (Shannon).
+
 static float PredictionCostSpatial(const int counts[256], int weight_0,
                                    double exp_val) {
   const int significant_symbols = 256 >> 4;
@@ -582,12 +595,166 @@ static float PredictionCostSpatialHistogram(const int accumulated[4][256],
   return (float)retval;
 }
 
+static WEBP_INLINE double BitsEntropyRefine(int nonzeros, int sum, int max_val,
+                                            double retval) {
+  double mix;
+  if (nonzeros < 5) {
+    if (nonzeros <= 1) {
+      return 0;
+    }
+    // Two symbols, they will be 0 and 1 in a Huffman code.
+    // Let's mix in a bit of entropy to favor good clustering when
+    // distributions of these are combined.
+    if (nonzeros == 2) {
+      return 0.99 * sum + 0.01 * retval;
+    }
+    // No matter what the entropy says, we cannot be better than min_limit
+    // with Huffman coding. I am mixing a bit of entropy into the
+    // min_limit since it produces much better (~0.5 %) compression results
+    // perhaps because of better entropy clustering.
+    if (nonzeros == 3) {
+      mix = 0.95;
+    } else {
+      mix = 0.7;  // nonzeros == 4.
+    }
+  } else {
+    mix = 0.627;
+  }
+
+  {
+    double min_limit = 2 * sum - max_val;
+    min_limit = mix * min_limit + (1.0 - mix) * retval;
+    return (retval < min_limit) ? min_limit : retval;
+  }
+}
+
+// Returns the entropy for the symbols in the input array.
+// Also sets trivial_symbol to the code value, if the array has only one code
+// value. Otherwise, set it to VP8L_NON_TRIVIAL_SYM.
+static double BitsEntropy(const uint32_t* const array, int n,
+                          uint32_t* const trivial_symbol) {
+  double retval = 0.;
+  uint32_t sum = 0;
+  uint32_t nonzero_code = VP8L_NON_TRIVIAL_SYM;
+  int nonzeros = 0;
+  uint32_t max_val = 0;
+  int i;
+  for (i = 0; i < n; ++i) {
+    if (array[i] != 0) {
+      sum += array[i];
+      nonzero_code = i;
+      ++nonzeros;
+      retval -= VP8LFastSLog2(array[i]);
+      if (max_val < array[i]) {
+        max_val = array[i];
+      }
+    }
+  }
+  retval += VP8LFastSLog2(sum);
+  if (trivial_symbol != NULL) {
+    *trivial_symbol = (nonzeros == 1) ? nonzero_code : VP8L_NON_TRIVIAL_SYM;
+  }
+  return BitsEntropyRefine(nonzeros, sum, max_val, retval);
+}
+
+static double BitsEntropyCombined(const uint32_t* const X,
+                                  const uint32_t* const Y, int n) {
+  double retval = 0.;
+  int sum = 0;
+  int nonzeros = 0;
+  int max_val = 0;
+  int i;
+  for (i = 0; i < n; ++i) {
+    const int xy = X[i] + Y[i];
+    if (xy != 0) {
+      sum += xy;
+      ++nonzeros;
+      retval -= VP8LFastSLog2(xy);
+      if (max_val < xy) {
+        max_val = xy;
+      }
+    }
+  }
+  retval += VP8LFastSLog2(sum);
+  return BitsEntropyRefine(nonzeros, sum, max_val, retval);
+}
+
+static double InitialHuffmanCost(void) {
+  // Small bias because Huffman code length is typically not stored in
+  // full length.
+  static const int kHuffmanCodeOfHuffmanCodeSize = CODE_LENGTH_CODES * 3;
+  static const double kSmallBias = 9.1;
+  return kHuffmanCodeOfHuffmanCodeSize - kSmallBias;
+}
+
+// Finalize the Huffman cost based on streak numbers and length type (<3 or >=3)
+static double FinalHuffmanCost(const VP8LStreaks* const stats) {
+  double retval = InitialHuffmanCost();
+  retval += stats->counts[0] * 1.5625 + 0.234375 * stats->streaks[0][1];
+  retval += stats->counts[1] * 2.578125 + 0.703125 * stats->streaks[1][1];
+  retval += 1.796875 * stats->streaks[0][0];
+  retval += 3.28125 * stats->streaks[1][0];
+  return retval;
+}
+
+// Trampolines
+static double HuffmanCost(const uint32_t* const population, int length) {
+  const VP8LStreaks stats = VP8LHuffmanCostCount(population, length);
+  return FinalHuffmanCost(&stats);
+}
+
+static double HuffmanCostCombined(const uint32_t* const X,
+                                  const uint32_t* const Y, int length) {
+  const VP8LStreaks stats = VP8LHuffmanCostCombinedCount(X, Y, length);
+  return FinalHuffmanCost(&stats);
+}
+
+// Aggregated costs
+double VP8LPopulationCost(const uint32_t* const population, int length,
+                          uint32_t* const trivial_sym) {
+  return
+      BitsEntropy(population, length, trivial_sym) +
+      HuffmanCost(population, length);
+}
+
+double VP8LGetCombinedEntropy(const uint32_t* const X,
+                              const uint32_t* const Y, int length) {
+  return BitsEntropyCombined(X, Y, length) + HuffmanCostCombined(X, Y, length);
+}
+
+// Estimates the Entropy + Huffman + other block overhead size cost.
+double VP8LHistogramEstimateBits(const VP8LHistogram* const p) {
+  return
+      VP8LPopulationCost(
+          p->literal_, VP8LHistogramNumCodes(p->palette_code_bits_), NULL)
+      + VP8LPopulationCost(p->red_, NUM_LITERAL_CODES, NULL)
+      + VP8LPopulationCost(p->blue_, NUM_LITERAL_CODES, NULL)
+      + VP8LPopulationCost(p->alpha_, NUM_LITERAL_CODES, NULL)
+      + VP8LPopulationCost(p->distance_, NUM_DISTANCE_CODES, NULL)
+      + VP8LExtraCost(p->literal_ + NUM_LITERAL_CODES, NUM_LENGTH_CODES)
+      + VP8LExtraCost(p->distance_, NUM_DISTANCE_CODES);
+}
+
+double VP8LHistogramEstimateBitsBulk(const VP8LHistogram* const p) {
+  return
+      BitsEntropy(p->literal_, VP8LHistogramNumCodes(p->palette_code_bits_),
+                  NULL)
+      + BitsEntropy(p->red_, NUM_LITERAL_CODES, NULL)
+      + BitsEntropy(p->blue_, NUM_LITERAL_CODES, NULL)
+      + BitsEntropy(p->alpha_, NUM_LITERAL_CODES, NULL)
+      + BitsEntropy(p->distance_, NUM_DISTANCE_CODES, NULL)
+      + VP8LExtraCost(p->literal_ + NUM_LITERAL_CODES, NUM_LENGTH_CODES)
+      + VP8LExtraCost(p->distance_, NUM_DISTANCE_CODES);
+}
+
 static WEBP_INLINE void UpdateHisto(int histo_argb[4][256], uint32_t argb) {
   ++histo_argb[0][argb >> 24];
   ++histo_argb[1][(argb >> 16) & 0xff];
   ++histo_argb[2][(argb >> 8) & 0xff];
   ++histo_argb[3][argb & 0xff];
 }
+
+//------------------------------------------------------------------------------
 
 static int GetBestPredictorForTile(int width, int height,
                                    int tile_x, int tile_y, int bits,
@@ -672,12 +839,13 @@ static void CopyTileWithPrediction(int width, int height,
   }
 }
 
-void VP8LResidualImage(int width, int height, int bits,
+void VP8LResidualImage(int width, int height, int bits, int low_effort,
                        uint32_t* const argb, uint32_t* const argb_scratch,
                        uint32_t* const image) {
   const int max_tile_size = 1 << bits;
   const int tiles_per_row = VP8LSubSampleSize(width, bits);
   const int tiles_per_col = VP8LSubSampleSize(height, bits);
+  const int kPredLowEffort = 11;
   uint32_t* const upper_row = argb_scratch;
   uint32_t* const current_tile_rows = argb_scratch + width;
   int tile_y;
@@ -702,22 +870,22 @@ void VP8LResidualImage(int width, int height, int bits,
       if (all_x_max > width) {
         all_x_max = width;
       }
-      pred = GetBestPredictorForTile(width, height, tile_x, tile_y, bits,
-                                     (const int (*)[256])histo,
-                                     argb_scratch);
+      pred = low_effort ? kPredLowEffort :
+                          GetBestPredictorForTile(width, height, tile_x,
+                                                  tile_y, bits,
+                                                  (const int (*)[256])histo,
+                                                  argb_scratch);
       image[tile_y * tiles_per_row + tile_x] = 0xff000000u | (pred << 8);
       CopyTileWithPrediction(width, height, tile_x, tile_y, bits, pred,
                              argb_scratch, argb);
       for (y = 0; y < max_tile_size; ++y) {
-        int ix;
         int all_x;
         int all_y = tile_y_offset + y;
         if (all_y >= height) {
           break;
         }
-        ix = all_y * width + tile_x_offset;
-        for (all_x = tile_x_offset; all_x < all_x_max; ++all_x, ++ix) {
-          UpdateHisto(histo, argb[ix]);
+        for (all_x = tile_x_offset; all_x < all_x_max; ++all_x) {
+          UpdateHisto(histo, argb[all_y * width + all_x]);
         }
       }
     }
@@ -897,20 +1065,28 @@ static float PredictionCostCrossColor(const int accumulated[256],
          PredictionCostSpatial(counts, 3, kExpValue);
 }
 
+static void CollectColorRedTransforms(const uint32_t* argb, int stride,
+                                      int tile_width, int tile_height,
+                                      int green_to_red, int histo[]) {
+  while (tile_height-- > 0) {
+    int x;
+    for (x = 0; x < tile_width; ++x) {
+      ++histo[TransformColorRed(green_to_red, argb[x])];
+    }
+    argb += stride;
+  }
+}
+
 static float GetPredictionCostCrossColorRed(
-    int tile_x_offset, int tile_y_offset, int all_x_max, int all_y_max,
-    int xsize, VP8LMultipliers prev_x, VP8LMultipliers prev_y, int green_to_red,
-    const int accumulated_red_histo[256], const uint32_t* const argb) {
-  int all_y;
+    const uint32_t* argb, int stride, int tile_width, int tile_height,
+    VP8LMultipliers prev_x, VP8LMultipliers prev_y, int green_to_red,
+    const int accumulated_red_histo[256]) {
   int histo[256] = { 0 };
   float cur_diff;
-  for (all_y = tile_y_offset; all_y < all_y_max; ++all_y) {
-    int ix = all_y * xsize + tile_x_offset;
-    int all_x;
-    for (all_x = tile_x_offset; all_x < all_x_max; ++all_x, ++ix) {
-      ++histo[TransformColorRed(green_to_red, argb[ix])];  // red.
-    }
-  }
+
+  VP8LCollectColorRedTransforms(argb, stride, tile_width, tile_height,
+                                green_to_red, histo);
+
   cur_diff = PredictionCostCrossColor(accumulated_red_histo, histo);
   if ((uint8_t)green_to_red == prev_x.green_to_red_) {
     cur_diff -= 3;  // favor keeping the areas locally similar
@@ -925,10 +1101,9 @@ static float GetPredictionCostCrossColorRed(
 }
 
 static void GetBestGreenToRed(
-    int tile_x_offset, int tile_y_offset, int all_x_max, int all_y_max,
-    int xsize, VP8LMultipliers prev_x, VP8LMultipliers prev_y,
-    const int accumulated_red_histo[256], const uint32_t* const argb,
-    VP8LMultipliers* const best_tx) {
+    const uint32_t* argb, int stride, int tile_width, int tile_height,
+    VP8LMultipliers prev_x, VP8LMultipliers prev_y,
+    const int accumulated_red_histo[256], VP8LMultipliers* const best_tx) {
   int min_green_to_red = -64;
   int max_green_to_red = 64;
   int green_to_red = 0;
@@ -940,14 +1115,14 @@ static void GetBestGreenToRed(
   while (max_green_to_red - min_green_to_red > 2) {
     if (eval_min) {
       cur_diff_min = GetPredictionCostCrossColorRed(
-          tile_x_offset, tile_y_offset, all_x_max, all_y_max, xsize,
-          prev_x, prev_y, min_green_to_red, accumulated_red_histo, argb);
+          argb, stride, tile_width, tile_height,
+          prev_x, prev_y, min_green_to_red, accumulated_red_histo);
       eval_min = 0;
     }
     if (eval_max) {
       cur_diff_max = GetPredictionCostCrossColorRed(
-          tile_x_offset, tile_y_offset, all_x_max, all_y_max, xsize,
-          prev_x, prev_y, max_green_to_red, accumulated_red_histo, argb);
+          argb, stride, tile_width, tile_height,
+          prev_x, prev_y, max_green_to_red, accumulated_red_histo);
       eval_max = 0;
     }
     if (cur_diff_min < cur_diff_max) {
@@ -963,21 +1138,29 @@ static void GetBestGreenToRed(
   best_tx->green_to_red_ = green_to_red;
 }
 
+static void CollectColorBlueTransforms(const uint32_t* argb, int stride,
+                                       int tile_width, int tile_height,
+                                       int green_to_blue, int red_to_blue,
+                                       int histo[]) {
+  while (tile_height-- > 0) {
+    int x;
+    for (x = 0; x < tile_width; ++x) {
+      ++histo[TransformColorBlue(green_to_blue, red_to_blue, argb[x])];
+    }
+    argb += stride;
+  }
+}
+
 static float GetPredictionCostCrossColorBlue(
-    int tile_x_offset, int tile_y_offset, int all_x_max, int all_y_max,
-    int xsize, VP8LMultipliers prev_x, VP8LMultipliers prev_y,
-    int green_to_blue, int red_to_blue, const int accumulated_blue_histo[256],
-    const uint32_t* const argb) {
-  int all_y;
+    const uint32_t* argb, int stride, int tile_width, int tile_height,
+    VP8LMultipliers prev_x, VP8LMultipliers prev_y,
+    int green_to_blue, int red_to_blue, const int accumulated_blue_histo[256]) {
   int histo[256] = { 0 };
   float cur_diff;
-  for (all_y = tile_y_offset; all_y < all_y_max; ++all_y) {
-    int all_x;
-    int ix = all_y * xsize + tile_x_offset;
-    for (all_x = tile_x_offset; all_x < all_x_max; ++all_x, ++ix) {
-      ++histo[TransformColorBlue(green_to_blue, red_to_blue, argb[ix])];
-    }
-  }
+
+  VP8LCollectColorBlueTransforms(argb, stride, tile_width, tile_height,
+                                 green_to_blue, red_to_blue, histo);
+
   cur_diff = PredictionCostCrossColor(accumulated_blue_histo, histo);
   if ((uint8_t)green_to_blue == prev_x.green_to_blue_) {
     cur_diff -= 3;  // favor keeping the areas locally similar
@@ -1001,9 +1184,9 @@ static float GetPredictionCostCrossColorBlue(
 }
 
 static void GetBestGreenRedToBlue(
-    int tile_x_offset, int tile_y_offset, int all_x_max, int all_y_max,
-    int xsize, VP8LMultipliers prev_x, VP8LMultipliers prev_y, int quality,
-    const int accumulated_blue_histo[256], const uint32_t* const argb,
+    const uint32_t* argb, int stride, int tile_width, int tile_height,
+    VP8LMultipliers prev_x, VP8LMultipliers prev_y, int quality,
+    const int accumulated_blue_histo[256],
     VP8LMultipliers* const best_tx) {
   float best_diff = MAX_DIFF_COST;
   float cur_diff;
@@ -1030,8 +1213,8 @@ static void GetBestGreenRedToBlue(
          num_tries_after_min < max_tries_after_min;
          red_to_blue += step) {
       cur_diff = GetPredictionCostCrossColorBlue(
-          tile_x_offset, tile_y_offset, all_x_max, all_y_max, xsize, prev_x,
-          prev_y, green_to_blue, red_to_blue, accumulated_blue_histo, argb);
+          argb, stride, tile_width, tile_height, prev_x, prev_y,
+          green_to_blue, red_to_blue, accumulated_blue_histo);
       if (cur_diff < best_diff) {
         best_diff = cur_diff;
         best_tx->green_to_blue_ = green_to_blue;
@@ -1057,14 +1240,18 @@ static VP8LMultipliers GetBestColorTransformForTile(
   const int tile_x_offset = tile_x * max_tile_size;
   const int all_x_max = GetMin(tile_x_offset + max_tile_size, xsize);
   const int all_y_max = GetMin(tile_y_offset + max_tile_size, ysize);
+  const int tile_width = all_x_max - tile_x_offset;
+  const int tile_height = all_y_max - tile_y_offset;
+  const uint32_t* const tile_argb = argb + tile_y_offset * xsize
+                                  + tile_x_offset;
   VP8LMultipliers best_tx;
   MultipliersClear(&best_tx);
 
-  GetBestGreenToRed(tile_x_offset, tile_y_offset, all_x_max, all_y_max, xsize,
-                    prev_x, prev_y, accumulated_red_histo, argb, &best_tx);
-  GetBestGreenRedToBlue(tile_x_offset, tile_y_offset, all_x_max, all_y_max,
-                        xsize, prev_x, prev_y, quality, accumulated_blue_histo,
-                        argb, &best_tx);
+  GetBestGreenToRed(tile_argb, xsize, tile_width, tile_height,
+                    prev_x, prev_y, accumulated_red_histo, &best_tx);
+  GetBestGreenRedToBlue(tile_argb, xsize, tile_width, tile_height,
+                        prev_x, prev_y, quality, accumulated_blue_histo,
+                        &best_tx);
   return best_tx;
 }
 
@@ -1168,15 +1355,27 @@ static void ColorSpaceInverseTransform(const VP8LTransform* const transform,
       data += remaining_width;
     }
     ++y;
-    if ((y & mask) == 0) pred_row += tiles_per_row;;
+    if ((y & mask) == 0) pred_row += tiles_per_row;
   }
 }
 
 // Separate out pixels packed together using pixel-bundling.
 // We define two methods for ARGB data (uint32_t) and alpha-only data (uint8_t).
-#define COLOR_INDEX_INVERSE(FUNC_NAME, TYPE, GET_INDEX, GET_VALUE)             \
-void FUNC_NAME(const VP8LTransform* const transform,                           \
-               int y_start, int y_end, const TYPE* src, TYPE* dst) {           \
+#define COLOR_INDEX_INVERSE(FUNC_NAME, F_NAME, STATIC_DECL, TYPE, BIT_SUFFIX,  \
+                            GET_INDEX, GET_VALUE)                              \
+static void F_NAME(const TYPE* src, const uint32_t* const color_map,           \
+                   TYPE* dst, int y_start, int y_end, int width) {             \
+  int y;                                                                       \
+  for (y = y_start; y < y_end; ++y) {                                          \
+    int x;                                                                     \
+    for (x = 0; x < width; ++x) {                                              \
+      *dst++ = GET_VALUE(color_map[GET_INDEX(*src++)]);                        \
+    }                                                                          \
+  }                                                                            \
+}                                                                              \
+STATIC_DECL void FUNC_NAME(const VP8LTransform* const transform,               \
+                           int y_start, int y_end, const TYPE* src,            \
+                           TYPE* dst) {                                        \
   int y;                                                                       \
   const int bits_per_pixel = 8 >> transform->bits_;                            \
   const int width = transform->xsize_;                                         \
@@ -1199,35 +1398,14 @@ void FUNC_NAME(const VP8LTransform* const transform,                           \
       }                                                                        \
     }                                                                          \
   } else {                                                                     \
-    for (y = y_start; y < y_end; ++y) {                                        \
-      int x;                                                                   \
-      for (x = 0; x < width; ++x) {                                            \
-        *dst++ = GET_VALUE(color_map[GET_INDEX(*src++)]);                      \
-      }                                                                        \
-    }                                                                          \
+    VP8LMapColor##BIT_SUFFIX(src, color_map, dst, y_start, y_end, width);      \
   }                                                                            \
 }
 
-static WEBP_INLINE uint32_t GetARGBIndex(uint32_t idx) {
-  return (idx >> 8) & 0xff;
-}
-
-static WEBP_INLINE uint8_t GetAlphaIndex(uint8_t idx) {
-  return idx;
-}
-
-static WEBP_INLINE uint32_t GetARGBValue(uint32_t val) {
-  return val;
-}
-
-static WEBP_INLINE uint8_t GetAlphaValue(uint32_t val) {
-  return (val >> 8) & 0xff;
-}
-
-static COLOR_INDEX_INVERSE(ColorIndexInverseTransform, uint32_t, GetARGBIndex,
-                           GetARGBValue)
-COLOR_INDEX_INVERSE(VP8LColorIndexInverseTransformAlpha, uint8_t, GetAlphaIndex,
-                    GetAlphaValue)
+COLOR_INDEX_INVERSE(ColorIndexInverseTransform, MapARGB, static, uint32_t, 32b,
+                    VP8GetARGBIndex, VP8GetARGBValue)
+COLOR_INDEX_INVERSE(VP8LColorIndexInverseTransformAlpha, MapAlpha, , uint8_t,
+                    8b, VP8GetAlphaIndex, VP8GetAlphaValue)
 
 #undef COLOR_INDEX_INVERSE
 
@@ -1357,29 +1535,18 @@ static void CopyOrSwap(const uint32_t* src, int num_pixels, uint8_t* dst,
   if (is_big_endian() == swap_on_big_endian) {
     const uint32_t* const src_end = src + num_pixels;
     while (src < src_end) {
-      uint32_t argb = *src++;
+      const uint32_t argb = *src++;
 
-#if !defined(__BIG_ENDIAN__)
+#if !defined(WORDS_BIGENDIAN)
 #if !defined(WEBP_REFERENCE_IMPLEMENTATION)
-#if defined(__i386__) || defined(__x86_64__)
-      __asm__ volatile("bswap %0" : "=r"(argb) : "0"(argb));
-      *(uint32_t*)dst = argb;
-#elif defined(_MSC_VER)
-      argb = _byteswap_ulong(argb);
-      *(uint32_t*)dst = argb;
-#else
-      dst[0] = (argb >> 24) & 0xff;
-      dst[1] = (argb >> 16) & 0xff;
-      dst[2] = (argb >>  8) & 0xff;
-      dst[3] = (argb >>  0) & 0xff;
-#endif
+      *(uint32_t*)dst = BSwap32(argb);
 #else  // WEBP_REFERENCE_IMPLEMENTATION
       dst[0] = (argb >> 24) & 0xff;
       dst[1] = (argb >> 16) & 0xff;
       dst[2] = (argb >>  8) & 0xff;
       dst[3] = (argb >>  0) & 0xff;
 #endif
-#else  // __BIG_ENDIAN__
+#else  // WORDS_BIGENDIAN
       dst[0] = (argb >>  0) & 0xff;
       dst[1] = (argb >>  8) & 0xff;
       dst[2] = (argb >> 16) & 0xff;
@@ -1437,6 +1604,7 @@ void VP8LConvertFromBGRA(const uint32_t* const in_data, int num_pixels,
   }
 }
 
+//------------------------------------------------------------------------------
 // Bundles multiple (1, 2, 4 or 8) pixels into a single pixel.
 void VP8LBundleColorMap(const uint8_t* const row, int width,
                         int xbits, uint32_t* const dst) {
@@ -1458,14 +1626,17 @@ void VP8LBundleColorMap(const uint8_t* const row, int width,
   }
 }
 
-static double ExtraCost(const int* population, int length) {
+//------------------------------------------------------------------------------
+
+static double ExtraCost(const uint32_t* population, int length) {
   int i;
   double cost = 0.;
   for (i = 2; i < length - 2; ++i) cost += (i >> 1) * population[i + 2];
   return cost;
 }
 
-static double ExtraCostCombined(const int* X, const int* Y, int length) {
+static double ExtraCostCombined(const uint32_t* X, const uint32_t* Y,
+                                int length) {
   int i;
   double cost = 0.;
   for (i = 2; i < length - 2; ++i) {
@@ -1476,7 +1647,7 @@ static double ExtraCostCombined(const int* X, const int* Y, int length) {
 }
 
 // Returns the various RLE counts
-static VP8LStreaks HuffmanCostCount(const int* population, int length) {
+static VP8LStreaks HuffmanCostCount(const uint32_t* population, int length) {
   int i;
   int streak = 0;
   VP8LStreaks stats;
@@ -1496,8 +1667,8 @@ static VP8LStreaks HuffmanCostCount(const int* population, int length) {
   return stats;
 }
 
-static VP8LStreaks HuffmanCostCombinedCount(const int* X, const int* Y,
-                                            int length) {
+static VP8LStreaks HuffmanCostCombinedCount(const uint32_t* X,
+                                            const uint32_t* Y, int length) {
   int i;
   int streak = 0;
   VP8LStreaks stats;
@@ -1524,6 +1695,41 @@ static VP8LStreaks HuffmanCostCombinedCount(const int* X, const int* Y,
 
 //------------------------------------------------------------------------------
 
+static void HistogramAdd(const VP8LHistogram* const a,
+                         const VP8LHistogram* const b,
+                         VP8LHistogram* const out) {
+  int i;
+  const int literal_size = VP8LHistogramNumCodes(a->palette_code_bits_);
+  assert(a->palette_code_bits_ == b->palette_code_bits_);
+  if (b != out) {
+    for (i = 0; i < literal_size; ++i) {
+      out->literal_[i] = a->literal_[i] + b->literal_[i];
+    }
+    for (i = 0; i < NUM_DISTANCE_CODES; ++i) {
+      out->distance_[i] = a->distance_[i] + b->distance_[i];
+    }
+    for (i = 0; i < NUM_LITERAL_CODES; ++i) {
+      out->red_[i] = a->red_[i] + b->red_[i];
+      out->blue_[i] = a->blue_[i] + b->blue_[i];
+      out->alpha_[i] = a->alpha_[i] + b->alpha_[i];
+    }
+  } else {
+    for (i = 0; i < literal_size; ++i) {
+      out->literal_[i] += a->literal_[i];
+    }
+    for (i = 0; i < NUM_DISTANCE_CODES; ++i) {
+      out->distance_[i] += a->distance_[i];
+    }
+    for (i = 0; i < NUM_LITERAL_CODES; ++i) {
+      out->red_[i] += a->red_[i];
+      out->blue_[i] += a->blue_[i];
+      out->alpha_[i] += a->alpha_[i];
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+
 VP8LProcessBlueAndRedFunc VP8LSubtractGreenFromBlueAndRed;
 VP8LProcessBlueAndRedFunc VP8LAddGreenToBlueAndRed;
 VP8LPredictorFunc VP8LPredictors[16];
@@ -1537,6 +1743,9 @@ VP8LConvertFunc VP8LConvertBGRAToRGBA4444;
 VP8LConvertFunc VP8LConvertBGRAToRGB565;
 VP8LConvertFunc VP8LConvertBGRAToBGR;
 
+VP8LCollectColorBlueTransformsFunc VP8LCollectColorBlueTransforms;
+VP8LCollectColorRedTransformsFunc VP8LCollectColorRedTransforms;
+
 VP8LFastLog2SlowFunc VP8LFastLog2Slow;
 VP8LFastLog2SlowFunc VP8LFastSLog2Slow;
 
@@ -1546,11 +1755,22 @@ VP8LCostCombinedFunc VP8LExtraCostCombined;
 VP8LCostCountFunc VP8LHuffmanCostCount;
 VP8LCostCombinedCountFunc VP8LHuffmanCostCombinedCount;
 
+VP8LHistogramAddFunc VP8LHistogramAdd;
+
+VP8LMapARGBFunc VP8LMapColor32b;
+VP8LMapAlphaFunc VP8LMapColor8b;
+
 extern void VP8LDspInitSSE2(void);
 extern void VP8LDspInitNEON(void);
 extern void VP8LDspInitMIPS32(void);
+extern void VP8LDspInitMIPSdspR2(void);
 
-void VP8LDspInit(void) {
+static volatile VP8CPUInfo lossless_last_cpuinfo_used =
+    (VP8CPUInfo)&lossless_last_cpuinfo_used;
+
+WEBP_TSAN_IGNORE_FUNCTION void VP8LDspInit(void) {
+  if (lossless_last_cpuinfo_used == VP8GetCPUInfo) return;
+
   memcpy(VP8LPredictors, kPredictorsC, sizeof(VP8LPredictors));
 
   VP8LSubtractGreenFromBlueAndRed = VP8LSubtractGreenFromBlueAndRed_C;
@@ -1565,6 +1785,9 @@ void VP8LDspInit(void) {
   VP8LConvertBGRAToRGB565 = VP8LConvertBGRAToRGB565_C;
   VP8LConvertBGRAToBGR = VP8LConvertBGRAToBGR_C;
 
+  VP8LCollectColorBlueTransforms = CollectColorBlueTransforms;
+  VP8LCollectColorRedTransforms = CollectColorRedTransforms;
+
   VP8LFastLog2Slow = FastLog2Slow;
   VP8LFastSLog2Slow = FastSLog2Slow;
 
@@ -1573,6 +1796,11 @@ void VP8LDspInit(void) {
 
   VP8LHuffmanCostCount = HuffmanCostCount;
   VP8LHuffmanCostCombinedCount = HuffmanCostCombinedCount;
+
+  VP8LHistogramAdd = HistogramAdd;
+
+  VP8LMapColor32b = MapARGB;
+  VP8LMapColor8b = MapAlpha;
 
   // If defined, use CPUInfo() to overwrite some pointers with faster versions.
   if (VP8GetCPUInfo != NULL) {
@@ -1591,7 +1819,13 @@ void VP8LDspInit(void) {
       VP8LDspInitMIPS32();
     }
 #endif
+#if defined(WEBP_USE_MIPS_DSP_R2)
+    if (VP8GetCPUInfo(kMIPSdspR2)) {
+      VP8LDspInitMIPSdspR2();
+    }
+#endif
   }
+  lossless_last_cpuinfo_used = VP8GetCPUInfo;
 }
 
 //------------------------------------------------------------------------------

@@ -17,7 +17,7 @@
 #include "./vp8i.h"
 #include "./vp8li.h"
 #include "./webpi.h"
-#include "../utils/bit_reader.h"
+#include "../utils/bit_reader_inl.h"
 #include "../utils/utils.h"
 
 //------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ VP8Decoder* VP8New(void) {
   VP8Decoder* const dec = (VP8Decoder*)WebPSafeCalloc(1ULL, sizeof(*dec));
   if (dec != NULL) {
     SetOk(dec);
-    WebPWorkerInit(&dec->worker_);
+    WebPGetWorkerInterface()->Init(&dec->worker_);
     dec->ready_ = 0;
     dec->num_parts_ = 1;
   }
@@ -363,28 +363,6 @@ int VP8GetHeaders(VP8Decoder* const dec, VP8Io* const io) {
 
   VP8ParseProba(br, dec);
 
-#ifdef WEBP_EXPERIMENTAL_FEATURES
-  // Extensions
-  if (dec->pic_hdr_.colorspace_) {
-    const size_t kTrailerSize = 8;
-    const uint8_t kTrailerMarker = 0x01;
-    const uint8_t* ext_buf = buf - kTrailerSize;
-    size_t size;
-
-    if (frm_hdr->partition_length_ < kTrailerSize ||
-        ext_buf[kTrailerSize - 1] != kTrailerMarker) {
-      return VP8SetError(dec, VP8_STATUS_BITSTREAM_ERROR,
-                         "RIFF: Inconsistent extra information.");
-    }
-
-    // Layer
-    size = (ext_buf[0] << 0) | (ext_buf[1] << 8) | (ext_buf[2] << 16);
-    dec->layer_data_size_ = size;
-    dec->layer_data_ = NULL;  // will be set later
-    dec->layer_colorspace_ = ext_buf[3];
-  }
-#endif
-
   // sanitized state
   dec->ready_ = 1;
   return 1;
@@ -392,11 +370,6 @@ int VP8GetHeaders(VP8Decoder* const dec, VP8Io* const io) {
 
 //------------------------------------------------------------------------------
 // Residual decoding (Paragraph 13.2 / 13.3)
-
-static const int kBands[16 + 1] = {
-  0, 1, 2, 3, 6, 4, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7,
-  0  // extra entry as sentinel
-};
 
 static const uint8_t kCat3[] = { 173, 148, 140, 0 };
 static const uint8_t kCat4[] = { 176, 155, 140, 135, 0 };
@@ -441,20 +414,19 @@ static int GetLargeValue(VP8BitReader* const br, const uint8_t* const p) {
 }
 
 // Returns the position of the last non-zero coeff plus one
-static int GetCoeffs(VP8BitReader* const br, const VP8BandProbas* const prob,
+static int GetCoeffs(VP8BitReader* const br, const VP8BandProbas* const prob[],
                      int ctx, const quant_t dq, int n, int16_t* out) {
-  // n is either 0 or 1 here. kBands[n] is not necessary for extracting '*p'.
-  const uint8_t* p = prob[n].probas_[ctx];
+  const uint8_t* p = prob[n]->probas_[ctx];
   for (; n < 16; ++n) {
     if (!VP8GetBit(br, p[0])) {
       return n;  // previous coeff was last non-zero coeff
     }
     while (!VP8GetBit(br, p[1])) {       // sequence of zero coeffs
-      p = prob[kBands[++n]].probas_[0];
+      p = prob[++n]->probas_[0];
       if (n == 16) return 16;
     }
     {        // non zero coeff
-      const VP8ProbaArray* const p_ctx = &prob[kBands[n + 1]].probas_[0];
+      const VP8ProbaArray* const p_ctx = &prob[n + 1]->probas_[0];
       int v;
       if (!VP8GetBit(br, p[2])) {
         v = 1;
@@ -477,8 +449,8 @@ static WEBP_INLINE uint32_t NzCodeBits(uint32_t nz_coeffs, int nz, int dc_nz) {
 
 static int ParseResiduals(VP8Decoder* const dec,
                           VP8MB* const mb, VP8BitReader* const token_br) {
-  VP8BandProbas (* const bands)[NUM_BANDS] = dec->proba_.bands_;
-  const VP8BandProbas* ac_proba;
+  const VP8BandProbas* (* const bands)[16 + 1] = dec->proba_.bands_ptr_;
+  const VP8BandProbas* const * ac_proba;
   VP8MBData* const block = dec->mb_data_ + dec->mb_x_;
   const VP8QuantMatrix* const q = &dec->dqm_[block->segment_];
   int16_t* dst = block->coeffs_;
@@ -626,17 +598,8 @@ static int ParseFrame(VP8Decoder* const dec, VP8Io* io) {
     }
   }
   if (dec->mt_method_ > 0) {
-    if (!WebPWorkerSync(&dec->worker_)) return 0;
+    if (!WebPGetWorkerInterface()->Sync(&dec->worker_)) return 0;
   }
-
-  // Finish
-#ifdef WEBP_EXPERIMENTAL_FEATURES
-  if (dec->layer_data_size_ > 0) {
-    if (!VP8DecodeLayer(dec)) {
-      return 0;
-    }
-  }
-#endif
 
   return 1;
 }
@@ -685,9 +648,7 @@ void VP8Clear(VP8Decoder* const dec) {
   if (dec == NULL) {
     return;
   }
-  if (dec->mt_method_ > 0) {
-    WebPWorkerEnd(&dec->worker_);
-  }
+  WebPGetWorkerInterface()->End(&dec->worker_);
   ALPHDelete(dec->alph_dec_);
   dec->alph_dec_ = NULL;
   WebPSafeFree(dec->mem_);

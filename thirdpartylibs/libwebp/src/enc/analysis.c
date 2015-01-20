@@ -30,7 +30,7 @@ static void SmoothSegmentMap(VP8Encoder* const enc) {
   const int w = enc->mb_w_;
   const int h = enc->mb_h_;
   const int majority_cnt_3_x_3_grid = 5;
-  uint8_t* const tmp = (uint8_t*)WebPSafeMalloc((uint64_t)w * h, sizeof(*tmp));
+  uint8_t* const tmp = (uint8_t*)WebPSafeMalloc(w * h, sizeof(*tmp));
   assert((uint64_t)(w * h) == (uint64_t)w * h);   // no overflow, as per spec
 
   if (tmp == NULL) return;
@@ -111,28 +111,28 @@ static int FinalAlphaValue(int alpha) {
 }
 
 static int GetAlpha(const VP8Histogram* const histo) {
-  int max_value = 0, last_non_zero = 1;
-  int k;
-  int alpha;
-  for (k = 0; k <= MAX_COEFF_THRESH; ++k) {
-    const int value = histo->distribution[k];
-    if (value > 0) {
-      if (value > max_value) max_value = value;
-      last_non_zero = k;
-    }
-  }
   // 'alpha' will later be clipped to [0..MAX_ALPHA] range, clamping outer
   // values which happen to be mostly noise. This leaves the maximum precision
   // for handling the useful small values which contribute most.
-  alpha = (max_value > 1) ? ALPHA_SCALE * last_non_zero / max_value : 0;
+  const int max_value = histo->max_value;
+  const int last_non_zero = histo->last_non_zero;
+  const int alpha =
+      (max_value > 1) ? ALPHA_SCALE * last_non_zero / max_value : 0;
   return alpha;
+}
+
+static void InitHistogram(VP8Histogram* const histo) {
+  histo->max_value = 0;
+  histo->last_non_zero = 1;
 }
 
 static void MergeHistograms(const VP8Histogram* const in,
                             VP8Histogram* const out) {
-  int i;
-  for (i = 0; i <= MAX_COEFF_THRESH; ++i) {
-    out->distribution[i] += in->distribution[i];
+  if (in->max_value > out->max_value) {
+    out->max_value = in->max_value;
+  }
+  if (in->last_non_zero > out->last_non_zero) {
+    out->last_non_zero = in->last_non_zero;
   }
 }
 
@@ -141,7 +141,11 @@ static void MergeHistograms(const VP8Histogram* const in,
 
 static void AssignSegments(VP8Encoder* const enc,
                            const int alphas[MAX_ALPHA + 1]) {
-  const int nb = enc->segment_hdr_.num_segments_;
+  // 'num_segments_' is previously validated and <= NUM_MB_SEGMENTS, but an
+  // explicit check is needed to avoid spurious warning about 'n + 1' exceeding
+  // array bounds of 'centers' with some compilers (noticed with gcc-4.9).
+  const int nb = (enc->segment_hdr_.num_segments_ < NUM_MB_SEGMENTS) ?
+                 enc->segment_hdr_.num_segments_ : NUM_MB_SEGMENTS;
   int centers[NUM_MB_SEGMENTS];
   int weighted_average = 0;
   int map[MAX_ALPHA + 1];
@@ -241,9 +245,10 @@ static int MBAnalyzeBestIntra16Mode(VP8EncIterator* const it) {
 
   VP8MakeLuma16Preds(it);
   for (mode = 0; mode < max_mode; ++mode) {
-    VP8Histogram histo = { { 0 } };
+    VP8Histogram histo;
     int alpha;
 
+    InitHistogram(&histo);
     VP8CollectHistogram(it->yuv_in_ + Y_OFF,
                         it->yuv_p_ + VP8I16ModeOffsets[mode],
                         0, 16, &histo);
@@ -262,8 +267,9 @@ static int MBAnalyzeBestIntra4Mode(VP8EncIterator* const it,
   uint8_t modes[16];
   const int max_mode = MAX_INTRA4_MODE;
   int i4_alpha;
-  VP8Histogram total_histo = { { 0 } };
+  VP8Histogram total_histo;
   int cur_histo = 0;
+  InitHistogram(&total_histo);
 
   VP8IteratorStartI4(it);
   do {
@@ -276,7 +282,7 @@ static int MBAnalyzeBestIntra4Mode(VP8EncIterator* const it,
     for (mode = 0; mode < max_mode; ++mode) {
       int alpha;
 
-      memset(&histos[cur_histo], 0, sizeof(histos[cur_histo]));
+      InitHistogram(&histos[cur_histo]);
       VP8CollectHistogram(src, it->yuv_p_ + VP8I4ModeOffsets[mode],
                           0, 1, &histos[cur_histo]);
       alpha = GetAlpha(&histos[cur_histo]);
@@ -307,8 +313,9 @@ static int MBAnalyzeBestUVMode(VP8EncIterator* const it) {
 
   VP8MakeChroma8Preds(it);
   for (mode = 0; mode < max_mode; ++mode) {
-    VP8Histogram histo = { { 0 } };
+    VP8Histogram histo;
     int alpha;
+    InitHistogram(&histo);
     VP8CollectHistogram(it->yuv_in_ + U_OFF,
                         it->yuv_p_ + VP8UVModeOffsets[mode],
                         16, 16 + 4 + 4, &histo);
@@ -420,7 +427,7 @@ static void MergeJobs(const SegmentJob* const src, SegmentJob* const dst) {
 // initialize the job struct with some TODOs
 static void InitSegmentJob(VP8Encoder* const enc, SegmentJob* const job,
                            int start_row, int end_row) {
-  WebPWorkerInit(&job->worker);
+  WebPGetWorkerInterface()->Init(&job->worker);
   job->worker.data1 = job;
   job->worker.data2 = &job->it;
   job->worker.hook = (WebPWorkerHook)DoSegmentsJob;
@@ -453,6 +460,8 @@ int VP8EncAnalyze(VP8Encoder* const enc) {
 #else
     const int do_mt = 0;
 #endif
+    const WebPWorkerInterface* const worker_interface =
+        WebPGetWorkerInterface();
     SegmentJob main_job;
     if (do_mt) {
       SegmentJob side_job;
@@ -462,23 +471,23 @@ int VP8EncAnalyze(VP8Encoder* const enc) {
       InitSegmentJob(enc, &side_job, split_row, last_row);
       // we don't need to call Reset() on main_job.worker, since we're calling
       // WebPWorkerExecute() on it
-      ok &= WebPWorkerReset(&side_job.worker);
+      ok &= worker_interface->Reset(&side_job.worker);
       // launch the two jobs in parallel
       if (ok) {
-        WebPWorkerLaunch(&side_job.worker);
-        WebPWorkerExecute(&main_job.worker);
-        ok &= WebPWorkerSync(&side_job.worker);
-        ok &= WebPWorkerSync(&main_job.worker);
+        worker_interface->Launch(&side_job.worker);
+        worker_interface->Execute(&main_job.worker);
+        ok &= worker_interface->Sync(&side_job.worker);
+        ok &= worker_interface->Sync(&main_job.worker);
       }
-      WebPWorkerEnd(&side_job.worker);
+      worker_interface->End(&side_job.worker);
       if (ok) MergeJobs(&side_job, &main_job);  // merge results together
     } else {
       // Even for single-thread case, we use the generic Worker tools.
       InitSegmentJob(enc, &main_job, 0, last_row);
-      WebPWorkerExecute(&main_job.worker);
-      ok &= WebPWorkerSync(&main_job.worker);
+      worker_interface->Execute(&main_job.worker);
+      ok &= worker_interface->Sync(&main_job.worker);
     }
-    WebPWorkerEnd(&main_job.worker);
+    worker_interface->End(&main_job.worker);
     if (ok) {
       enc->alpha_ = main_job.alpha / total_mb;
       enc->uv_alpha_ = main_job.uv_alpha / total_mb;

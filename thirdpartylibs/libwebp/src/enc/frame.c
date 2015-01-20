@@ -398,8 +398,8 @@ static void RecordResiduals(VP8EncIterator* const it,
 
 #if !defined(DISABLE_TOKEN_BUFFER)
 
-static void RecordTokens(VP8EncIterator* const it, const VP8ModeScore* const rd,
-                         VP8TBuffer* const tokens) {
+static int RecordTokens(VP8EncIterator* const it, const VP8ModeScore* const rd,
+                        VP8TBuffer* const tokens) {
   int x, y, ch;
   VP8Residual res;
   VP8Encoder* const enc = it->enc_;
@@ -445,6 +445,7 @@ static void RecordTokens(VP8EncIterator* const it, const VP8ModeScore* const rd,
     }
   }
   VP8IteratorBytesToNz(it);
+  return !tokens->error_;
 }
 
 #endif    // !DISABLE_TOKEN_BUFFER
@@ -507,7 +508,7 @@ static void StoreSideInfo(const VP8EncIterator* const it) {
       }
       case 7: *info = mb->alpha_; break;
       default: *info = 0; break;
-    };
+    }
   }
 #if SEGMENT_VISU  // visualize segments and prediction modes
   SetBlock(it->yuv_out_ + Y_OFF, mb->segment_ * 64, 16);
@@ -651,7 +652,10 @@ static int PreLoopInitialize(VP8Encoder* const enc) {
   for (p = 0; ok && p < enc->num_parts_; ++p) {
     ok = VP8BitWriterInit(enc->parts_ + p, bytes_per_parts);
   }
-  if (!ok) VP8EncFreeBitWriters(enc);  // malloc error occurred
+  if (!ok) {
+    VP8EncFreeBitWriters(enc);  // malloc error occurred
+    WebPEncodingSetError(enc->pic_, VP8_ENC_ERROR_OUT_OF_MEMORY);
+  }
   return ok;
 }
 
@@ -716,11 +720,6 @@ int VP8EncLoop(VP8Encoder* const enc) {
     } else {   // reset predictors after a skip
       ResetAfterSkip(&it);
     }
-#ifdef WEBP_EXPERIMENTAL_FEATURES
-    if (enc->use_layer_) {
-      VP8EncCodeLayerBlock(&it);
-    }
-#endif
     StoreSideInfo(&it);
     VP8StoreFilterStats(&it);
     VP8IteratorExport(&it);
@@ -785,14 +784,13 @@ int VP8EncTokenLoop(VP8Encoder* const enc) {
         cnt = max_count;
       }
       VP8Decimate(&it, &info, rd_opt);
-      RecordTokens(&it, &info, &enc->tokens_);
+      ok = RecordTokens(&it, &info, &enc->tokens_);
+      if (!ok) {
+        WebPEncodingSetError(enc->pic_, VP8_ENC_ERROR_OUT_OF_MEMORY);
+        break;
+      }
       size_p0 += info.H;
       distortion += info.D;
-#ifdef WEBP_EXPERIMENTAL_FEATURES
-      if (enc->use_layer_) {
-        VP8EncCodeLayerBlock(&it);
-      }
-#endif
       if (is_last_pass) {
         StoreSideInfo(&it);
         VP8StoreFilterStats(&it);
