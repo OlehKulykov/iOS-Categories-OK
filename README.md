@@ -39,9 +39,7 @@ Additional Dependencies
 
 License
 -------
-Apache License
-Version 2.0, January 2004
-http://www.apache.org/licenses/
+MIT
 
 
 Functionality
@@ -169,11 +167,6 @@ Functionality
 * **Mach Time**
  * ```+ (NSTimeInterval) currentTime``` Time interval in seconds from application start.
  * ```+ (uint64_t) machAbsoluteTime``` Unsigned integer of the mach counter.
-
-### Derived
-
-* **Anchor Point Rotatable UIView**
- * ```- (void) rotateByAngle:(CGFloat)radianAngle withAnchorPoint:(CGPoint)anchorPoint``` Rotates view using radian angle arround anchor point.
 
 
 ### Screenshots with linking process steps
