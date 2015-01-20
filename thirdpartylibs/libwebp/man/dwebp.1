@@ -1,5 +1,5 @@
 .\"                                      Hey, EMACS: -*- nroff -*-
-.TH DWEBP 1 "May 10, 2013"
+.TH DWEBP 1 "March 7, 2014"
 .SH NAME
 dwebp \- decompress a WebP file to an image file
 .SH SYNOPSIS
@@ -25,6 +25,12 @@ Print the version number (as major.minor.revision) and exit.
 Specify the name of the output file (as PNG format by default).
 Using "-" as output name will direct output to 'stdout'.
 .TP
+.BI \-\- " string
+Explicitly specify the input file. This option is useful if the input
+file starts with an '\-' for instance. This option must appear \fBlast\fP.
+Any other options afterward will be ignored. If the input file is "\-",
+the data will be read from \fIstdin\fP instead of a file.
+.TP
 .B \-bmp
 Change the output format to uncompressed BMP.
 .TP
@@ -39,7 +45,7 @@ Change the output format to PPM (discards alpha).
 .TP
 .B \-pgm
 Change the output format to PGM. The output consists of luma/chroma
-samples instead of RGB, using the ICM4 layout. This option is mainly
+samples instead of RGB, using the IMC4 layout. This option is mainly
 for verification and debugging purposes.
 .TP
 .B \-yuv
@@ -55,7 +61,15 @@ edges (especially the red ones), but should be faster.
 .B \-nofilter
 Don't use the in-loop filtering process even if it is required by
 the bitstream. This may produce visible blocks on the non-compliant output,
-but will make the decoding faster.
+but it will make the decoding faster.
+.TP
+.BI \-dither " strength
+Specify a dithering \fBstrength\fP between 0 and 100. Dithering is a
+post-processing effect applied to chroma components in lossy compression.
+It helps by smoothing gradients and avoiding banding artifacts.
+.TP
+.B \-nodither
+Disable all dithering (default).
 .TP
 .B \-mt
 Use multi-threading for decoding, if possible.
@@ -67,6 +81,9 @@ This cropping area must be fully contained within the source rectangle.
 The top-left corner will be snapped to even coordinates if needed.
 This option is meant to reduce the memory needed for cropping large images.
 Note: the cropping is applied \fIbefore\fP any scaling.
+.TP
+.B \-flip
+Flip decoded image vertically (can be useful for OpenGL textures for instance).
 .TP
 .BI \-scale " width height
 Rescale the decoded picture to dimension \fBwidth\fP x \fBheight\fP. This
@@ -91,6 +108,10 @@ http://www.webmproject.org/code/contribute/submitting-patches/
 dwebp picture.webp \-o output.png
 .br
 dwebp picture.webp \-ppm \-o output.ppm
+.br
+dwebp \-o output.ppm \-\- \-\-\-picture.webp
+.br
+cat picture.webp | dwebp \-o \- \-\- \- > output.ppm
 
 .SH AUTHORS
 \fBdwebp\fP was written by the WebP team.
@@ -102,8 +123,8 @@ for the Debian project (and may be used by others).
 
 .SH SEE ALSO
 .BR cwebp (1),
-.BR webpmux (1),
-.BR gif2webp (1).
+.BR gif2webp (1),
+.BR webpmux (1)
 .br
 Please refer to http://developers.google.com/speed/webp/ for additional
 information.

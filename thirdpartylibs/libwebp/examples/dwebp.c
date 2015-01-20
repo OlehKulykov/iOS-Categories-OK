@@ -49,13 +49,13 @@
 
 static int verbose = 0;
 #ifndef WEBP_DLL
-#if defined(__cplusplus) || defined(c_plusplus)
+#ifdef __cplusplus
 extern "C" {
 #endif
 
 extern void* VP8GetCPUInfo;   // opaque forward declaration.
 
-#if defined(__cplusplus) || defined(c_plusplus)
+#ifdef __cplusplus
 }    // extern "C"
 #endif
 #endif  // WEBP_DLL
@@ -186,7 +186,7 @@ static int WritePNG(const char* out_file_name, int use_stdout,
 }
 
 #elif defined(WEBP_HAVE_PNG)    // !HAVE_WINCODEC_H
-static void PNGAPI error_function(png_structp png, png_const_charp dummy) {
+static void PNGAPI PNGErrorFunction(png_structp png, png_const_charp dummy) {
   (void)dummy;  // remove variable-unused warning
   longjmp(png_jmpbuf(png), 1);
 }
@@ -202,7 +202,7 @@ static int WritePNG(FILE* out_file, const WebPDecBuffer* const buffer) {
   png_uint_32 y;
 
   png = png_create_write_struct(PNG_LIBPNG_VER_STRING,
-                                NULL, error_function, NULL);
+                                NULL, PNGErrorFunction, NULL);
   if (png == NULL) {
     return 0;
   }
@@ -552,25 +552,27 @@ static void Help(void) {
          "  -yuv ......... save the raw YUV samples in flat layout\n"
          "\n"
          " Other options are:\n"
-         "  -version  .... print version number and exit.\n"
-         "  -nofancy ..... don't use the fancy YUV420 upscaler.\n"
-         "  -nofilter .... disable in-loop filtering.\n"
+         "  -version  .... print version number and exit\n"
+         "  -nofancy ..... don't use the fancy YUV420 upscaler\n"
+         "  -nofilter .... disable in-loop filtering\n"
+         "  -nodither .... disable dithering\n"
+         "  -dither <d> .. dithering strength (in 0..100)\n"
          "  -mt .......... use multi-threading\n"
          "  -crop <x> <y> <w> <h> ... crop output with the given rectangle\n"
          "  -scale <w> <h> .......... scale the output (*after* any cropping)\n"
-         "  -alpha ....... only save the alpha plane.\n"
+         "  -flip ........ flip the output vertically\n"
+         "  -alpha ....... only save the alpha plane\n"
          "  -incremental . use incremental decoding (useful for tests)\n"
-         "  -h     ....... this help message.\n"
+         "  -h     ....... this help message\n"
          "  -v     ....... verbose (e.g. print encoding/decoding times)\n"
 #ifndef WEBP_DLL
-         "  -noasm ....... disable all assembly optimizations.\n"
+         "  -noasm ....... disable all assembly optimizations\n"
 #endif
         );
 }
 
-static const char* const kStatusMessages[] = {
-  "OK", "OUT_OF_MEMORY", "INVALID_PARAM", "BITSTREAM_ERROR",
-  "UNSUPPORTED_FEATURE", "SUSPENDED", "USER_ABORT", "NOT_ENOUGH_DATA"
+static const char* const kFormatType[] = {
+  "unspecified", "lossy", "lossless"
 };
 
 int main(int argc, const char *argv[]) {
@@ -621,6 +623,10 @@ int main(int argc, const char *argv[]) {
       format = YUV;
     } else if (!strcmp(argv[c], "-mt")) {
       config.options.use_threads = 1;
+    } else if (!strcmp(argv[c], "-nodither")) {
+      config.options.dithering_strength = 0;
+    } else if (!strcmp(argv[c], "-dither") && c < argc - 1) {
+      config.options.dithering_strength = strtol(argv[++c], NULL, 0);
     } else if (!strcmp(argv[c], "-crop") && c < argc - 4) {
       config.options.use_cropping = 1;
       config.options.crop_left   = strtol(argv[++c], NULL, 0);
@@ -631,6 +637,8 @@ int main(int argc, const char *argv[]) {
       config.options.use_scaling = 1;
       config.options.scaled_width  = strtol(argv[++c], NULL, 0);
       config.options.scaled_height = strtol(argv[++c], NULL, 0);
+    } else if (!strcmp(argv[c], "-flip")) {
+      config.options.flip = 1;
     } else if (!strcmp(argv[c], "-v")) {
       verbose = 1;
 #ifndef WEBP_DLL
@@ -639,6 +647,9 @@ int main(int argc, const char *argv[]) {
 #endif
     } else if (!strcmp(argv[c], "-incremental")) {
       incremental = 1;
+    } else if (!strcmp(argv[c], "--")) {
+      if (c < argc - 1) in_file = argv[++c];
+      break;
     } else if (argv[c][0] == '-') {
       fprintf(stderr, "Unknown option '%s'\n", argv[c]);
       Help();
@@ -655,27 +666,11 @@ int main(int argc, const char *argv[]) {
   }
 
   {
-    Stopwatch stop_watch;
     VP8StatusCode status = VP8_STATUS_OK;
     size_t data_size = 0;
     const uint8_t* data = NULL;
-
-    if (!ExUtilReadFile(in_file, &data, &data_size)) return -1;
-
-    if (verbose) {
-      StopwatchReset(&stop_watch);
-    }
-
-    status = WebPGetFeatures(data, data_size, bitstream);
-    if (status != VP8_STATUS_OK) {
-      goto end;
-    }
-
-    if (bitstream->has_animation) {
-      fprintf(stderr,
-              "Error! Decoding of an animated WebP file is not supported.\n"
-              "       Use webpmux to extract the individual frames or\n"
-              "       vwebp to view this image.\n");
+    if (!ExUtilLoadWebP(in_file, &data, &data_size, bitstream)) {
+      goto End;
     }
 
     switch (format) {
@@ -711,44 +706,33 @@ int main(int argc, const char *argv[]) {
         return -1;
     }
 
-    // Decoding call.
-    if (!incremental) {
-      status = WebPDecode(data, data_size, &config);
+    if (incremental) {
+      status = ExUtilDecodeWebPIncremental(data, data_size, verbose, &config);
     } else {
-      WebPIDecoder* const idec = WebPINewDecoder(output_buffer);
-      if (idec == NULL) {
-        fprintf(stderr, "Failed during WebPINewDecoder().\n");
-        status = VP8_STATUS_OUT_OF_MEMORY;
-        ok = 0;
-      } else {
-        status = WebPIUpdate(idec, data, data_size);
-        WebPIDelete(idec);
-      }
+      status = ExUtilDecodeWebP(data, data_size, verbose, &config);
     }
-
-    if (verbose) {
-      const double decode_time = StopwatchReadAndReset(&stop_watch);
-      fprintf(stderr, "Time to decode picture: %.3fs\n", decode_time);
-    }
- end:
+ End:
     free((void*)data);
     ok = (status == VP8_STATUS_OK);
     if (!ok) {
-      fprintf(stderr, "Decoding of %s failed.\n", in_file);
-      fprintf(stderr, "Status: %d (%s)\n", status, kStatusMessages[status]);
+      ExUtilPrintWebPError(in_file, status);
       goto Exit;
     }
   }
 
   if (out_file != NULL) {
-    fprintf(stderr, "Decoded %s. Dimensions: %d x %d%s. Now saving...\n",
+    fprintf(stderr, "Decoded %s. Dimensions: %d x %d %s. Format: %s. "
+                    "Now saving...\n",
             in_file, output_buffer->width, output_buffer->height,
-            bitstream->has_alpha ? " (with alpha)" : "");
+            bitstream->has_alpha ? " (with alpha)" : "",
+            kFormatType[bitstream->format]);
     ok = SaveOutput(output_buffer, format, out_file);
   } else {
-    fprintf(stderr, "File %s can be decoded (dimensions: %d x %d)%s.\n",
+    fprintf(stderr, "File %s can be decoded "
+                    "(dimensions: %d x %d %s. Format: %s).\n",
             in_file, output_buffer->width, output_buffer->height,
-            bitstream->has_alpha ? " (with alpha)" : "");
+            bitstream->has_alpha ? " (with alpha)" : "",
+            kFormatType[bitstream->format]);
     fprintf(stderr, "Nothing written; "
                     "use -o flag to save the result as e.g. PNG.\n");
   }

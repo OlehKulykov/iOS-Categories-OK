@@ -14,10 +14,7 @@
 #include <stdlib.h>
 
 #include "./vp8enci.h"
-
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
+#include "../utils/utils.h"
 
 //------------------------------------------------------------------------------
 
@@ -43,9 +40,5 @@ int VP8EncFinishLayer(VP8Encoder* const enc) {
 }
 
 void VP8EncDeleteLayer(VP8Encoder* enc) {
-  free(enc->layer_data_);
+  WebPSafeFree(enc->layer_data_);
 }
-
-#if defined(__cplusplus) || defined(c_plusplus)
-}    // extern "C"
-#endif

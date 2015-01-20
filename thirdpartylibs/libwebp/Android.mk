@@ -3,7 +3,11 @@ LOCAL_PATH := $(call my-dir)
 WEBP_CFLAGS := -Wall -DANDROID -DHAVE_MALLOC_H -DHAVE_PTHREAD -DWEBP_USE_THREAD
 
 ifeq ($(APP_OPTIM),release)
-  WEBP_CFLAGS += -finline-functions -frename-registers -ffast-math -s
+  WEBP_CFLAGS += -finline-functions -ffast-math \
+                 -ffunction-sections -fdata-sections
+  ifeq ($(findstring clang,$(NDK_TOOLCHAIN_VERSION)),)
+    WEBP_CFLAGS += -frename-registers -s
+  endif
 endif
 
 include $(CLEAR_VARS)
@@ -22,11 +26,17 @@ LOCAL_SRC_FILES := \
     src/dec/webp.c \
     src/dsp/cpu.c \
     src/dsp/dec.c \
+    src/dsp/dec_clip_tables.c \
+    src/dsp/dec_mips32.c \
     src/dsp/dec_sse2.c \
     src/dsp/enc.c \
+    src/dsp/enc_mips32.c \
     src/dsp/enc_sse2.c \
     src/dsp/lossless.c \
+    src/dsp/lossless_mips32.c \
+    src/dsp/lossless_sse2.c \
     src/dsp/upsampling.c \
+    src/dsp/upsampling_mips32.c \
     src/dsp/upsampling_sse2.c \
     src/dsp/yuv.c \
     src/enc/alpha.c \
@@ -55,6 +65,7 @@ LOCAL_SRC_FILES := \
     src/utils/huffman_encode.c \
     src/utils/quant_levels.c \
     src/utils/quant_levels_dec.c \
+    src/utils/random.c \
     src/utils/rescaler.c \
     src/utils/thread.c \
     src/utils/utils.c \
@@ -65,13 +76,14 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/src
 # prefer arm over thumb mode for performance gains
 LOCAL_ARM_MODE := arm
 
-ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+ifneq ($(findstring armeabi-v7a, $(TARGET_ARCH_ABI)),)
   # Setting LOCAL_ARM_NEON will enable -mfpu=neon which may cause illegal
   # instructions to be generated for armv7a code. Instead target the neon code
   # specifically.
   LOCAL_SRC_FILES += src/dsp/dec_neon.c.neon
-  LOCAL_SRC_FILES += src/dsp/upsampling_neon.c.neon
   LOCAL_SRC_FILES += src/dsp/enc_neon.c.neon
+  LOCAL_SRC_FILES += src/dsp/lossless_neon.c.neon
+  LOCAL_SRC_FILES += src/dsp/upsampling_neon.c.neon
 endif
 LOCAL_STATIC_LIBRARIES := cpufeatures
 

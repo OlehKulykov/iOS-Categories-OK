@@ -1,5 +1,5 @@
 .\"                                      Hey, EMACS: -*- nroff -*-
-.TH CWEBP 1 "March 28, 2013"
+.TH CWEBP 1 "April 19, 2014"
 .SH NAME
 cwebp \- compress an image file to a WebP file
 .SH SYNOPSIS
@@ -12,13 +12,19 @@ This manual page documents the
 command.
 .PP
 \fBcwebp\fP compresses an image using the WebP format.
-Input format can be either PNG, JPEG, TIFF or raw Y'CbCr samples.
+Input format can be either PNG, JPEG, TIFF, WebP or raw Y'CbCr samples.
 .SH OPTIONS
 The basic options are:
 .TP
 .BI \-o " string
 Specify the name of the output WebP file. If omitted, \fBcwebp\fP will
 perform compression but only report statistics.
+Using "\-" as output name will direct output to 'stdout'.
+.TP
+.BI \-\- " string
+Explicitly specify the input file. This option is useful if the input
+file starts with an '\-' for instance. This option must appear \fBlast\fP.
+Any other options afterward will be ignored.
 .TP
 .B \-h, \-help
 A short usage summary.
@@ -32,6 +38,14 @@ Print the version number (as major.minor.revision) and exit.
 .BI \-q " float
 Specify the compression factor for RGB channels between 0 and 100. The default
 is 75.
+.TP
+.BI \-z " int
+Switch on \fBlossless\fP compression mode with the specified level between 0
+and 9, with level 0 being the fastest, 9 being the slowest. Fast mode
+produces larger file size than slower ones. A good default is \-z 6.
+This option is actually a shortcut for some predefined settings for quality
+and method. If options \-q  or \-m are subsequently used, they will invalidate
+the effect of this \-z option.
 .br
 In case of lossy compression (default), a small factor produces a smaller file
 with lower quality. Best quality is achieved by using a value of 100.
@@ -73,7 +87,7 @@ trade off between encoding speed and the compressed file size and quality.
 Possible values range from 0 to 6. Default value is 4.
 When higher values are used, the encoder will spend more time inspecting
 additional encoding possibilities and decide on the quality gain.
-Lower value can result is faster processing time at the expense of
+Lower value can result in faster processing time at the expense of
 larger file size and lower compression quality.
 .TP
 .B \-jpeg_like
@@ -153,6 +167,11 @@ close as possible to this target.
 Set a maximum number of passes to use during the dichotomy used by
 options \fB\-size\fP or \fB\-psnr\fP. Maximum value is 10.
 .TP
+.BI \-resize " width height
+Resize the source to a rectangle with size \fBwidth\fP x \fBheight\fP.
+If either (but not both) of the \fBwidth\fP or \fBheight\fP parameters is 0,
+the value will be calculated preserving the aspect-ratio.
+.TP
 .BI \-crop " x_position y_position width height
 Crop the source to a rectangle with top-left corner at coordinates
 (\fBx_position\fP, \fBy_position\fP) and size \fBwidth\fP x \fBheight\fP.
@@ -168,8 +187,9 @@ Output additional ASCII-map of encoding information. Possible map values
 range from 1 to 6. This is only meant to help debugging.
 .TP
 .BI \-pre " int
-Specify a pre-processing filter. This option is a placeholder
-and has currently no effect.
+Specify some pre-processing steps. Using a value of '2' will trigger
+quality-dependent pseudo-random dithering during RGBA->YUVA conversion
+(lossy compression only).
 .TP
 .BI \-alpha_filter " string
 Specify the predictive filtering method for the alpha plane. One of 'none',
@@ -249,6 +269,8 @@ cwebp \-q 50 -lossless picture.png \-o picture_lossless.webp
 cwebp \-q 70 picture_with_alpha.png \-o picture_with_alpha.webp
 .br
 cwebp \-sns 70 \-f 50 \-size 60000 picture.png \-o picture.webp
+.br
+cwebp \-o picture.webp \-\- \-\-\-picture.png
 
 .SH AUTHORS
 \fBcwebp\fP was written by the WebP team.
@@ -260,7 +282,7 @@ for the Debian project (and may be used by others).
 
 .SH SEE ALSO
 .BR dwebp (1),
-.BR gif2webp (1).
+.BR gif2webp (1)
 .br
 Please refer to http://developers.google.com/speed/webp/ for additional
 information.

@@ -16,7 +16,7 @@
 
 #include "../webp/types.h"
 
-#if defined(__cplusplus) || defined(c_plusplus)
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -49,10 +49,10 @@ extern const WebPFilterFunc WebPFilters[WEBP_FILTER_LAST];
 extern const WebPUnfilterFunc WebPUnfilters[WEBP_FILTER_LAST];
 
 // Fast estimate of a potentially good filter.
-extern WEBP_FILTER_TYPE EstimateBestFilter(const uint8_t* data,
-                                           int width, int height, int stride);
+WEBP_FILTER_TYPE EstimateBestFilter(const uint8_t* data,
+                                    int width, int height, int stride);
 
-#if defined(__cplusplus) || defined(c_plusplus)
+#ifdef __cplusplus
 }    // extern "C"
 #endif
 

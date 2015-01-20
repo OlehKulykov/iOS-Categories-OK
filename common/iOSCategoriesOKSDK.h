@@ -1,5 +1,5 @@
 /*
- *   Copyright 2012 - 2014 Kulykov Oleh
+ *   Copyright 2012 - 2015 Kulykov Oleh
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -30,11 +30,6 @@
 #import "common/MachTime.h"
 #import "common/EnvironmentInfo.h"
 
-
-#import "derived/AnchorPointRotatableUIView.h"
-#import "derived/NotificationManager.h"
-#import "derived/StorageBase.h"
-#import "derived/UIViewSubviewsStoredProperties.h"
 
 
 #import "foundation/NSArray+CategoryOK.h"

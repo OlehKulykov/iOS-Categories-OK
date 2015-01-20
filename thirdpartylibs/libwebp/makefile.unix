@@ -69,6 +69,10 @@ EXTRA_FLAGS += -Wdeclaration-after-statement
 EXTRA_FLAGS += -Wshadow
 # EXTRA_FLAGS += -Wvla
 
+# NEON-specific flags:
+# EXTRA_FLAGS += -march=armv7-a -mfloat-abi=hard -mfpu=neon -mtune=cortex-a8
+# -> seems to make the overall lib slower: -fno-split-wide-types
+
 #### Nothing should normally be changed below this line ####
 
 AR = ar
@@ -100,16 +104,23 @@ DEMUX_OBJS = \
 DSP_DEC_OBJS = \
     src/dsp/cpu.o \
     src/dsp/dec.o \
+    src/dsp/dec_clip_tables.o \
+    src/dsp/dec_mips32.o \
     src/dsp/dec_neon.o \
     src/dsp/dec_sse2.o \
     src/dsp/lossless.o \
+    src/dsp/lossless_mips32.o \
+    src/dsp/lossless_neon.o \
+    src/dsp/lossless_sse2.o \
     src/dsp/upsampling.o \
+    src/dsp/upsampling_mips32.o \
     src/dsp/upsampling_neon.o \
     src/dsp/upsampling_sse2.o \
     src/dsp/yuv.o \
 
 DSP_ENC_OBJS = \
     src/dsp/enc.o \
+    src/dsp/enc_mips32.o \
     src/dsp/enc_neon.o \
     src/dsp/enc_sse2.o \
 
@@ -137,6 +148,7 @@ EX_FORMAT_DEC_OBJS = \
     examples/metadata.o \
     examples/pngdec.o \
     examples/tiffdec.o \
+    examples/webpdec.o \
 
 EX_UTIL_OBJS = \
     examples/example_util.o \
@@ -156,6 +168,7 @@ UTILS_DEC_OBJS = \
     src/utils/filters.o \
     src/utils/huffman.o \
     src/utils/quant_levels_dec.o \
+    src/utils/random.o \
     src/utils/rescaler.o \
     src/utils/thread.o \
     src/utils/utils.o \
@@ -187,9 +200,14 @@ HDRS = \
     src/dec/webpi.h \
     src/dsp/dsp.h \
     src/dsp/lossless.h \
+    src/dsp/neon.h \
     src/dsp/yuv.h \
+    src/enc/backward_references.h \
     src/enc/cost.h \
+    src/enc/histogram.h \
     src/enc/vp8enci.h \
+    src/enc/vp8li.h \
+    src/mux/muxi.h \
     src/utils/alpha_processing.h \
     src/utils/bit_reader.h \
     src/utils/bit_writer.h \
@@ -199,8 +217,10 @@ HDRS = \
     src/utils/huffman_encode.h \
     src/utils/quant_levels.h \
     src/utils/quant_levels_dec.h \
+    src/utils/random.h \
     src/utils/rescaler.h \
     src/utils/thread.h \
+    src/utils/utils.h \
     src/webp/format_constants.h \
     $(HDRS_INSTALLED) \
 
@@ -212,6 +232,7 @@ OUTPUT = $(OUT_LIBS) $(OUT_EXAMPLES)
 ifeq ($(MAKECMDGOALS),clean)
   OUTPUT += $(EXTRA_EXAMPLES)
   OUTPUT += src/demux/libwebpdemux.a src/mux/libwebpmux.a
+  OUTPUT += examples/libgif2webp_util.a
 endif
 
 ex: $(OUT_EXAMPLES)
@@ -238,7 +259,7 @@ examples/gif2webp: examples/gif2webp.o
 examples/vwebp: examples/vwebp.o
 examples/webpmux: examples/webpmux.o
 
-examples/cwebp: src/libwebp.a
+examples/cwebp: examples/libexample_util.a src/libwebp.a
 examples/cwebp: EXTRA_LIBS += $(CWEBP_LIBS)
 examples/dwebp: examples/libexample_util.a src/libwebpdecoder.a
 examples/dwebp: EXTRA_LIBS += $(DWEBP_LIBS)
@@ -260,8 +281,8 @@ dist: DESTDIR := dist
 dist: OUT_EXAMPLES += $(EXTRA_EXAMPLES)
 dist: all
 	$(INSTALL) -m755 -d $(DESTDIR)/include/webp \
-	           $(DESTDIR)/doc $(DESTDIR)/lib
-	$(INSTALL) -m755 -s $(OUT_EXAMPLES) $(DESTDIR)
+	           $(DESTDIR)/bin $(DESTDIR)/doc $(DESTDIR)/lib
+	$(INSTALL) -m755 -s $(OUT_EXAMPLES) $(DESTDIR)/bin
 	$(INSTALL) -m644 $(HDRS_INSTALLED) $(DESTDIR)/include/webp
 	$(INSTALL) -m644 src/libwebp.a $(DESTDIR)/lib
 	$(INSTALL) -m644 src/demux/libwebpdemux.a $(DESTDIR)/lib

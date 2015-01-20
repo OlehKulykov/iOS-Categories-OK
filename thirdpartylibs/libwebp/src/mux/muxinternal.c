@@ -16,10 +16,6 @@
 #include "./muxi.h"
 #include "../utils/utils.h"
 
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
-
 #define UNDEFINED_CHUNK_SIZE (-1)
 
 const ChunkInfo kChunks[] = {
@@ -70,7 +66,7 @@ WebPChunk* ChunkRelease(WebPChunk* const chunk) {
 CHUNK_INDEX ChunkGetIndexFromTag(uint32_t tag) {
   int i;
   for (i = 0; kChunks[i].tag != NIL_TAG; ++i) {
-    if (tag == kChunks[i].tag) return i;
+    if (tag == kChunks[i].tag) return (CHUNK_INDEX)i;
   }
   return IDX_UNKNOWN;
 }
@@ -169,7 +165,7 @@ WebPMuxError ChunkSetNth(WebPChunk* chunk, WebPChunk** chunk_list,
     return WEBP_MUX_NOT_FOUND;
   }
 
-  new_chunk = (WebPChunk*)malloc(sizeof(*new_chunk));
+  new_chunk = (WebPChunk*)WebPSafeMalloc(1ULL, sizeof(*new_chunk));
   if (new_chunk == NULL) return WEBP_MUX_MEMORY_ERROR;
   *new_chunk = *chunk;
   chunk->owner_ = 0;
@@ -183,7 +179,7 @@ WebPMuxError ChunkSetNth(WebPChunk* chunk, WebPChunk** chunk_list,
 
 WebPChunk* ChunkDelete(WebPChunk* const chunk) {
   WebPChunk* const next = ChunkRelease(chunk);
-  free(chunk);
+  WebPSafeFree(chunk);
   return next;
 }
 
@@ -316,7 +312,7 @@ WebPMuxError MuxImagePush(const WebPMuxImage* wpi, WebPMuxImage** wpi_list) {
     wpi_list = &cur_wpi->next_;
   }
 
-  new_wpi = (WebPMuxImage*)malloc(sizeof(*new_wpi));
+  new_wpi = (WebPMuxImage*)WebPSafeMalloc(1ULL, sizeof(*new_wpi));
   if (new_wpi == NULL) return WEBP_MUX_MEMORY_ERROR;
   *new_wpi = *wpi;
   new_wpi->next_ = NULL;
@@ -335,7 +331,7 @@ WebPMuxError MuxImagePush(const WebPMuxImage* wpi, WebPMuxImage** wpi_list) {
 WebPMuxImage* MuxImageDelete(WebPMuxImage* const wpi) {
   // Delete the components of wpi. If wpi is NULL this is a noop.
   WebPMuxImage* const next = MuxImageRelease(wpi);
-  free(wpi);
+  WebPSafeFree(wpi);
   return next;
 }
 
@@ -451,7 +447,7 @@ static int IsNotCompatible(int feature, int num_items) {
 // On success returns WEBP_MUX_OK and stores the chunk count in *num.
 static WebPMuxError ValidateChunk(const WebPMux* const mux, CHUNK_INDEX idx,
                                   WebPFeatureFlags feature,
-                                  WebPFeatureFlags vp8x_flags,
+                                  uint32_t vp8x_flags,
                                   int max, int* num) {
   const WebPMuxError err =
       WebPMuxNumChunks(mux, kChunks[idx].id, num);
@@ -553,6 +549,3 @@ WebPMuxError MuxValidate(const WebPMux* const mux) {
 
 //------------------------------------------------------------------------------
 
-#if defined(__cplusplus) || defined(c_plusplus)
-}    // extern "C"
-#endif

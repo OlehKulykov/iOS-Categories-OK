@@ -18,13 +18,10 @@
 
 #include "./vp8enci.h"
 #include "./vp8li.h"
+#include "./cost.h"
 #include "../utils/utils.h"
 
 // #define PRINT_MEMORY_INFO
-
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
 
 #ifdef PRINT_MEMORY_INFO
 #include <stdio.h>
@@ -157,7 +154,7 @@ static void MapConfigToTools(VP8Encoder* const enc) {
 //             non-zero: 196
 //             lf-stats: 2048
 //                total: 68635
-// Transcient object sizes:
+// Transient object sizes:
 //       VP8EncIterator: 352
 //         VP8ModeScore: 912
 //       VP8SegmentInfo: 532
@@ -255,7 +252,7 @@ static VP8Encoder* InitVP8Encoder(const WebPConfig* const config,
   ResetSegmentHeader(enc);
   ResetFilterHeader(enc);
   ResetBoundaryPredictions(enc);
-
+  VP8GetResidualCostInit();
   VP8EncInitAlpha(enc);
 #ifdef WEBP_EXPERIMENTAL_FEATURES
   VP8EncInitLayer(enc);
@@ -273,7 +270,7 @@ static int DeleteVP8Encoder(VP8Encoder* enc) {
     VP8EncDeleteLayer(enc);
 #endif
     VP8TBufferClear(&enc->tokens_);
-    free(enc);
+    WebPSafeFree(enc);
   }
   return ok;
 }
@@ -358,7 +355,17 @@ int WebPEncode(const WebPConfig* config, WebPPicture* pic) {
     VP8Encoder* enc = NULL;
     if (pic->y == NULL || pic->u == NULL || pic->v == NULL) {
       // Make sure we have YUVA samples.
-      if (!WebPPictureARGBToYUVA(pic, WEBP_YUV420)) return 0;
+      float dithering = 0.f;
+      if (config->preprocessing & 2) {
+        const float x = config->quality / 100.f;
+        const float x2 = x * x;
+        // slowly decreasing from max dithering at low quality (q->0)
+        // to 0.5 dithering amplitude at high quality (q->100)
+        dithering = 1.0f + (0.5f - 1.0f) * x2 * x2;
+      }
+      if (!WebPPictureARGBToYUVADithered(pic, WEBP_YUV420, dithering)) {
+        return 0;
+      }
     }
 
     enc = InitVP8Encoder(config, pic);
@@ -396,6 +403,3 @@ int WebPEncode(const WebPConfig* config, WebPPicture* pic) {
   return ok;
 }
 
-#if defined(__cplusplus) || defined(c_plusplus)
-}    // extern "C"
-#endif

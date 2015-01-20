@@ -11,12 +11,19 @@ commondir = $(includedir)/webp
 COMMON_SOURCES =
 COMMON_SOURCES += cpu.c
 COMMON_SOURCES += dec.c
+COMMON_SOURCES += dec_clip_tables.c
+COMMON_SOURCES += dec_mips32.c
 COMMON_SOURCES += dec_neon.c
 COMMON_SOURCES += dec_sse2.c
 COMMON_SOURCES += dsp.h
 COMMON_SOURCES += lossless.c
 COMMON_SOURCES += lossless.h
+COMMON_SOURCES += lossless_mips32.c
+COMMON_SOURCES += lossless_neon.c
+COMMON_SOURCES += lossless_sse2.c
+COMMON_SOURCES += neon.h
 COMMON_SOURCES += upsampling.c
+COMMON_SOURCES += upsampling_mips32.c
 COMMON_SOURCES += upsampling_neon.c
 COMMON_SOURCES += upsampling_sse2.c
 COMMON_SOURCES += yuv.c
@@ -24,6 +31,7 @@ COMMON_SOURCES += yuv.h
 
 ENC_SOURCES =
 ENC_SOURCES += enc.c
+ENC_SOURCES += enc_mips32.c
 ENC_SOURCES += enc_neon.c
 ENC_SOURCES += enc_sse2.c
 

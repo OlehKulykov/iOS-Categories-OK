@@ -169,16 +169,23 @@ DEMUX_OBJS = \
 DSP_DEC_OBJS = \
     $(DIROBJ)\dsp\cpu.obj \
     $(DIROBJ)\dsp\dec.obj \
+    $(DIROBJ)\dsp\dec_clip_tables.obj \
+    $(DIROBJ)\dsp\dec_mips32.obj \
     $(DIROBJ)\dsp\dec_neon.obj \
     $(DIROBJ)\dsp\dec_sse2.obj \
     $(DIROBJ)\dsp\lossless.obj \
+    $(DIROBJ)\dsp\lossless_mips32.obj \
+    $(DIROBJ)\dsp\lossless_neon.obj \
+    $(DIROBJ)\dsp\lossless_sse2.obj \
     $(DIROBJ)\dsp\upsampling.obj \
+    $(DIROBJ)\dsp\upsampling_mips32.obj \
     $(DIROBJ)\dsp\upsampling_neon.obj \
     $(DIROBJ)\dsp\upsampling_sse2.obj \
     $(DIROBJ)\dsp\yuv.obj \
 
 DSP_ENC_OBJS = \
     $(DIROBJ)\dsp\enc.obj \
+    $(DIROBJ)\dsp\enc_mips32.obj \
     $(DIROBJ)\dsp\enc_neon.obj \
     $(DIROBJ)\dsp\enc_sse2.obj \
 
@@ -187,6 +194,7 @@ EX_FORMAT_DEC_OBJS = \
     $(DIROBJ)\examples\metadata.obj \
     $(DIROBJ)\examples\pngdec.obj \
     $(DIROBJ)\examples\tiffdec.obj \
+    $(DIROBJ)\examples\webpdec.obj \
     $(DIROBJ)\examples\wicdec.obj \
 
 EX_UTIL_OBJS = \
@@ -224,6 +232,7 @@ UTILS_DEC_OBJS = \
     $(DIROBJ)\utils\huffman.obj \
     $(DIROBJ)\utils\quant_levels_dec.obj \
     $(DIROBJ)\utils\rescaler.obj \
+    $(DIROBJ)\utils\random.obj \
     $(DIROBJ)\utils\thread.obj \
     $(DIROBJ)\utils\utils.obj \
 

@@ -16,17 +16,14 @@
 #include "./vp8i.h"
 #include "./vp8li.h"
 #include "../utils/quant_levels_dec.h"
+#include "../utils/utils.h"
 #include "../webp/format_constants.h"
-
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
 
 //------------------------------------------------------------------------------
 // ALPHDecoder object.
 
 ALPHDecoder* ALPHNew(void) {
-  ALPHDecoder* const dec = (ALPHDecoder*)calloc(1, sizeof(*dec));
+  ALPHDecoder* const dec = (ALPHDecoder*)WebPSafeCalloc(1ULL, sizeof(*dec));
   return dec;
 }
 
@@ -34,7 +31,7 @@ void ALPHDelete(ALPHDecoder* const dec) {
   if (dec != NULL) {
     VP8LDelete(dec->vp8l_dec_);
     dec->vp8l_dec_ = NULL;
-    free(dec);
+    WebPSafeFree(dec);
   }
 }
 
@@ -85,7 +82,7 @@ static int ALPHInit(ALPHDecoder* const dec, const uint8_t* data,
 }
 
 // Decodes, unfilters and dequantizes *at least* 'num_rows' rows of alpha
-// starting from row number 'row'. It assumes that rows upto (row - 1) have
+// starting from row number 'row'. It assumes that rows up to (row - 1) have
 // already been decoded.
 // Returns false in case of bitstream error.
 static int ALPHDecode(VP8Decoder* const dec, int row, int num_rows) {
@@ -162,7 +159,3 @@ const uint8_t* VP8DecompressAlphaRows(VP8Decoder* const dec,
   // Return a pointer to the current decoded row.
   return dec->alpha_plane_ + row * width;
 }
-
-#if defined(__cplusplus) || defined(c_plusplus)
-}    // extern "C"
-#endif

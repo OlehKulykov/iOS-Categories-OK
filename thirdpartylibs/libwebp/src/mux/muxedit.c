@@ -16,10 +16,6 @@
 #include "./muxi.h"
 #include "../utils/utils.h"
 
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
-
 //------------------------------------------------------------------------------
 // Life of a mux object.
 
@@ -32,7 +28,7 @@ WebPMux* WebPNewInternal(int version) {
   if (WEBP_ABI_IS_INCOMPATIBLE(version, WEBP_MUX_ABI_VERSION)) {
     return NULL;
   } else {
-    WebPMux* const mux = (WebPMux*)malloc(sizeof(WebPMux));
+    WebPMux* const mux = (WebPMux*)WebPSafeMalloc(1ULL, sizeof(WebPMux));
     // If mux is NULL MuxInit is a noop.
     MuxInit(mux);
     return mux;
@@ -60,7 +56,7 @@ static void MuxRelease(WebPMux* const mux) {
 void WebPMuxDelete(WebPMux* mux) {
   // If mux is NULL MuxRelease is a noop.
   MuxRelease(mux);
-  free(mux);
+  WebPSafeFree(mux);
 }
 
 //------------------------------------------------------------------------------
@@ -106,7 +102,7 @@ static WebPMuxError CreateFrameFragmentData(
   assert(info->dispose_method == (info->dispose_method & 1));
   // Note: assertion on upper bounds is done in PutLE24().
 
-  frame_frgm_bytes = (uint8_t*)malloc(frame_frgm_size);
+  frame_frgm_bytes = (uint8_t*)WebPSafeMalloc(1ULL, frame_frgm_size);
   if (frame_frgm_bytes == NULL) return WEBP_MUX_MEMORY_ERROR;
 
   PutLE24(frame_frgm_bytes + 0, info->x_offset / 2);
@@ -414,7 +410,7 @@ static WebPMuxError GetImageInfo(const WebPMuxImage* const wpi,
   // Get width and height from VP8/VP8L chunk.
   if (width != NULL) *width = wpi->width_;
   if (height != NULL) *height = wpi->height_;
-  return 1;
+  return WEBP_MUX_OK;
 }
 
 static WebPMuxError GetImageCanvasWidthHeight(
@@ -623,7 +619,7 @@ WebPMuxError WebPMuxAssemble(WebPMux* mux, WebPData* assembled_data) {
        + ChunkListDiskSize(mux->exif_) + ChunkListDiskSize(mux->xmp_)
        + ChunkListDiskSize(mux->unknown_) + RIFF_HEADER_SIZE;
 
-  data = (uint8_t*)malloc(size);
+  data = (uint8_t*)WebPSafeMalloc(1ULL, size);
   if (data == NULL) return WEBP_MUX_MEMORY_ERROR;
 
   // Emit header & chunks.
@@ -640,7 +636,7 @@ WebPMuxError WebPMuxAssemble(WebPMux* mux, WebPData* assembled_data) {
   // Validate mux.
   err = MuxValidate(mux);
   if (err != WEBP_MUX_OK) {
-    free(data);
+    WebPSafeFree(data);
     data = NULL;
     size = 0;
   }
@@ -654,6 +650,3 @@ WebPMuxError WebPMuxAssemble(WebPMux* mux, WebPData* assembled_data) {
 
 //------------------------------------------------------------------------------
 
-#if defined(__cplusplus) || defined(c_plusplus)
-}    // extern "C"
-#endif

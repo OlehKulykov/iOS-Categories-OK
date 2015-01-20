@@ -28,16 +28,17 @@
 #include "./jpegdec.h"
 #include "./pngdec.h"
 #include "./tiffdec.h"
+#include "./webpdec.h"
 #include "./wicdec.h"
 
 #ifndef WEBP_DLL
-#if defined(__cplusplus) || defined(c_plusplus)
+#ifdef __cplusplus
 extern "C" {
 #endif
 
 extern void* VP8GetCPUInfo;   // opaque forward declaration.
 
-#if defined(__cplusplus) || defined(c_plusplus)
+#ifdef __cplusplus
 }    // extern "C"
 #endif
 #endif  // WEBP_DLL
@@ -106,26 +107,30 @@ typedef enum {
   PNG_ = 0,
   JPEG_,
   TIFF_,  // 'TIFF' clashes with libtiff
+  WEBP_,
   UNSUPPORTED
 } InputFileFormat;
 
 static InputFileFormat GetImageType(FILE* in_file) {
   InputFileFormat format = UNSUPPORTED;
-  uint32_t magic;
-  uint8_t buf[4];
+  uint32_t magic1, magic2;
+  uint8_t buf[12];
 
-  if ((fread(&buf[0], 4, 1, in_file) != 1) ||
+  if ((fread(&buf[0], 12, 1, in_file) != 1) ||
       (fseek(in_file, 0, SEEK_SET) != 0)) {
     return format;
   }
 
-  magic = ((uint32_t)buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | buf[3];
-  if (magic == 0x89504E47U) {
+  magic1 = ((uint32_t)buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | buf[3];
+  magic2 = ((uint32_t)buf[8] << 24) | (buf[9] << 16) | (buf[10] << 8) | buf[11];
+  if (magic1 == 0x89504E47U) {
     format = PNG_;
-  } else if (magic >= 0xFFD8FF00U && magic <= 0xFFD8FFFFU) {
+  } else if (magic1 >= 0xFFD8FF00U && magic1 <= 0xFFD8FFFFU) {
     format = JPEG_;
-  } else if (magic == 0x49492A00 || magic == 0x4D4D002A) {
+  } else if (magic1 == 0x49492A00 || magic1 == 0x4D4D002A) {
     format = TIFF_;
+  } else if (magic1 == 0x52494646 && magic2 == 0x57454250) {
+    format = WEBP_;
   }
   return format;
 }
@@ -148,6 +153,8 @@ static int ReadPicture(const char* const filename, WebPPicture* const pic,
       ok = ReadJPEG(in_file, pic, metadata);
     } else if (format == TIFF_) {
       ok = ReadTIFF(filename, pic, keep_alpha, metadata);
+    } else if (format == WEBP_) {
+      ok = ReadWebP(filename, pic, keep_alpha, metadata);
     }
   } else {
     // If image size is specified, infer it as YUV format.
@@ -298,6 +305,9 @@ static void PrintExtraInfoLossy(const WebPPicture* const pic, int short_output,
       PrintFullLosslessInfo(stats, "alpha");
     }
   }
+}
+
+static void PrintMapInfo(const WebPPicture* const pic) {
   if (pic->extra_info != NULL) {
     const int mb_w = (pic->width + 15) / 16;
     const int mb_h = (pic->height + 15) / 16;
@@ -307,18 +317,18 @@ static void PrintExtraInfoLossy(const WebPPicture* const pic, int short_output,
       for (x = 0; x < mb_w; ++x) {
         const int c = pic->extra_info[x + y * mb_w];
         if (type == 1) {   // intra4/intra16
-          printf("%c", "+."[c]);
+          fprintf(stderr, "%c", "+."[c]);
         } else if (type == 2) {    // segments
-          printf("%c", ".-*X"[c]);
+          fprintf(stderr, "%c", ".-*X"[c]);
         } else if (type == 3) {    // quantizers
-          printf("%.2d ", c);
+          fprintf(stderr, "%.2d ", c);
         } else if (type == 6 || type == 7) {
-          printf("%3d ", c);
+          fprintf(stderr, "%3d ", c);
         } else {
-          printf("0x%.2x ", c);
+          fprintf(stderr, "0x%.2x ", c);
         }
       }
-      printf("\n");
+      fprintf(stderr, "\n");
     }
   }
 }
@@ -494,6 +504,7 @@ static int WriteWebPWithMetadata(FILE* const out,
     if (has_vp8x) {  // update the existing VP8X flags
       webp[kChunkHeaderSize] |= (uint8_t)(flags & 0xff);
       ok = ok && (fwrite(webp, kVP8XChunkSize, 1, out) == 1);
+      webp += kVP8XChunkSize;
       webp_size -= kVP8XChunkSize;
     } else {
       const int is_lossless = !memcmp(webp, "VP8L", kTagSize);
@@ -530,9 +541,8 @@ static int WriteWebPWithMetadata(FILE* const out,
 //------------------------------------------------------------------------------
 
 static int ProgressReport(int percent, const WebPPicture* const picture) {
-  printf("[%s]: %3d %%      \r",
-         (char*)picture->user_data, percent);
-  fflush(stdout);
+  fprintf(stderr, "[%s]: %3d %%      \r",
+          (char*)picture->user_data, percent);
   return 1;  // all ok
 }
 
@@ -550,7 +560,7 @@ static void HelpLong(void) {
   printf("Usage:\n");
   printf(" cwebp [-preset <...>] [options] in_file [-o out_file]\n\n");
   printf("If input size (-s) for an image is not specified, "
-         "it is assumed to be a PNG, JPEG or TIFF file.\n");
+         "it is assumed to be a PNG, JPEG, TIFF or WebP file.\n");
 #ifdef HAVE_WINCODEC_H
   printf("Windows builds can take as input any of the files handled by WIC\n");
 #endif
@@ -564,6 +574,8 @@ static void HelpLong(void) {
   printf("                            default, photo, picture,\n");
   printf("                            drawing, icon, text\n");
   printf("     -preset must come first, as it overwrites other parameters.");
+  printf("  -z <int> ............... Activates lossless preset with given "
+         "                           level in [0:fast, ..., 9:slowest]\n");
   printf("\n");
   printf("  -m <int> ............... compression method (0=fast, 6=slowest)\n");
   printf("  -segments <int> ........ number of segments to use (1..4)\n");
@@ -668,6 +680,8 @@ int main(int argc, const char *argv[]) {
   uint32_t background_color = 0xffffffu;
   int crop = 0, crop_x = 0, crop_y = 0, crop_w = 0, crop_h = 0;
   int resize_w = 0, resize_h = 0;
+  int lossless_preset = 6;
+  int use_lossless_preset = -1;  // -1=unset, 0=don't use, 1=use it
   int show_progress = 0;
   int keep_metadata = 0;
   int metadata_written = 0;
@@ -716,14 +730,19 @@ int main(int argc, const char *argv[]) {
       config.show_compressed = 1;
       print_distortion = 2;
     } else if (!strcmp(argv[c], "-short")) {
-      short_output++;
+      ++short_output;
     } else if (!strcmp(argv[c], "-s") && c < argc - 2) {
       picture.width = strtol(argv[++c], NULL, 0);
       picture.height = strtol(argv[++c], NULL, 0);
     } else if (!strcmp(argv[c], "-m") && c < argc - 1) {
       config.method = strtol(argv[++c], NULL, 0);
+      use_lossless_preset = 0;   // disable -z option
     } else if (!strcmp(argv[c], "-q") && c < argc - 1) {
       config.quality = (float)strtod(argv[++c], NULL);
+      use_lossless_preset = 0;   // disable -z option
+    } else if (!strcmp(argv[c], "-z") && c < argc - 1) {
+      lossless_preset = strtol(argv[++c], NULL, 0);
+      if (use_lossless_preset != 0) use_lossless_preset = 1;
     } else if (!strcmp(argv[c], "-alpha_q") && c < argc - 1) {
       config.alpha_quality = strtol(argv[++c], NULL, 0);
     } else if (!strcmp(argv[c], "-alpha_method") && c < argc - 1) {
@@ -895,6 +914,9 @@ int main(int argc, const char *argv[]) {
 #endif
     } else if (!strcmp(argv[c], "-v")) {
       verbose = 1;
+    } else if (!strcmp(argv[c], "--")) {
+      if (c < argc - 1) in_file = argv[++c];
+      break;
     } else if (argv[c][0] == '-') {
       fprintf(stderr, "Error! Unknown option '%s'\n", argv[c]);
       HelpLong();
@@ -907,6 +929,13 @@ int main(int argc, const char *argv[]) {
     fprintf(stderr, "No input file specified!\n");
     HelpShort();
     goto Error;
+  }
+
+  if (use_lossless_preset == 1) {
+    if (!WebPConfigLosslessPreset(&config, lossless_preset)) {
+      fprintf(stderr, "Invalid lossless preset (-z %d)\n", lossless_preset);
+      goto Error;
+    }
   }
 
   // Check for unsupported command line options for lossless mode and log
@@ -952,8 +981,9 @@ int main(int argc, const char *argv[]) {
   }
 
   // Open the output
-  if (out_file) {
-    out = fopen(out_file, "wb");
+  if (out_file != NULL) {
+    const int use_stdout = !strcmp(out_file, "-");
+    out = use_stdout ? stdout : fopen(out_file, "wb");
     if (out == NULL) {
       fprintf(stderr, "Error! Cannot open output file '%s'\n", out_file);
       goto Error;
@@ -1024,42 +1054,86 @@ int main(int argc, const char *argv[]) {
     }
   }
 
-  if (keep_metadata != 0 && out != NULL) {
-    if (!WriteWebPWithMetadata(out, &picture, &memory_writer,
-                               &metadata, keep_metadata, &metadata_written)) {
-      fprintf(stderr, "Error writing WebP file with metadata!\n");
-      goto Error;
+  if (keep_metadata != 0) {
+    if (out != NULL) {
+      if (!WriteWebPWithMetadata(out, &picture, &memory_writer,
+                                 &metadata, keep_metadata, &metadata_written)) {
+        fprintf(stderr, "Error writing WebP file with metadata!\n");
+        goto Error;
+      }
+    } else {  // output is disabled, just display the metadata stats.
+      const struct {
+        const MetadataPayload* const payload;
+        int flag;
+      } *iter, info[] = {
+        { &metadata.exif, METADATA_EXIF },
+        { &metadata.iccp, METADATA_ICC },
+        { &metadata.xmp, METADATA_XMP },
+        { NULL, 0 }
+      };
+      uint32_t unused1 = 0;
+      uint64_t unused2 = 0;
+
+      for (iter = info; iter->payload != NULL; ++iter) {
+        if (UpdateFlagsAndSize(iter->payload, !!(keep_metadata & iter->flag),
+                               0, &unused1, &unused2)) {
+          metadata_written |= iter->flag;
+        }
+      }
     }
   }
 
   if (!quiet) {
-    if (config.lossless) {
-      PrintExtraInfoLossless(&picture, short_output, in_file);
-    } else {
-      PrintExtraInfoLossy(&picture, short_output, config.low_memory, in_file);
+    if (!short_output || print_distortion < 0) {
+      if (config.lossless) {
+        PrintExtraInfoLossless(&picture, short_output, in_file);
+      } else {
+        PrintExtraInfoLossy(&picture, short_output, config.low_memory, in_file);
+      }
+    }
+    if (!short_output && picture.extra_info_type > 0) {
+      PrintMapInfo(&picture);
+    }
+    if (print_distortion >= 0) {    // print distortion
+      static const char* distortion_names[] = { "PSNR", "SSIM", "LSIM" };
+      float values[5];
+      // Comparison is performed in YUVA colorspace.
+      if (original_picture.use_argb &&
+          !WebPPictureARGBToYUVA(&original_picture, WEBP_YUV420A)) {
+       fprintf(stderr, "Error while converting original picture to YUVA.\n");
+        goto Error;
+      }
+      if (picture.use_argb &&
+          !WebPPictureARGBToYUVA(&picture, WEBP_YUV420A)) {
+        fprintf(stderr, "Error while converting compressed picture to YUVA.\n");
+        goto Error;
+      }
+      if (!WebPPictureDistortion(&picture, &original_picture,
+                                 print_distortion, values)) {
+        fprintf(stderr, "Error while computing the distortion.\n");
+        goto Error;
+      }
+      if (!short_output) {
+        fprintf(stderr, "%s: Y:%.2f U:%.2f V:%.2f A:%.2f  Total:%.2f\n",
+                distortion_names[print_distortion],
+                values[0], values[1], values[2], values[3], values[4]);
+      } else {
+        fprintf(stderr, "%7d %.4f\n", picture.stats->coded_size, values[4]);
+      }
     }
     if (!short_output) {
       PrintMetadataInfo(&metadata, metadata_written);
     }
   }
-  if (!quiet && !short_output && print_distortion >= 0) {  // print distortion
-    static const char* distortion_names[] = { "PSNR", "SSIM", "LSIM" };
-    float values[5];
-    WebPPictureDistortion(&picture, &original_picture,
-                          print_distortion, values);
-    fprintf(stderr, "%s: Y:%.2f U:%.2f V:%.2f A:%.2f  Total:%.2f\n",
-            distortion_names[print_distortion],
-            values[0], values[1], values[2], values[3], values[4]);
-  }
   return_value = 0;
 
  Error:
-  free(memory_writer.mem);
+  WebPMemoryWriterClear(&memory_writer);
   free(picture.extra_info);
   MetadataFree(&metadata);
   WebPPictureFree(&picture);
   WebPPictureFree(&original_picture);
-  if (out != NULL) {
+  if (out != NULL && out != stdout) {
     fclose(out);
   }
 

@@ -18,10 +18,7 @@
 #include "./vp8li.h"
 #include "./webpi.h"
 #include "../utils/bit_reader.h"
-
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
+#include "../utils/utils.h"
 
 //------------------------------------------------------------------------------
 
@@ -48,7 +45,7 @@ int VP8InitIoInternal(VP8Io* const io, int version) {
 }
 
 VP8Decoder* VP8New(void) {
-  VP8Decoder* const dec = (VP8Decoder*)calloc(1, sizeof(*dec));
+  VP8Decoder* const dec = (VP8Decoder*)WebPSafeCalloc(1ULL, sizeof(*dec));
   if (dec != NULL) {
     SetOk(dec);
     WebPWorkerInit(&dec->worker_);
@@ -72,7 +69,7 @@ const char* VP8StatusMessage(VP8Decoder* const dec) {
 void VP8Delete(VP8Decoder* const dec) {
   if (dec != NULL) {
     VP8Clear(dec);
-    free(dec);
+    WebPSafeFree(dec);
   }
 }
 
@@ -321,7 +318,6 @@ int VP8GetHeaders(VP8Decoder* const dec, VP8Io* const io) {
 
     VP8ResetProba(&dec->proba_);
     ResetSegmentHeader(&dec->segment_hdr_);
-    dec->segment_ = 0;    // default for intra
   }
 
   // Check if we have all the partition #0 available, and initialize dec->br_
@@ -359,38 +355,11 @@ int VP8GetHeaders(VP8Decoder* const dec, VP8Io* const io) {
 
   // Frame buffer marking
   if (!frm_hdr->key_frame_) {
-    // Paragraph 9.7
-#ifndef ONLY_KEYFRAME_CODE
-    dec->buffer_flags_ = VP8Get(br) << 0;   // update golden
-    dec->buffer_flags_ |= VP8Get(br) << 1;  // update alt ref
-    if (!(dec->buffer_flags_ & 1)) {
-      dec->buffer_flags_ |= VP8GetValue(br, 2) << 2;
-    }
-    if (!(dec->buffer_flags_ & 2)) {
-      dec->buffer_flags_ |= VP8GetValue(br, 2) << 4;
-    }
-    dec->buffer_flags_ |= VP8Get(br) << 6;    // sign bias golden
-    dec->buffer_flags_ |= VP8Get(br) << 7;    // sign bias alt ref
-#else
     return VP8SetError(dec, VP8_STATUS_UNSUPPORTED_FEATURE,
                        "Not a key frame.");
-#endif
-  } else {
-    dec->buffer_flags_ = 0x003 | 0x100;
   }
 
-  // Paragraph 9.8
-#ifndef ONLY_KEYFRAME_CODE
-  dec->update_proba_ = VP8Get(br);
-  if (!dec->update_proba_) {    // save for later restore
-    dec->proba_saved_ = dec->proba_;
-  }
-  dec->buffer_flags_ &= 1 << 8;
-  dec->buffer_flags_ |=
-      (frm_hdr->key_frame_ || VP8Get(br)) << 8;    // refresh last frame
-#else
-  VP8Get(br);   // just ignore the value of update_proba_
-#endif
+  VP8Get(br);   // ignore the value of update_proba_
 
   VP8ParseProba(br, dec);
 
@@ -510,8 +479,8 @@ static int ParseResiduals(VP8Decoder* const dec,
                           VP8MB* const mb, VP8BitReader* const token_br) {
   VP8BandProbas (* const bands)[NUM_BANDS] = dec->proba_.bands_;
   const VP8BandProbas* ac_proba;
-  const VP8QuantMatrix* const q = &dec->dqm_[dec->segment_];
-  VP8MBData* const block = dec->mb_data_;
+  VP8MBData* const block = dec->mb_data_ + dec->mb_x_;
+  const VP8QuantMatrix* const q = &dec->dqm_[block->segment_];
   int16_t* dst = block->coeffs_;
   VP8MB* const left_mb = dec->mb_info_ - 1;
   uint8_t tnz, lnz;
@@ -588,6 +557,12 @@ static int ParseResiduals(VP8Decoder* const dec,
 
   block->non_zero_y_ = non_zero_y;
   block->non_zero_uv_ = non_zero_uv;
+
+  // We look at the mode-code of each block and check if some blocks have less
+  // than three non-zero coeffs (code < 2). This is to avoid dithering flat and
+  // empty blocks.
+  block->dither_ = (non_zero_uv & 0xaaaa) ? 0 : q->dither_;
+
   return !(non_zero_y | non_zero_uv);  // will be used for further optimization
 }
 
@@ -595,26 +570,10 @@ static int ParseResiduals(VP8Decoder* const dec,
 // Main loop
 
 int VP8DecodeMB(VP8Decoder* const dec, VP8BitReader* const token_br) {
-  VP8BitReader* const br = &dec->br_;
   VP8MB* const left = dec->mb_info_ - 1;
   VP8MB* const mb = dec->mb_info_ + dec->mb_x_;
-  VP8MBData* const block = dec->mb_data_;
-  int skip;
-
-  // Note: we don't save segment map (yet), as we don't expect
-  // to decode more than 1 keyframe.
-  if (dec->segment_hdr_.update_map_) {
-    // Hardcoded tree parsing
-    dec->segment_ = !VP8GetBit(br, dec->proba_.segments_[0]) ?
-        VP8GetBit(br, dec->proba_.segments_[1]) :
-        2 + VP8GetBit(br, dec->proba_.segments_[2]);
-  }
-  skip = dec->use_skip_proba_ ? VP8GetBit(br, dec->skip_p_) : 0;
-
-  VP8ParseIntraMode(br, dec);
-  if (br->eof_) {
-    return 0;
-  }
+  VP8MBData* const block = dec->mb_data_ + dec->mb_x_;
+  int skip = dec->use_skip_proba_ ? block->skip_ : 0;
 
   if (!skip) {
     skip = ParseResiduals(dec, mb, token_br);
@@ -629,8 +588,8 @@ int VP8DecodeMB(VP8Decoder* const dec, VP8BitReader* const token_br) {
 
   if (dec->filter_type_ > 0) {  // store filter info
     VP8FInfo* const finfo = dec->f_info_ + dec->mb_x_;
-    *finfo = dec->fstrengths_[dec->segment_][block->is_i4x4_];
-    finfo->f_inner_ = !skip || block->is_i4x4_;
+    *finfo = dec->fstrengths_[block->segment_][block->is_i4x4_];
+    finfo->f_inner_ |= !skip;
   }
 
   return !token_br->eof_;
@@ -641,39 +600,36 @@ void VP8InitScanline(VP8Decoder* const dec) {
   left->nz_ = 0;
   left->nz_dc_ = 0;
   memset(dec->intra_l_, B_DC_PRED, sizeof(dec->intra_l_));
-  dec->filter_row_ =
-    (dec->filter_type_ > 0) &&
-    (dec->mb_y_ >= dec->tl_mb_y_) && (dec->mb_y_ <= dec->br_mb_y_);
+  dec->mb_x_ = 0;
 }
 
 static int ParseFrame(VP8Decoder* const dec, VP8Io* io) {
   for (dec->mb_y_ = 0; dec->mb_y_ < dec->br_mb_y_; ++dec->mb_y_) {
+    // Parse bitstream for this row.
     VP8BitReader* const token_br =
         &dec->parts_[dec->mb_y_ & (dec->num_parts_ - 1)];
-    VP8InitScanline(dec);
-    for (dec->mb_x_ = 0; dec->mb_x_ < dec->mb_w_;  dec->mb_x_++) {
+    if (!VP8ParseIntraModeRow(&dec->br_, dec)) {
+      return VP8SetError(dec, VP8_STATUS_NOT_ENOUGH_DATA,
+                         "Premature end-of-partition0 encountered.");
+    }
+    for (; dec->mb_x_ < dec->mb_w_; ++dec->mb_x_) {
       if (!VP8DecodeMB(dec, token_br)) {
         return VP8SetError(dec, VP8_STATUS_NOT_ENOUGH_DATA,
                            "Premature end-of-file encountered.");
       }
-      // Reconstruct and emit samples.
-      VP8ReconstructBlock(dec);
     }
+    VP8InitScanline(dec);   // Prepare for next scanline
+
+    // Reconstruct, filter and emit the row.
     if (!VP8ProcessRow(dec, io)) {
       return VP8SetError(dec, VP8_STATUS_USER_ABORT, "Output aborted.");
     }
   }
-  if (dec->use_threads_ && !WebPWorkerSync(&dec->worker_)) {
-    return 0;
+  if (dec->mt_method_ > 0) {
+    if (!WebPWorkerSync(&dec->worker_)) return 0;
   }
 
   // Finish
-#ifndef ONLY_KEYFRAME_CODE
-  if (!dec->update_proba_) {
-    dec->proba_ = dec->proba_saved_;
-  }
-#endif
-
 #ifdef WEBP_EXPERIMENTAL_FEATURES
   if (dec->layer_data_size_ > 0) {
     if (!VP8DecodeLayer(dec)) {
@@ -729,12 +685,12 @@ void VP8Clear(VP8Decoder* const dec) {
   if (dec == NULL) {
     return;
   }
-  if (dec->use_threads_) {
+  if (dec->mt_method_ > 0) {
     WebPWorkerEnd(&dec->worker_);
   }
   ALPHDelete(dec->alph_dec_);
   dec->alph_dec_ = NULL;
-  free(dec->mem_);
+  WebPSafeFree(dec->mem_);
   dec->mem_ = NULL;
   dec->mem_size_ = 0;
   memset(&dec->br_, 0, sizeof(dec->br_));
@@ -743,6 +699,3 @@ void VP8Clear(VP8Decoder* const dec) {
 
 //------------------------------------------------------------------------------
 
-#if defined(__cplusplus) || defined(c_plusplus)
-}    // extern "C"
-#endif

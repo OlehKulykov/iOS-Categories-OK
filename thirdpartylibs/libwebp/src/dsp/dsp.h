@@ -16,12 +16,20 @@
 
 #include "../webp/types.h"
 
-#if defined(__cplusplus) || defined(c_plusplus)
+#ifdef __cplusplus
 extern "C" {
 #endif
 
 //------------------------------------------------------------------------------
 // CPU detection
+
+#if defined(__GNUC__)
+# define LOCAL_GCC_VERSION ((__GNUC__ << 8) | __GNUC_MINOR__)
+# define LOCAL_GCC_PREREQ(maj, min) \
+    (LOCAL_GCC_VERSION >= (((maj) << 8) | (min)))
+#else
+# define LOCAL_GCC_PREREQ(maj, min) 0
+#endif
 
 #if defined(_MSC_VER) && _MSC_VER > 1310 && \
     (defined(_M_X64) || defined(_M_IX86))
@@ -36,20 +44,20 @@ extern "C" {
 #define WEBP_ANDROID_NEON  // Android targets that might support NEON
 #endif
 
-#if defined(__ARM_NEON__) || defined(WEBP_ANDROID_NEON)
+#if (defined(__ARM_NEON__) && !defined(__aarch64__)) || \
+    defined(WEBP_ANDROID_NEON)
 #define WEBP_USE_NEON
 #endif
 
-#if defined(__64BIT_MODE__)
-#warning "__64BIT_MODE__ iOS custom define in PCH file"
-#undef WEBP_USE_NEON
-#undef __ARM_NEON__
+#if defined(__mips__)
+#define WEBP_USE_MIPS32
 #endif
 
 typedef enum {
   kSSE2,
   kSSE3,
-  kNEON
+  kNEON,
+  kMIPS32
 } CPUFeature;
 // returns true if the CPU supports the feature.
 typedef int (*VP8CPUInfo)(CPUFeature feature);
@@ -67,7 +75,6 @@ typedef void (*VP8Fdct)(const uint8_t* src, const uint8_t* ref, int16_t* out);
 typedef void (*VP8WHT)(const int16_t* in, int16_t* out);
 extern VP8Idct VP8ITransform;
 extern VP8Fdct VP8FTransform;
-extern VP8WHT VP8ITransformWHT;
 extern VP8WHT VP8FTransformWHT;
 // Predictions
 // *dst is the destination block. *top and *left can be NULL.
@@ -89,8 +96,13 @@ extern VP8BlockCopy VP8Copy4x4;
 // Quantization
 struct VP8Matrix;   // forward declaration
 typedef int (*VP8QuantizeBlock)(int16_t in[16], int16_t out[16],
-                                int n, const struct VP8Matrix* const mtx);
+                                const struct VP8Matrix* const mtx);
 extern VP8QuantizeBlock VP8EncQuantizeBlock;
+
+// specific to 2nd transform:
+typedef int (*VP8QuantizeBlockWHT)(int16_t in[16], int16_t out[16],
+                                   const struct VP8Matrix* const mtx);
+extern VP8QuantizeBlockWHT VP8EncQuantizeBlockWHT;
 
 // Collect histogram for susceptibility calculation and accumulate in histo[].
 struct VP8Histogram;
@@ -121,6 +133,13 @@ typedef void (*VP8PredFunc)(uint8_t* dst);
 extern const VP8PredFunc VP8PredLuma16[/* NUM_B_DC_MODES */];
 extern const VP8PredFunc VP8PredChroma8[/* NUM_B_DC_MODES */];
 extern const VP8PredFunc VP8PredLuma4[/* NUM_BMODES */];
+
+// clipping tables (for filtering)
+extern const int8_t* const VP8ksclip1;  // clips [-1020, 1020] to [-128, 127]
+extern const int8_t* const VP8ksclip2;  // clips [-112, 112] to [-16, 15]
+extern const uint8_t* const VP8kclip1;  // clips [-255,511] to [0,255]
+extern const uint8_t* const VP8kabs0;   // abs(x) for x in [-255,255]
+void VP8InitClipTables(void);           // must be called first
 
 // simple filter (only for luma)
 typedef void (*VP8SimpleFilterFunc)(uint8_t* p, int stride, int thresh);
@@ -181,7 +200,11 @@ typedef void (*WebPSampleLinePairFunc)(
     const uint8_t* u, const uint8_t* v,
     uint8_t* top_dst, uint8_t* bottom_dst, int len);
 
-extern const WebPSampleLinePairFunc WebPSamplers[/* MODE_LAST */];
+// Sampling functions to convert YUV to RGB(A) modes
+extern WebPSampleLinePairFunc WebPSamplers[/* MODE_LAST */];
+
+// Initializes MIPS version of the samplers.
+void WebPInitSamplersMIPS32(void);
 
 // General function for converting two lines of ARGB or RGBA.
 // 'alpha_is_last' should be true if 0xff000000 is stored in memory as
@@ -197,6 +220,7 @@ extern const WebPYUV444Converter WebPYUV444Converters[/* MODE_LAST */];
 
 // Main function to be called
 void WebPInitUpsamplers(void);
+void WebPInitSamplers(void);
 
 //------------------------------------------------------------------------------
 // Pre-multiply planes with alpha values
@@ -218,7 +242,7 @@ void WebPInitPremultiplyNEON(void);
 
 //------------------------------------------------------------------------------
 
-#if defined(__cplusplus) || defined(c_plusplus)
+#ifdef __cplusplus
 }    // extern "C"
 #endif
 

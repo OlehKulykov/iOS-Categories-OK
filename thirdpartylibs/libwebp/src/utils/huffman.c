@@ -18,10 +18,6 @@
 #include "../utils/utils.h"
 #include "../webp/format_constants.h"
 
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
-
 // Uncomment the following to use look-up table for ReverseBits()
 // (might be faster on some platform)
 // #define USE_LUT_REVERSE_BITS
@@ -70,7 +66,7 @@ static int TreeInit(HuffmanTree* const tree, int num_leaves) {
 
 void HuffmanTreeRelease(HuffmanTree* const tree) {
   if (tree != NULL) {
-    free(tree->root_);
+    WebPSafeFree(tree->root_);
     tree->root_ = NULL;
     tree->max_nodes_ = 0;
     tree->num_nodes_ = 0;
@@ -249,7 +245,7 @@ int HuffmanTreeBuildImplicit(HuffmanTree* const tree,
     }
     ok = 1;
  End:
-    free(codes);
+    WebPSafeFree(codes);
     ok = ok && IsFull(tree);
     if (!ok) HuffmanTreeRelease(tree);
     return ok;
@@ -290,6 +286,3 @@ int HuffmanTreeBuildExplicit(HuffmanTree* const tree,
   return ok;
 }
 
-#if defined(__cplusplus) || defined(c_plusplus)
-}    // extern "C"
-#endif

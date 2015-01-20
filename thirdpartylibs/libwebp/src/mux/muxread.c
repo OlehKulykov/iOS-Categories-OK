@@ -16,10 +16,6 @@
 #include "./muxi.h"
 #include "../utils/utils.h"
 
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
-
 //------------------------------------------------------------------------------
 // Helper method(s).
 
@@ -224,7 +220,7 @@ WebPMux* WebPMuxCreateInternal(const WebPData* bitstream, int copy_data,
   data += RIFF_HEADER_SIZE;
   size -= RIFF_HEADER_SIZE;
 
-  wpi = (WebPMuxImage*)malloc(sizeof(*wpi));
+  wpi = (WebPMuxImage*)WebPSafeMalloc(1ULL, sizeof(*wpi));
   if (wpi == NULL) goto Err;
   MuxImageInit(wpi);
 
@@ -379,7 +375,7 @@ static WebPMuxError SynthesizeBitstream(const WebPMuxImage* const wpi,
   // Note: No need to output ANMF/FRGM chunk for a single image.
   const size_t size = RIFF_HEADER_SIZE + vp8x_size + alpha_size +
                       ChunkDiskSize(wpi->img_);
-  uint8_t* const data = (uint8_t*)malloc(size);
+  uint8_t* const data = (uint8_t*)WebPSafeMalloc(1ULL, size);
   if (data == NULL) return WEBP_MUX_MEMORY_ERROR;
 
   // Main RIFF header.
@@ -505,7 +501,7 @@ WebPMuxError WebPMuxGetAnimationParams(const WebPMux* mux,
 static CHUNK_INDEX ChunkGetIndexFromId(WebPChunkId id) {
   int i;
   for (i = 0; kChunks[i].id != WEBP_CHUNK_NIL; ++i) {
-    if (id == kChunks[i].id) return i;
+    if (id == kChunks[i].id) return (CHUNK_INDEX)i;
   }
   return IDX_NIL;
 }
@@ -542,6 +538,3 @@ WebPMuxError WebPMuxNumChunks(const WebPMux* mux,
 
 //------------------------------------------------------------------------------
 
-#if defined(__cplusplus) || defined(c_plusplus)
-}    // extern "C"
-#endif

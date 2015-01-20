@@ -13,10 +13,6 @@
 
 #include "./dsp.h"
 
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
-
 #if defined(WEBP_USE_SSE2)
 
 #include <assert.h>
@@ -51,7 +47,7 @@ extern "C" {
   (out) = _mm_sub_epi8(tmp0, tmp4);    /* (k + in + 1) / 2 - lsb_correction */ \
 } while (0)
 
-// pack and store two alterning pixel rows
+// pack and store two alternating pixel rows
 #define PACK_AND_STORE(a, b, da, db, out) do {                                 \
   const __m128i t_a = _mm_avg_epu8(a, da);  /* (9a + 3b + 3c +  d + 8) / 16 */ \
   const __m128i t_b = _mm_avg_epu8(b, db);  /* (3a + 9b +  c + 3d + 8) / 16 */ \
@@ -173,10 +169,10 @@ static void FUNC_NAME(const uint8_t* top_y, const uint8_t* bottom_y,           \
 }
 
 // SSE2 variants of the fancy upsampler.
-SSE2_UPSAMPLE_FUNC(UpsampleRgbLinePairSSE2,  VP8YuvToRgb,  3)
-SSE2_UPSAMPLE_FUNC(UpsampleBgrLinePairSSE2,  VP8YuvToBgr,  3)
-SSE2_UPSAMPLE_FUNC(UpsampleRgbaLinePairSSE2, VP8YuvToRgba, 4)
-SSE2_UPSAMPLE_FUNC(UpsampleBgraLinePairSSE2, VP8YuvToBgra, 4)
+SSE2_UPSAMPLE_FUNC(UpsampleRgbLinePair,  VP8YuvToRgb,  3)
+SSE2_UPSAMPLE_FUNC(UpsampleBgrLinePair,  VP8YuvToBgr,  3)
+SSE2_UPSAMPLE_FUNC(UpsampleRgbaLinePair, VP8YuvToRgba, 4)
+SSE2_UPSAMPLE_FUNC(UpsampleBgraLinePair, VP8YuvToBgra, 4)
 
 #undef GET_M
 #undef PACK_AND_STORE
@@ -199,17 +195,17 @@ extern WebPUpsampleLinePairFunc WebPUpsamplers[/* MODE_LAST */];
 void WebPInitUpsamplersSSE2(void) {
 #if defined(WEBP_USE_SSE2)
   VP8YUVInitSSE2();
-  WebPUpsamplers[MODE_RGB]  = UpsampleRgbLinePairSSE2;
-  WebPUpsamplers[MODE_RGBA] = UpsampleRgbaLinePairSSE2;
-  WebPUpsamplers[MODE_BGR]  = UpsampleBgrLinePairSSE2;
-  WebPUpsamplers[MODE_BGRA] = UpsampleBgraLinePairSSE2;
+  WebPUpsamplers[MODE_RGB]  = UpsampleRgbLinePair;
+  WebPUpsamplers[MODE_RGBA] = UpsampleRgbaLinePair;
+  WebPUpsamplers[MODE_BGR]  = UpsampleBgrLinePair;
+  WebPUpsamplers[MODE_BGRA] = UpsampleBgraLinePair;
 #endif   // WEBP_USE_SSE2
 }
 
 void WebPInitPremultiplySSE2(void) {
 #if defined(WEBP_USE_SSE2)
-  WebPUpsamplers[MODE_rgbA] = UpsampleRgbaLinePairSSE2;
-  WebPUpsamplers[MODE_bgrA] = UpsampleBgraLinePairSSE2;
+  WebPUpsamplers[MODE_rgbA] = UpsampleRgbaLinePair;
+  WebPUpsamplers[MODE_bgrA] = UpsampleBgraLinePair;
 #endif   // WEBP_USE_SSE2
 }
 
@@ -220,6 +216,3 @@ void WebPInitPremultiplySSE2(void) {}
 
 #endif  // FANCY_UPSAMPLING
 
-#if defined(__cplusplus) || defined(c_plusplus)
-}    // extern "C"
-#endif

@@ -12,8 +12,8 @@
 // Authors: Vikas Arora (vikaas.arora@gmail.com)
 //          Jyrki Alakuijala (jyrki@google.com)
 
-#include <stdio.h>
 #include <stdlib.h>
+
 #include "./alphai.h"
 #include "./vp8li.h"
 #include "../dsp/lossless.h"
@@ -21,10 +21,6 @@
 #include "../utils/alpha_processing.h"
 #include "../utils/huffman.h"
 #include "../utils/utils.h"
-
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
 
 #define NUM_ARGB_CACHE_ROWS          16
 
@@ -289,7 +285,7 @@ static int ReadHuffmanCode(int alphabet_size, VP8LDecoder* const dec,
     if (ok) {
       ok = HuffmanTreeBuildImplicit(tree, code_lengths, alphabet_size);
     }
-    free(code_lengths);
+    WebPSafeFree(code_lengths);
   }
   ok = ok && !br->error_;
   if (!ok) {
@@ -308,7 +304,7 @@ static void DeleteHtreeGroups(HTreeGroup* htree_groups, int num_htree_groups) {
         HuffmanTreeRelease(&htrees[j]);
       }
     }
-    free(htree_groups);
+    WebPSafeFree(htree_groups);
   }
 }
 
@@ -372,7 +368,7 @@ static int ReadHuffmanCodes(VP8LDecoder* const dec, int xsize, int ysize,
   return 1;
 
  Error:
-  free(huffman_image);
+  WebPSafeFree(huffman_image);
   DeleteHtreeGroups(htree_groups, num_htree_groups);
   return 0;
 }
@@ -424,7 +420,7 @@ static int Export(WebPRescaler* const rescaler, WEBP_CSP_MODE colorspace,
   int num_lines_out = 0;
   while (WebPRescalerHasPendingOutput(rescaler)) {
     uint8_t* const dst = rgba + num_lines_out * rgba_stride;
-    WebPRescalerExportRow(rescaler);
+    WebPRescalerExportRow(rescaler, 0);
     WebPMultARGBRow(src, dst_width, 1);
     VP8LConvertFromBGRA(src, dst_width, colorspace, dst);
     ++num_lines_out;
@@ -481,7 +477,8 @@ static void ConvertToYUVA(const uint32_t* const src, int width, int y_pos,
     uint8_t* const y = buf->y + y_pos * buf->y_stride;
     for (i = 0; i < width; ++i) {
       const uint32_t p = src[i];
-      y[i] = VP8RGBToY((p >> 16) & 0xff, (p >> 8) & 0xff, (p >> 0) & 0xff);
+      y[i] = VP8RGBToY((p >> 16) & 0xff, (p >> 8) & 0xff, (p >> 0) & 0xff,
+                       YUV_HALF);
     }
   }
 
@@ -500,11 +497,11 @@ static void ConvertToYUVA(const uint32_t* const src, int width, int y_pos,
       const int g = ((v0 >>  7) & 0x1fe) + ((v1 >>  7) & 0x1fe);
       const int b = ((v0 <<  1) & 0x1fe) + ((v1 <<  1) & 0x1fe);
       if (!(y_pos & 1)) {  // even lines: store values
-        u[i] = VP8RGBToU(r, g, b);
-        v[i] = VP8RGBToV(r, g, b);
+        u[i] = VP8RGBToU(r, g, b, YUV_HALF << 2);
+        v[i] = VP8RGBToV(r, g, b, YUV_HALF << 2);
       } else {             // odd lines: average with previous values
-        const int tmp_u = VP8RGBToU(r, g, b);
-        const int tmp_v = VP8RGBToV(r, g, b);
+        const int tmp_u = VP8RGBToU(r, g, b, YUV_HALF << 2);
+        const int tmp_v = VP8RGBToV(r, g, b, YUV_HALF << 2);
         // Approximated average-of-four. But it's an acceptable diff.
         u[i] = (u[i] + tmp_u + 1) >> 1;
         v[i] = (v[i] + tmp_v + 1) >> 1;
@@ -516,11 +513,11 @@ static void ConvertToYUVA(const uint32_t* const src, int width, int y_pos,
       const int g = (v0 >>  6) & 0x3fc;
       const int b = (v0 <<  2) & 0x3fc;
       if (!(y_pos & 1)) {  // even lines
-        u[i] = VP8RGBToU(r, g, b);
-        v[i] = VP8RGBToV(r, g, b);
+        u[i] = VP8RGBToU(r, g, b, YUV_HALF << 2);
+        v[i] = VP8RGBToV(r, g, b, YUV_HALF << 2);
       } else {             // odd lines (note: we could just skip this)
-        const int tmp_u = VP8RGBToU(r, g, b);
-        const int tmp_v = VP8RGBToV(r, g, b);
+        const int tmp_u = VP8RGBToU(r, g, b, YUV_HALF << 2);
+        const int tmp_v = VP8RGBToV(r, g, b, YUV_HALF << 2);
         u[i] = (u[i] + tmp_u + 1) >> 1;
         v[i] = (v[i] + tmp_v + 1) >> 1;
       }
@@ -540,7 +537,7 @@ static int ExportYUVA(const VP8LDecoder* const dec, int y_pos) {
   const int dst_width = rescaler->dst_width;
   int num_lines_out = 0;
   while (WebPRescalerHasPendingOutput(rescaler)) {
-    WebPRescalerExportRow(rescaler);
+    WebPRescalerExportRow(rescaler, 0);
     WebPMultARGBRow(src, dst_width, 1);
     ConvertToYUVA(src, dst_width, y_pos, dec->output_);
     ++y_pos;
@@ -743,6 +740,7 @@ static int DecodeAlphaData(VP8LDecoder* const dec, uint8_t* const data,
   const int len_code_limit = NUM_LITERAL_CODES + NUM_LENGTH_CODES;
   const int mask = hdr->huffman_mask_;
   assert(htree_group != NULL);
+  assert(pos < end);
   assert(last_row <= height);
   assert(Is8bOptimizable(hdr));
 
@@ -833,6 +831,7 @@ static int DecodeImageData(VP8LDecoder* const dec, uint32_t* const data,
       (hdr->color_cache_size_ > 0) ? &hdr->color_cache_ : NULL;
   const int mask = hdr->huffman_mask_;
   assert(htree_group != NULL);
+  assert(src < src_end);
   assert(src_last <= src_end);
 
   while (!br->eos_ && src < src_last) {
@@ -934,7 +933,7 @@ static int DecodeImageData(VP8LDecoder* const dec, uint32_t* const data,
 // VP8LTransform
 
 static void ClearTransform(VP8LTransform* const transform) {
-  free(transform->data_);
+  WebPSafeFree(transform->data_);
   transform->data_ = NULL;
 }
 
@@ -958,7 +957,7 @@ static int ExpandColorMap(int num_colors, VP8LTransform* const transform) {
     }
     for (; i < 4 * final_num_colors; ++i)
       new_data[i] = 0;  // black tail.
-    free(transform->data_);
+    WebPSafeFree(transform->data_);
     transform->data_ = new_color_map;
   }
   return 1;
@@ -1028,7 +1027,7 @@ static void InitMetadata(VP8LMetadata* const hdr) {
 static void ClearMetadata(VP8LMetadata* const hdr) {
   assert(hdr);
 
-  free(hdr->huffman_image_);
+  WebPSafeFree(hdr->huffman_image_);
   DeleteHtreeGroups(hdr->htree_groups_, hdr->num_htree_groups_);
   VP8LColorCacheClear(&hdr->color_cache_);
   InitMetadata(hdr);
@@ -1038,7 +1037,7 @@ static void ClearMetadata(VP8LMetadata* const hdr) {
 // VP8LDecoder
 
 VP8LDecoder* VP8LNew(void) {
-  VP8LDecoder* const dec = (VP8LDecoder*)calloc(1, sizeof(*dec));
+  VP8LDecoder* const dec = (VP8LDecoder*)WebPSafeCalloc(1ULL, sizeof(*dec));
   if (dec == NULL) return NULL;
   dec->status_ = VP8_STATUS_OK;
   dec->action_ = READ_DIM;
@@ -1054,7 +1053,7 @@ void VP8LClear(VP8LDecoder* const dec) {
   if (dec == NULL) return;
   ClearMetadata(&dec->hdr_);
 
-  free(dec->pixels_);
+  WebPSafeFree(dec->pixels_);
   dec->pixels_ = NULL;
   for (i = 0; i < dec->next_transform_; ++i) {
     ClearTransform(&dec->transforms_[i]);
@@ -1062,7 +1061,7 @@ void VP8LClear(VP8LDecoder* const dec) {
   dec->next_transform_ = 0;
   dec->transforms_seen_ = 0;
 
-  free(dec->rescaler_memory);
+  WebPSafeFree(dec->rescaler_memory);
   dec->rescaler_memory = NULL;
 
   dec->output_ = NULL;   // leave no trace behind
@@ -1071,7 +1070,7 @@ void VP8LClear(VP8LDecoder* const dec) {
 void VP8LDelete(VP8LDecoder* const dec) {
   if (dec != NULL) {
     VP8LClear(dec);
-    free(dec);
+    WebPSafeFree(dec);
   }
 }
 
@@ -1158,7 +1157,7 @@ static int DecodeImageStream(int xsize, int ysize,
  End:
 
   if (!ok) {
-    free(data);
+    WebPSafeFree(data);
     ClearMetadata(hdr);
     // If not enough data (br.eos_) resulted in BIT_STREAM_ERROR, update the
     // status appropriately.
@@ -1297,6 +1296,10 @@ int VP8LDecodeAlphaImageStream(ALPHDecoder* const alph_dec, int last_row) {
   assert(dec->action_ == READ_DATA);
   assert(last_row <= dec->height_);
 
+  if (dec->last_pixel_ == dec->width_ * dec->height_) {
+    return 1;  // done
+  }
+
   // Decode (with special row processing).
   return alph_dec->use_8b_decode ?
       DecodeAlphaData(dec, (uint8_t*)dec->pixels_, dec->width_, dec->height_,
@@ -1381,6 +1384,3 @@ int VP8LDecodeImage(VP8LDecoder* const dec) {
 
 //------------------------------------------------------------------------------
 
-#if defined(__cplusplus) || defined(c_plusplus)
-}    // extern "C"
-#endif

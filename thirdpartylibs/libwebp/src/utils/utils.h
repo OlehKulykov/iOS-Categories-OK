@@ -19,7 +19,7 @@
 
 #include "../webp/types.h"
 
-#if defined(__cplusplus) || defined(c_plusplus)
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -35,10 +35,13 @@ extern "C" {
 // somewhere (like: malloc(num_pixels * sizeof(*something))). That's why this
 // safe malloc() borrows the signature from calloc(), pointing at the dangerous
 // underlying multiply involved.
-void* WebPSafeMalloc(uint64_t nmemb, size_t size);
+WEBP_EXTERN(void*) WebPSafeMalloc(uint64_t nmemb, size_t size);
 // Note that WebPSafeCalloc() expects the second argument type to be 'size_t'
 // in order to favor the "calloc(num_foo, sizeof(foo))" pattern.
-void* WebPSafeCalloc(uint64_t nmemb, size_t size);
+WEBP_EXTERN(void*) WebPSafeCalloc(uint64_t nmemb, size_t size);
+
+// Companion deallocation function to the above allocations.
+WEBP_EXTERN(void) WebPSafeFree(void* const ptr);
 
 //------------------------------------------------------------------------------
 // Reading/writing data.
@@ -76,7 +79,7 @@ static WEBP_INLINE void PutLE32(uint8_t* const data, uint32_t val) {
 
 //------------------------------------------------------------------------------
 
-#if defined(__cplusplus) || defined(c_plusplus)
+#ifdef __cplusplus
 }    // extern "C"
 #endif
 

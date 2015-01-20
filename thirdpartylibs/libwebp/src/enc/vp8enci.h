@@ -20,7 +20,7 @@
 #include "../utils/bit_writer.h"
 #include "../utils/thread.h"
 
-#if defined(__cplusplus) || defined(c_plusplus)
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -29,8 +29,8 @@ extern "C" {
 
 // version numbers
 #define ENC_MAJ_VERSION 0
-#define ENC_MIN_VERSION 3
-#define ENC_REV_VERSION 1
+#define ENC_MIN_VERSION 4
+#define ENC_REV_VERSION 0
 
 // intra prediction modes
 enum { B_DC_PRED = 0,   // 4x4 modes
@@ -130,8 +130,8 @@ typedef enum {   // Rate-distortion optimization levels
 #define ALIGN_CST 15
 #define DO_ALIGN(PTR) ((uintptr_t)((PTR) + ALIGN_CST) & ~ALIGN_CST)
 
-extern const int VP8Scan[16 + 4 + 4];           // in quant.c
-extern const int VP8UVModeOffsets[4];           // in analyze.c
+extern const int VP8Scan[16];           // in quant.c
+extern const int VP8UVModeOffsets[4];   // in analyze.c
 extern const int VP8I16ModeOffsets[4];
 extern const int VP8I4ModeOffsets[NUM_BMODES];
 
@@ -160,14 +160,16 @@ extern const int VP8I4ModeOffsets[NUM_BMODES];
 #define I4TMP (6 * 16 * BPS + 8 * BPS +  8)
 
 typedef int64_t score_t;     // type used for scores, rate, distortion
+// Note that MAX_COST is not the maximum allowed by sizeof(score_t),
+// in order to allow overflowing computations.
 #define MAX_COST ((score_t)0x7fffffffffffffLL)
 
 #define QFIX 17
 #define BIAS(b)  ((b) << (QFIX - 8))
 // Fun fact: this is the _only_ line where we're actually being lossy and
 // discarding bits.
-static WEBP_INLINE int QUANTDIV(int n, int iQ, int B) {
-  return (n * iQ + B) >> QFIX;
+static WEBP_INLINE int QUANTDIV(uint32_t n, uint32_t iQ, uint32_t B) {
+  return (int)((n * iQ + B) >> QFIX);
 }
 
 // size of histogram used by CollectHistogram.
@@ -204,9 +206,9 @@ typedef struct {
 typedef struct {
   uint8_t segments_[3];     // probabilities for segment tree
   uint8_t skip_proba_;      // final probability of being skipped.
-  ProbaArray coeffs_[NUM_TYPES][NUM_BANDS];      // 924 bytes
+  ProbaArray coeffs_[NUM_TYPES][NUM_BANDS];      // 1056 bytes
   StatsArray stats_[NUM_TYPES][NUM_BANDS];       // 4224 bytes
-  CostArray level_cost_[NUM_TYPES][NUM_BANDS];   // 11.4k
+  CostArray level_cost_[NUM_TYPES][NUM_BANDS];   // 13056 bytes
   int dirty_;               // if true, need to call VP8CalculateLevelCosts()
   int use_skip_proba_;      // Note: we always use skip_proba for now.
   int nb_skip_;             // number of skipped blocks
@@ -236,8 +238,8 @@ typedef struct {
 typedef struct VP8Matrix {
   uint16_t q_[16];        // quantizer steps
   uint16_t iq_[16];       // reciprocals, fixed point.
-  uint16_t bias_[16];     // rounding bias
-  uint16_t zthresh_[16];  // value under which a coefficient is zeroed
+  uint32_t bias_[16];     // rounding bias
+  uint32_t zthresh_[16];  // value below which a coefficient is zeroed
   uint16_t sharpen_[16];  // frequency boosters for slight sharpening
 } VP8Matrix;
 
@@ -248,13 +250,15 @@ typedef struct {
   int beta_;       // filter-susceptibility, range [0,255].
   int quant_;      // final segment quantizer.
   int fstrength_;  // final in-loop filtering strength
+  int max_edge_;   // max edge delta (for filtering strength)
+  int min_disto_;  // minimum distortion required to trigger filtering record
   // reactivities
   int lambda_i16_, lambda_i4_, lambda_uv_;
   int lambda_mode_, lambda_trellis_, tlambda_;
   int lambda_trellis_i16_, lambda_trellis_i4_, lambda_trellis_uv_;
 } VP8SegmentInfo;
 
-// Handy transcient struct to accumulate score and info during RD-optimization
+// Handy transient struct to accumulate score and info during RD-optimization
 // and mode evaluation.
 typedef struct {
   score_t D, SD;              // Distortion, spectral distortion
@@ -555,9 +559,13 @@ void VP8InitFilter(VP8EncIterator* const it);
 void VP8StoreFilterStats(VP8EncIterator* const it);
 void VP8AdjustFilterStrength(VP8EncIterator* const it);
 
+// returns the approximate filtering strength needed to smooth a edge
+// step of 'delta', given a sharpness parameter 'sharpness'.
+int VP8FilterStrengthFromDelta(int sharpness, int delta);
+
 //------------------------------------------------------------------------------
 
-#if defined(__cplusplus) || defined(c_plusplus)
+#ifdef __cplusplus
 }    // extern "C"
 #endif
 
