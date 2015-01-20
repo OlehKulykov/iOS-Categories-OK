@@ -24,6 +24,7 @@
 		3DBBD291175C8DF50051A020 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD28E175C8DF50051A020 /* CoreGraphics.framework */; };
 		3DBBD292175C8DF50051A020 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD28F175C8DF50051A020 /* CoreLocation.framework */; };
 		3DBBD294175C8DFF0051A020 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DBBD293175C8DFF0051A020 /* UIKit.framework */; };
+		3DCE20B61A6E9738000F2E7B /* NSMutableArray+AppendFromSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DCE20B51A6E9738000F2E7B /* NSMutableArray+AppendFromSet.m */; };
 		3DF97D13180AAF89004FD2F4 /* EnvironmentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DF97D12180AAF89004FD2F4 /* EnvironmentInfo.m */; };
 		3DFD298E178D51CC00A1CA27 /* JSONObjectConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DFD298D178D51CC00A1CA27 /* JSONObjectConverter.m */; };
 /* End PBXBuildFile section */
@@ -73,6 +74,8 @@
 		3DBBD28E175C8DF50051A020 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3DBBD28F175C8DF50051A020 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3DBBD293175C8DFF0051A020 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3DCE20B41A6E9738000F2E7B /* NSMutableArray+AppendFromSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+AppendFromSet.h"; path = "../foundation/NSMutableArray+AppendFromSet.h"; sourceTree = SOURCE_ROOT; };
+		3DCE20B51A6E9738000F2E7B /* NSMutableArray+AppendFromSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+AppendFromSet.m"; path = "../foundation/NSMutableArray+AppendFromSet.m"; sourceTree = SOURCE_ROOT; };
 		3DF97D10180AAEA7004FD2F4 /* iOS_Categories_OK_CommonHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = iOS_Categories_OK_CommonHeader.h; path = ../common/iOS_Categories_OK_CommonHeader.h; sourceTree = SOURCE_ROOT; };
 		3DF97D11180AAF89004FD2F4 /* EnvironmentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnvironmentInfo.h; path = ../common/EnvironmentInfo.h; sourceTree = SOURCE_ROOT; };
 		3DF97D12180AAF89004FD2F4 /* EnvironmentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EnvironmentInfo.m; path = ../common/EnvironmentInfo.m; sourceTree = SOURCE_ROOT; };
@@ -172,6 +175,8 @@
 				3DBBD26E175C82B90051A020 /* NSDictionary+CategoryOK.m */,
 				3DBBD26F175C82B90051A020 /* NSString+CategoryOK.h */,
 				3DBBD270175C82B90051A020 /* NSString+CategoryOK.m */,
+				3DCE20B41A6E9738000F2E7B /* NSMutableArray+AppendFromSet.h */,
+				3DCE20B51A6E9738000F2E7B /* NSMutableArray+AppendFromSet.m */,
 			);
 			name = foundation;
 			path = ../../foundation;
@@ -262,6 +267,7 @@
 				3D79BC0E1806BA6A00E60D19 /* UIImageWebP+CategoryOK.m in Sources */,
 				3DFD298E178D51CC00A1CA27 /* JSONObjectConverter.m in Sources */,
 				3DF97D13180AAF89004FD2F4 /* EnvironmentInfo.m in Sources */,
+				3DCE20B61A6E9738000F2E7B /* NSMutableArray+AppendFromSet.m in Sources */,
 				3D79BC0B1806B99300E60D19 /* UIImage+CategoryOK.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

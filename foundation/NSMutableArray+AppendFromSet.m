@@ -21,58 +21,25 @@
  */
 
 
-#import <UIKit/UIKit.h>
+#import "NSMutableArray+AppendFromSet.h"
 
+@implementation NSMutableArray (AppendFromSet)
 
-@interface UIView (BackgroundImage)
+- (void) append:(id<NSFastEnumeration>) set
+{
+	if (set)
+	{
+		for (id object in set) [self addObject:object];
+	}
+}
 
-/**
- @brief Set background view image.
- @detailed Set background image to the view layer using setContents. Image scales to content.
- @param backgroundImage The view background image.
- */
-- (void) setBackgroundImage:(UIImage *)backgroundImage;
-
-@end
-
-
-@interface UIView (SimpleFrame)
-
-/**
- @brief View read/write property for it's frame coordinate X.
- */
-@property CGFloat x;
-
-
-/**
- @brief View read/write property for it's frame coordinate Y.
- */
-@property CGFloat y;
-
-
-/**
- @brief View read/write property for it's frame size Width.
- */
-@property CGFloat width;
-
-
-/**
- @brief View read/write property for it's frame size Height.
- */
-@property CGFloat height;
-
+- (void) prepend:(id<NSFastEnumeration>) set
+{
+	if (set)
+	{
+		NSUInteger index = 0;
+		for (id object in set) [self insertObject:object atIndex:index++];
+	}
+}
 
 @end
-
-
-@interface UIView (SubviewWithClassType)
-
-/**
- @brief Subiew with reqired class type.
- @param svClass Reqired class type.
- @return Subview or nil if not found or svClass is nil.
- */
-- (id) subviewWithClass:(Class) svClass;
-
-@end
-

@@ -21,58 +21,23 @@
  */
 
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "../common/iOS_Categories_OK_CommonHeader.h"
 
-
-@interface UIView (BackgroundImage)
+@interface NSMutableArray (AppendFromSet)
 
 /**
- @brief Set background view image.
- @detailed Set background image to the view layer using setContents. Image scales to content.
- @param backgroundImage The view background image.
+ @brief Appends mutable array with objects from set.
+ @param set The set object source, can be nil.
  */
-- (void) setBackgroundImage:(UIImage *)backgroundImage;
+- (void) append:(id<NSFastEnumeration>) set;
+
+
+/**
+ @brief Prepends mutable array with objects from set.
+ @detailed Heavy. 
+ @param set The set object source, can be nil.
+ */
+- (void) prepend:(id<NSFastEnumeration>) set;
 
 @end
-
-
-@interface UIView (SimpleFrame)
-
-/**
- @brief View read/write property for it's frame coordinate X.
- */
-@property CGFloat x;
-
-
-/**
- @brief View read/write property for it's frame coordinate Y.
- */
-@property CGFloat y;
-
-
-/**
- @brief View read/write property for it's frame size Width.
- */
-@property CGFloat width;
-
-
-/**
- @brief View read/write property for it's frame size Height.
- */
-@property CGFloat height;
-
-
-@end
-
-
-@interface UIView (SubviewWithClassType)
-
-/**
- @brief Subiew with reqired class type.
- @param svClass Reqired class type.
- @return Subview or nil if not found or svClass is nil.
- */
-- (id) subviewWithClass:(Class) svClass;
-
-@end
-
